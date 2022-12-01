@@ -9,7 +9,7 @@ import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
 // app name
 const searchTag = globalThis.document.getElementsByTagName("title");
-const appName = searchTag[0]?.innerText || "Laravel";
+const appName = searchTag[0]?.innerText || "App vehículos";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

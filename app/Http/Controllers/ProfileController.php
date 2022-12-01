@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\UserFactory;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
@@ -11,6 +12,16 @@ use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
+
+    /**
+     * Constructor 
+     *
+     * @param UserFactory $factory
+     */
+    public function __construct(private UserFactory $factory)
+    {
+    }
+
     /**
      * Display the user's profile form.
      *
@@ -19,6 +30,13 @@ class ProfileController extends Controller
      */
     public function edit(Request $request)
     {
+        // ejemplo de como se implementa el factory Fran
+        // constructor
+        // lo mismo para las querys
+        // un factory por cada modelo y pasarlo por elñ constructor
+        $this->factory->exampleFunction();
+
+
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
