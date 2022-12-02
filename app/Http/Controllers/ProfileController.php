@@ -14,7 +14,7 @@ class ProfileController extends Controller
 {
 
     /**
-     * Constructor 
+     * Constructor
      *
      * @param UserFactory $factory
      */
@@ -34,7 +34,7 @@ class ProfileController extends Controller
         // constructor
         // lo mismo para las querys
         // un factory por cada modelo y pasarlo por elñ constructor
-        $this->factory->exampleFunction();
+        //$this->factory->exampleFunction();
 
 
         return Inertia::render('Profile/Edit', [
