@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,12 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Rol::factory()->create();
-         \App\Models\User::factory()->create();
+        if (!User::count()) {
+            \App\Models\Rol::factory()->create();
+            \App\Models\User::factory()->create();
+        }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            BrandSeeder::class,
+            ModelVehicleSeeder::class,
+            ColorSeeder::class,
+        ]);
     }
 }

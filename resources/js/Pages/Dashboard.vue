@@ -1,6 +1,6 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 </script>
 
 <template>
@@ -8,13 +8,25 @@ import { Head } from '@inertiajs/inertia-vue3';
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+            <h1 class="text-gray-900 text-2xl font-bold">
+                Bienvenido {{ $page.props.auth.user.name }}
+            </h1>
         </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
+        <div class="py-12 mx-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white py-5">
+                    <div class="flex justify-center md:justify-start items-center">
+                        <div class="py-10 px-5">
+                            <Link
+                                :href="route('vehicle.create')"
+                                class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
+                            >
+                                <span class="uppercase font-medium text-lg">
+                                    Nuevo ingreso vehicular
+                                </span>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
