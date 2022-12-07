@@ -1,12 +1,12 @@
 <script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Layout from "@/Layouts/Layout.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 </script>
 
 <template>
     <Head title="Dashboard" />
 
-    <AuthenticatedLayout>
+    <Layout>
         <template #header>
             <h1 class="text-gray-900 text-2xl font-bold">
                 Bienvenido {{ $page.props.auth.user.name }}
@@ -30,5 +30,5 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </Layout >
 </template>

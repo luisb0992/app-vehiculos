@@ -1,7 +1,20 @@
 <script setup>
-import { Head } from "@inertiajs/inertia-vue3";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import UseForm from "./components/UseForm.vue";
+import { Head } from "@inertiajs/inertia-vue3";
+import { currentYear } from "@/Utils/Common/common";
+import { onMounted } from "vue";
+import {
+    form,
+    getModels,
+    saveVehicle,
+    filterModels,
+    clearForm,
+} from "./modules/create";
+
 
 const props = defineProps({
     brands: Array,
@@ -12,7 +25,7 @@ const props = defineProps({
 <template>
     <Head title="Nuevo reporte vehicular" />
 
-    <AuthenticatedLayout>
+    <Layout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="bg-white p-7 rounded-md">
                 <div class="w-full pb-5">
@@ -31,5 +44,5 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </Layout>
 </template>
