@@ -58,7 +58,11 @@ class VehicleController extends Controller
      */
     public function store(CreateVehicleRequest $request): RedirectResponse
     {
-        $this->vehicleF->createVehicle($request->validated());
+        // guardar vehículo
+        $vehicle = $this->vehicleF->createVehicle($request->validated());
+
+        // guardar imagenes
+        $this->vehicleF->saveGallery($vehicle, $request->gallery);
 
         return Redirect::route('vehicle.create')->with('success', 'Vehículo agregado con éxito');
     }

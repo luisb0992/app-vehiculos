@@ -20,5 +20,8 @@
         "tailwindcss": "^3.2.1",
         "vite": "^3.0.0",
         "vue": "^3.2.41"
+    },
+    "dependencies": {
+        "vue-sweetalert2": "^5.0.5"
     }
 }
