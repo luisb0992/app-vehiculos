@@ -14,6 +14,7 @@ export const form = useForm({
     description: "",
     observation: "",
     status: 1,
+    gallery: [],
 });
 
 export const getModels = (models) => {
@@ -34,13 +35,14 @@ export const clearForm = () => {
     form.reset("description", "");
     form.reset("observation", "");
     form.reset("status", 1);
+    form.reset("gallery", []);
 };
 
 export const saveVehicle = () => {
     form.post(route("vehicle.store"), {
         onStart: () => console.log("start"),
         onFinish: () => console.log("finish"),
-        onError: () => console.log("error"),
+        onError: (error) => console.log(error),
         onSuccess: () => clearForm,
     });
 };

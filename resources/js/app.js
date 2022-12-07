@@ -7,6 +7,10 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
+// sweetalert2
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
 // app name
 const searchTag = globalThis.document.getElementsByTagName("title");
 const appName = searchTag[0]?.innerText || "App vehículos";
@@ -19,10 +23,15 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.vue")
         ),
     setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
-            .use(plugin)
-            .use(ZiggyVue, Ziggy)
-            .mount(el);
+        const VueApp = createApp({ render: () => h(app, props) });
+
+        // use
+        VueApp.use(plugin).use(VueSweetalert2).use(ZiggyVue, Ziggy);
+
+        // mount app
+        VueApp.mount(el);
+
+        return { VueApp };
     },
 });
 

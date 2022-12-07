@@ -34,6 +34,7 @@ class CreateVehicleRequest extends FormRequest
             'description' => 'nullable|string',
             'observation' => 'nullable|string',
             'status' => 'nullable|integer',
+            'gallery' => 'nullable|array',
         ];
     }
 
@@ -61,6 +62,7 @@ class CreateVehicleRequest extends FormRequest
             'description.string' => 'La descripción debe ser una cadena de texto',
             'observation.string' => 'La observación debe ser una cadena de texto',
             'status.integer' => 'El estado debe ser un número entero',
+            'gallery.array' => 'La galería debe ser un arreglo de imagenes',
         ];
     }
 }
