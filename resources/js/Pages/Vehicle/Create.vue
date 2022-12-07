@@ -1,20 +1,7 @@
 <script setup>
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import { currentYear } from "@/Utils/Common/common";
-import { onMounted } from "vue";
-import {
-    form,
-    getModels,
-    saveVehicle,
-    filterModels,
-    clearForm,
-} from "./modules/create";
-
+import Layout from "@/Layouts/Layout.vue";
+import UseForm from "./components/UseForm.vue";
 
 const props = defineProps({
     brands: Array,
