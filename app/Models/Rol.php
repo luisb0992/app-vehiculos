@@ -10,4 +10,8 @@ class Rol extends Model
     use HasFactory;
 
     public $table = 'roles';
+
+    protected $fillable = [
+        'name',
+    ];
 }
