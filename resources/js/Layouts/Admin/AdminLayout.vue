@@ -18,7 +18,21 @@
                     :active="route().current('dashboard')"
                     :icon="'bi bi-house-door-fill'"
                 >
-                <span class="text-[15px] ml-4 text-gray-200">Inicio</span>
+                    <span class="text-[15px] ml-4 text-gray-200">Inicio</span>
+                </SideLink>
+                <!-- <SideLink
+                    :href="route('dashboard')"
+                    :active="route().current('dashboard')"
+                    :icon="'bi bi-people'"
+                >
+                    <span class="text-[15px] ml-4 text-gray-200">Usuarios</span>
+                </SideLink> -->
+                <SideLink
+                    :href="route('roles.create')"
+                    :active="route().current('roles')"
+                    :icon="'bi bi-people'"
+                >
+                    <span class="text-[15px] ml-4 text-gray-200">Roles</span>
                 </SideLink>
                 <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer ">
                     <i class="bi bi-chat-left-text-fill"></i>
@@ -64,7 +78,7 @@
             </div>
         </div>
     </div>
-    <div class="main-content flex flex-col flex-grow p-4 md:lg:pl-[400px] py-16">
+    <div class="main-content flex flex-col flex-grow md:lg:pl-[100px] py-4">
         <!-- <h1 class="font-bold text-2xl text-gray-700">Inicio</h1> -->
         <div class="flex flex-col flex-grow bg-white rounded mt-4">
             <!-- mostrar mensaje -->

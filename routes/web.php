@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RolController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,6 +18,10 @@ use Inertia\Inertia;
     ->middleware(['auth', 'verified'])->name('dashboard'); */
 Route::get('/dashboard', fn () => Inertia::render('Dashboard'))
     ->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->prefix('rol')->group(function () {
+    Route::resource('roles', RolController::class);
+});
 
 require __DIR__ . '/modules/profile.php';
 
