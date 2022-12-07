@@ -3,7 +3,7 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Layout from "@/Layouts/Layout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { currentYear } from "@/Utils/Common/common";
 import { onMounted } from "vue";
@@ -14,6 +14,7 @@ import {
     filterModels,
     clearForm,
 } from "./modules/create";
+
 
 const props = defineProps({
     brands: Array,
@@ -29,7 +30,7 @@ onMounted(() => {
 <template>
     <Head title="Nuevo reporte vehicular" />
 
-    <AuthenticatedLayout>
+    <Layout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="bg-white p-7 rounded-md">
                 <div class="w-full pb-5">
@@ -229,5 +230,5 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </Layout>
 </template>

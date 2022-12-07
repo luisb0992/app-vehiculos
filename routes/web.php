@@ -13,6 +13,8 @@ Route::get('/', function () {
     ]);
 });
 
+/* Route::get('/dashboard', fn () => Inertia::render('Admin/Dashboard'))
+    ->middleware(['auth', 'verified'])->name('dashboard'); */
 Route::get('/dashboard', fn () => Inertia::render('Dashboard'))
     ->middleware(['auth', 'verified'])->name('dashboard');
 

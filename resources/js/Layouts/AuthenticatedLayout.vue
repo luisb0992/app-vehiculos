@@ -7,7 +7,6 @@ import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import AlertDismiss from "@/Components/AlertDismiss.vue";
-
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -194,7 +193,6 @@ const showingNavigationDropdown = ref(false);
                     :show-danger="$page.props.flash.danger ? true : false"
                 />
             </div>
-
             <!-- Page Content -->
             <main>
                 <slot />
