@@ -1,14 +1,15 @@
 <?php
 namespace App\Factories;
 
-//use App\Models\Model;
+use App\Models\Workshop;
+use Illuminate\Database\Eloquent\Collection;
 
 class WorkshopFactory
 {
   // ordenar por nombre
-  public function getHandle(): Model
+  public function getWorkshops(): Collection
   {
-    return true;
+    return Workshop::all(['id', 'name']);
   }
 }
 

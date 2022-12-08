@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\CreateUserRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
-use App\Factories\RolFactory;
+use App\Factories\{WorkshopFactory,RolFactory,UserFactory};
 use Illuminate\Http\Request;
 use Inertia\Response;
 use Inertia\Inertia;
@@ -16,6 +16,8 @@ class UserController extends Controller
 {
     public function __construct(
         private RolFactory $rolF,
+        private WorkshopFactory $workshopF,
+        private UserFactory $userF
     ) {
     }
 
@@ -38,6 +40,7 @@ class UserController extends Controller
     {
         return Inertia::render('User/Create',[
             'roles' => $this->rolF->getRoles(),
+            'workshops' => $this->workshopF->getWorkshops()
         ]);
     }
 
@@ -49,7 +52,9 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request): RedirectResponse
     {
-        dd("construccion putito");
+         $user = $this->userF->createUser($request->validated());
+
+         return Redirect::route('users.create')->with('success', 'Usuario agregado con éxito');
     }
 
     /**

@@ -5,7 +5,7 @@ export const filterModels = ref([]);
 
 export const form = useForm({
     rol_id: "",
-    worshop_id: "",
+    workshop_id: "",
     name: "",
     last_name: "",
     email: "",
@@ -19,11 +19,16 @@ export const getRol = (models) => {
     filterModels.value = data;
 };
 
+export const getWorkshop = (models) => {
+    const data = models.filter((model) => model.taller_id === form.taller_id);
+    filterModels.value = data;
+};
+
 // limpiar los datos del formulario
 // cuando se inicializa el componente
 export const clearForm = () => {
     form.reset("rol_id", "");
-    form.reset("worshop_id", "");
+    form.reset("workshop_id", "");
     form.reset("name", "");
     form.reset("last_name", "");
     form.reset("email", "");

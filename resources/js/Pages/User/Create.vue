@@ -5,6 +5,7 @@ import UseForm from "./components/UseForm.vue";
 
 const props = defineProps({
     roles: Array,
+    workshops: Array,
 });
 </script>
 <template>
@@ -23,6 +24,7 @@ const props = defineProps({
                 <div class="w-full">
                     <UseForm
                         :roles="roles"
+                        :workshops = "workshops"
                     />
                 </div>
             </div>

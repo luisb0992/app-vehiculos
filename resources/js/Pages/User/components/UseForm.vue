@@ -8,6 +8,7 @@ import TextInput from "@/Components/TextInput.vue";
 import {
     form,
     getRol,
+    getWorkshop,
     handleSaveUser,
     filterModels,
     clearForm
@@ -15,8 +16,9 @@ import {
 
 const props = defineProps({
     roles: Array,
+    workshops: Array,
 });
-console.log(props.roles)
+
 clearForm();
 </script>
 <template>
@@ -83,14 +85,14 @@ clearForm();
                     :message="form.errors.email"
                 />
             </div>
-            <div>
+            <div v-if="($page.props.auth.user.rol_id == 1)">
                 <InputLabel for="rol" value="Rol" />
                 <select
                     id="rol"
                     class="mt-1 block w-full border-gray-200 border"
                     v-model="form.rol_id"
                     required
-                    @change="getRol(models)"
+                    @change="getRol(roles)"
                 >
                     <option value="">Seleccione un rol</option>
                     <option
@@ -102,6 +104,27 @@ clearForm();
                     </option>
                 </select>
                 <InputError class="mt-2" :message="form.errors.rol_id" />
+            </div>
+
+            <div v-if="($page.props.auth.user.rol_id == 1)">
+                <InputLabel for="workshop" value="Taller" />
+                <select
+                    id="workshop"
+                    class="mt-1 block w-full border-gray-200 border"
+                    v-model="form.workshop_id"
+                    required
+                    @change="getWorkshop(workshops)"
+                >
+                    <option value="">Seleccione un taller</option>
+                    <option
+                        v-for="workshop in workshops"
+                        :key="workshop.id"
+                        :value="workshop.id"
+                    >
+                        {{ workshop.name }}
+                    </option>
+                </select>
+                <InputError class="mt-2" :message="form.errors.workshop_id" />
             </div>
             <div>
                 <InputLabel for="password" value="Contraseña" />
