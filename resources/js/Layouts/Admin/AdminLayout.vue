@@ -20,22 +20,22 @@
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Inicio</span>
                 </SideLink>
-                <!-- <SideLink
+                <SideLink
                     :href="route('dashboard')"
                     :active="route().current('dashboard')"
                     :icon="'bi bi-people'"
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Usuarios</span>
-                </SideLink> -->
+                </SideLink>
                 <SideLink
                     :href="route('roles.create')"
-                    :active="route().current('roles')"
-                    :icon="'bi bi-people'"
+                    :active="route().current('roles.*')"
+                    :icon="'bi bi-person-gear'"
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Roles</span>
                 </SideLink>
                 <div class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer ">
-                    <i class="bi bi-chat-left-text-fill"></i>
+                    <i class="bi bi-check-all"></i>
                     <div class="flex justify-between w-full items-center" @click="dropDown()">
                         <span class="text-[15px] ml-4 text-gray-200">Vehiculos</span>
                         <span class="text-sm rotate-180" id="arrow">
