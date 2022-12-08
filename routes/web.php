@@ -23,6 +23,7 @@ Route::middleware('auth')->prefix('rol')->group(function () {
     Route::resource('roles', RolController::class);
 });
 
+
 require __DIR__ . '/modules/profile.php';
 
 require __DIR__ . '/modules/auth.php';

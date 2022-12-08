@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\CreateUserRequest;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\RedirectResponse;
+use App\Factories\RolFactory;
 use Illuminate\Http\Request;
+use Inertia\Response;
+use Inertia\Inertia;
+use App\Models\User;
+
 
 class UserController extends Controller
 {
+    public function __construct(
+        private RolFactory $rolF,
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +34,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        return Inertia::render('User/Create',[
+            'roles' => $this->rolF->getRoles(),
+        ]);
     }
 
     /**
@@ -32,9 +47,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request): RedirectResponse
     {
-        //
+        dd("construccion putito");
     }
 
     /**

@@ -21,8 +21,8 @@
                     <span class="text-[15px] ml-4 text-gray-200">Inicio</span>
                 </SideLink>
                 <SideLink
-                    :href="route('dashboard')"
-                    :active="route().current('dashboard')"
+                    :href="route('users.create')"
+                    :active="route().current('users.*')"
                     :icon="'bi bi-people'"
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Usuarios</span>
@@ -30,7 +30,7 @@
                 <SideLink
                     :href="route('roles.create')"
                     :active="route().current('roles.*')"
-                    :icon="'bi bi-person-gear'"
+                    :icon="'bi bi-award-fill'"
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Roles</span>
                 </SideLink>

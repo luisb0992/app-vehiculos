@@ -4,9 +4,6 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
-/* import UseTakePhoto from "./UseTakePhoto.vue";
-import UseUploadFiles from "./UseUploadFiles.vue"; */
-/* import { currentYear, hasCamera } from "@/Utils/Common/common"; */
 import {
     form,
     clearForm,

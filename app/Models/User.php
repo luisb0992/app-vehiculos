@@ -26,6 +26,7 @@ class User extends Authenticatable
         'last_name',
         'email_verified_at',
         'rol_id',
+        'status',
 
     ];
 
