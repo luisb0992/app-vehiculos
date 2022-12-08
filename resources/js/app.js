@@ -7,9 +7,16 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
+
 // sweetalert2
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+
+//primeVue
+import PrimeVue from 'primevue/config';
+import 'primevue/resources/themes/saga-blue/theme.css';
+import 'primevue/resources/primevue.min.css';
+import 'primeicons/primeicons.css'
 
 // app name
 const searchTag = globalThis.document.getElementsByTagName("title");
@@ -26,7 +33,7 @@ createInertiaApp({
         const VueApp = createApp({ render: () => h(app, props) });
 
         // use
-        VueApp.use(plugin).use(VueSweetalert2).use(ZiggyVue, Ziggy);
+        VueApp.use(plugin).use(VueSweetalert2).use(PrimeVue).use(ZiggyVue, Ziggy);
 
         // mount app
         VueApp.mount(el);
