@@ -1,0 +1,11 @@
+<?php
+namespace App\Traits;
+
+class Dummy
+{
+    public function handle(){
+        return true;
+    }
+
+}
+

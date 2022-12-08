@@ -5,6 +5,7 @@ export const filterModels = ref([]);
 
 export const form = useForm({
     rol_id: "",
+    worshop_id: "",
     name: "",
     last_name: "",
     email: "",
@@ -22,6 +23,7 @@ export const getRol = (models) => {
 // cuando se inicializa el componente
 export const clearForm = () => {
     form.reset("rol_id", "");
+    form.reset("worshop_id", "");
     form.reset("name", "");
     form.reset("last_name", "");
     form.reset("email", "");
