@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             ModelVehicleSeeder::class,
             ColorSeeder::class,
             WorkshopSeeder::class,
+            RepairCategorySeeder::class,
+            RepairSubCategorySeeder::class,
         ]);
     }
 }

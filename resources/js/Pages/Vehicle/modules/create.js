@@ -43,6 +43,6 @@ export const saveVehicle = () => {
         onStart: () => console.log("start"),
         onFinish: () => console.log("finish"),
         onError: (error) => console.log(error),
-        onSuccess: () => clearForm,
+        onSuccess: (resp) => clearForm(),
     });
 };

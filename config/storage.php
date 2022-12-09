@@ -15,11 +15,11 @@ return [
 
     // original
     'original_sp' => 'img/original/vehicles/',
-    'original_pp' => public_path('img/original/vehicles/'),
+    'original_pp' => env('APP_URL') . 'storage/img/original/vehicles/',
 
     // resize
     'resize_sp' => 'img/resize/vehicles/',
-    'resize_pp' => public_path('img/resize/vehicles/'),
+    'resize_pp' => env('APP_URL') . 'storage/img/resize/vehicles/',
 
     // extra config
     'max_size' => 1024 * 1024 * 2, // 2MB

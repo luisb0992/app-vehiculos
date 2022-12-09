@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vehicle extends Model
@@ -32,7 +33,7 @@ class Vehicle extends Model
      */
     public function model(): BelongsTo
     {
-        return $this->belongsTo(Model::class);
+        return $this->belongsTo(ModelVehicle::class);
     }
 
     /**
@@ -45,9 +46,21 @@ class Vehicle extends Model
 
     /**
      * Get the gallery for the vehicle.
+     *
+     * @return HasMany
      */
-    public function gallery()
+    public function gallery(): HasMany
     {
         return $this->hasMany(GalleryVehicle::class);
+    }
+
+    /**
+     * Get the repair for the vehicle.
+     *
+     * @return HasMany
+     */
+    public function repairOrder(): HasMany
+    {
+        return $this->hasMany(RepairOrder::class, 'vehicle_id');
     }
 }

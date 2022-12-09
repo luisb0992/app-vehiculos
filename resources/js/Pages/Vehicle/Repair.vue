@@ -1,16 +1,17 @@
 <script setup>
 import { Head } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/Layout.vue";
-import UseForm from "./components/UseForm.vue";
+import UseRepairForm from "./components/UseRepairForm.vue";
+import CardVehicle from "./components/CardVehicle.vue";
 
 const props = defineProps({
-    brands: Array,
-    models: Array,
-    colors: Array,
+    vehicle: Object,
+    categories: Array,
+    workshops: Array,
 });
 </script>
 <template>
-    <Head title="Nuevo reporte vehicular" />
+    <Head title="Solicitar reparación" />
 
     <Layout>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
@@ -23,10 +24,13 @@ const props = defineProps({
                     </div>
                 </div>
                 <div class="w-full">
-                    <UseForm
-                        :brands="brands"
-                        :models="models"
-                        :colors="colors"
+                    <CardVehicle :vehicle="vehicle" />
+                </div>
+                <div class="w-full py-5">
+                    <UseRepairForm
+                        :vehicle="vehicle"
+                        :categories="categories"
+                        :workshops="workshops"
                     />
                 </div>
             </div>
