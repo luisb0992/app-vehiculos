@@ -6,21 +6,13 @@ import TextInput from "@/Components/TextInput.vue";
 import UseTakePhoto from "./UseTakePhoto.vue";
 import UseUploadFiles from "./UseUploadFiles.vue";
 import { currentYear, hasCamera } from "@/Utils/Common/common";
-import {
-    form,
-    getModels,
-    saveVehicle,
-    filterModels,
-    clearForm
-} from "../modules/create";
+import { form, getModels, saveVehicle, filterModels } from "../modules/create";
 
 const props = defineProps({
     brands: Array,
     models: Array,
     colors: Array,
 });
-
-clearForm();
 </script>
 <template>
     <form @submit.prevent="saveVehicle">
@@ -163,7 +155,7 @@ clearForm();
             <div>
                 <InputLabel value="Tomar fotos" class="font-bold text-2xl" />
                 <UseTakePhoto v-if="hasCamera()" />
-                <UseUploadFiles v-else/>
+                <UseUploadFiles v-else />
             </div>
 
             <div>

@@ -49,6 +49,14 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
             ],
+
+            // path
+            'path' => [
+                'vehicle' => [
+                    'resize' => config('storage.vehicle.resize_pp'),
+                    'original' => config('storage.vehicle.original_pp'),
+                ],
+            ],
         ]);
     }
 }

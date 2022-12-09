@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\DB\RepairCategoryDB;
+use App\DB\VehicleDB;
+use App\DB\WorkshopDB;
 use App\Factories\BrandFactory;
 use App\Factories\ColorFactory;
 use App\Factories\ModelVehicleFactory;
@@ -22,7 +25,10 @@ class VehicleController extends Controller
         private BrandFactory $brandF,
         private ColorFactory $colorF,
         private ModelVehicleFactory $modelF,
-        private VehicleFactory $vehicleF
+        private VehicleFactory $vehicleF,
+        private VehicleDB $db,
+        private RepairCategoryDB $dbCat,
+        private WorkshopDB $dbShop,
     ) {
     }
 
@@ -64,7 +70,10 @@ class VehicleController extends Controller
         // guardar imagenes
         $this->vehicleF->saveGallery($vehicle, $request->gallery);
 
-        return Redirect::route('vehicle.create')->with('success', 'Vehículo agregado con éxito');
+        // devolver un json con el vehículo creado
+        // pasar los datos del vehículo
+        return Redirect::route('vehicle.repair', ['id' => $vehicle->id])
+            ->with('success', 'Vehículo creado correctamente, ya puedes solicitar una reparación.');
     }
 
     /**
@@ -110,5 +119,35 @@ class VehicleController extends Controller
     public function destroy(Vehicle $vehicle)
     {
         //
+    }
+
+
+    /**
+     * Solicitar reparación de un vehículo
+     *
+     * @param int $id
+     */
+    public function repair(int $id): Response
+    {
+        return Inertia::render('Vehicle/Repair', [
+            'vehicle' => $this->db->getVehicleByIdWithRelation($id),
+            'categories' => $this->dbCat->getAllCategories(),
+            'workshops' => $this->dbShop->getAllWorkshops(),
+        ]);
+    }
+
+    /**
+     * ALmacena los datos de la reparación
+     *
+     * @param int $id
+     */
+    public function storeRepair(Request $request)
+    {
+        // $vehicle = $this->db->getVehicleByIdWithRelation($id);
+
+        // return Inertia::render('Vehicle/Repair', [
+        //     'vehicle' => $vehicle,
+        //     'categories' => $this->dbCat->getAllCategories(),
+        // ]);
     }
 }

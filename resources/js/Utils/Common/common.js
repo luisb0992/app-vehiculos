@@ -2,6 +2,9 @@
  * Funcionalidades/util js comunes a todos los componentes
  */
 
+import { usePage } from "@inertiajs/inertia-vue3";
+import { computed } from "vue";
+
 // año en curso
 export const currentYear = new Date().getFullYear();
 
@@ -12,4 +15,14 @@ export const hasCamera = () => {
         navigator.mediaDevices.getUserMedia
         ? true
         : false;
+};
+
+// path públicos
+export const pp = {
+    resizeImgVehicle: computed(
+        () => usePage().props?.value?.path?.vehicle?.resize
+    ),
+    originalImgVehicle: computed(
+        () => usePage().props?.value?.path?.vehicle?.original
+    ),
 };
