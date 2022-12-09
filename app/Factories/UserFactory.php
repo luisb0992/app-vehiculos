@@ -7,7 +7,6 @@ class UserFactory
 {
   public function createUser(array $data) : User
   {
-    //dd($data);
     return User::create([
         'name' => $data['name'],
         'last_name' => $data['last_name'],
@@ -17,5 +16,9 @@ class UserFactory
         'password' => $data['password'],
         'workshop_id' => $data['workshop_id'],
       ]);
+  }
+
+  public function getUsersWithRelationShip(){
+    return User::with('rol','workshop')->get();
   }
 }

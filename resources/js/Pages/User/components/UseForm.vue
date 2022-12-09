@@ -48,7 +48,6 @@ clearForm();
                     class="mt-1 block w-full border-gray-200 border"
                     v-model="form.last_name"
                     required
-                    autofocus
                 />
                 <InputError
                     class="mt-2"
@@ -63,7 +62,6 @@ clearForm();
                     class="mt-1 block w-full border-gray-200 border"
                     v-model="form.dni"
                     required
-                    autofocus
                 />
                 <InputError
                     class="mt-2"
@@ -78,7 +76,6 @@ clearForm();
                     class="mt-1 block w-full border-gray-200 border"
                     v-model="form.email"
                     required
-                    autofocus
                 />
                 <InputError
                     class="mt-2"
@@ -134,7 +131,6 @@ clearForm();
                     class="mt-1 block w-full border-gray-200 border"
                     v-model="form.password"
                     required
-                    autofocus
                 />
                 <InputError
                     class="mt-2"
@@ -149,7 +145,6 @@ clearForm();
                     class="mt-1 block w-full border-gray-200 border"
                     v-model="form.password_confirmation"
                     required
-                    autofocus
                 />
                 <InputError
                     class="mt-2"

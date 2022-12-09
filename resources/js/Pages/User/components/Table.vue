@@ -1,0 +1,66 @@
+<template lang="">
+    <DataTable :value="users" :paginator="true" :rows="10"
+            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+            :rowsPerPageOptions="[10,20,50]" responsiveLayout="scroll"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters1" filterDisplay="menu" >
+        <template #header>
+            <div class="flex justify-between">
+               <!--  <Button type="button" icon="pi pi-filter-slash" label="Clear" class="p-button-outlined" @click="clearFilter1()"/> -->
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" />
+                    <InputText v-model="filters1['global'].value" placeholder="Busqueda..." />
+                </span>
+            </div>
+        </template>
+        <Column field="name" header="Nombre" :sortable="true"></Column>
+        <Column field="last_name" header="Apellido" :sortable="true"></Column>
+        <Column field="dni" header="DNI" :sortable="true"></Column>
+        <Column field="email" header="Email" :sortable="true"></Column>
+        <Column header="Taller" :sortable="true" >
+            <template #body="{data}">
+                {{data.workshop.name}}
+            </template>
+        </Column>
+        <Column field="rol_id" header="Rol" :filterMenuStyle="{'width':'14rem'}" :sortable="true">
+            <template #body="{data}">
+                <span :class="{
+                    'bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded': data.rol.id == 1,
+                    'bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded': data.rol.id != 1,
+                }">{{data.rol.name}}</span>
+            </template>
+        </Column>
+        <Column field="status" header="Status" :filterMenuStyle="{'width':'14rem'}" :sortable="true">
+            <template #body="{data}">
+                <span :class="{
+                    'bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded': data.status == 1,
+                    'bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded': data.status != 1,
+                }">{{data.status == 1 ? 'Activo' : 'Inhabilitado'}}</span>
+            </template>
+        </Column>
+    </DataTable>
+</template>
+
+
+
+<script setup>
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Button from 'primevue/button';
+import {ref} from 'vue'
+import {FilterMatchMode} from 'primevue/api';
+import InputText from 'primevue/inputtext';
+const props = defineProps({
+    users: Array,
+});
+const filters1 = ref({
+    'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+});
+
+const initFilters1 = () => {
+    filters1.value = {
+        'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+    }
+};
+
+
+</script>

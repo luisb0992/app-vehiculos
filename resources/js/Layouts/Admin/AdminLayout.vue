@@ -21,7 +21,7 @@
                     <span class="text-[15px] ml-4 text-gray-200">Inicio</span>
                 </SideLink>
                 <SideLink
-                    :href="route('users.create')"
+                    :href="route('users.index')"
                     :active="route().current('users.*')"
                     :icon="'bi bi-people'"
                 >
