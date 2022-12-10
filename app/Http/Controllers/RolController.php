@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Roles\CreateRolRequest;
+use App\Http\Requests\Roles\{CreateRolRequest, EditRolRequest};
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
+use App\Factories\{RolFactory};
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Rol;
 
 class RolController extends Controller
 {
+
+    public function __construct(
+        private RolFactory $rolF,
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +25,9 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Roles/Index',[
+            'roles' => $this->rolF->getRoles()
+        ]);
     }
 
     /**
@@ -65,7 +74,9 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Roles/Edit',[
+            'rol' => $this->rolF->findRolWithId($id),
+        ]);
     }
 
     /**
@@ -75,9 +86,11 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditRolRequest $request, Rol $role)
     {
-        //
+        $this->rolF->updateRol($request->validated(),$role);
+
+        return Redirect::route('roles.index')->with('success', 'Rol modificado con éxito');
     }
 
     /**

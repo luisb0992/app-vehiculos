@@ -18,7 +18,26 @@ class UserFactory
       ]);
   }
 
+  public function updateUser(array $data,$user)
+  {
+
+    $user->name = $data['name'];
+    $user->last_name = $data['last_name'];
+    $user->rol_id = $data['rol_id'];
+    $user->email = $data['email'];
+    $user->dni = $data['dni'];
+    $user->workshop_id = $data['workshop_id'];
+
+    return $user->save();
+
+  }
+
   public function getUsersWithRelationShip(){
     return User::with('rol','workshop')->get();
+  }
+
+  public function findUserWithId($id)
+  {
+    return User::find($id);
   }
 }

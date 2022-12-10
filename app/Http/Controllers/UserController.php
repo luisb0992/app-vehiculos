@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\{CreateUserRequest,EditUserRequest};
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
 use App\Factories\{WorkshopFactory,RolFactory,UserFactory};
@@ -78,7 +78,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('User/Edit',[
+            'user' => $this->userF->findUserWithId($id),
+            'roles' => $this->rolF->getRoles(),
+            'workshops' => $this->workshopF->getWorkshops()
+        ]);
     }
 
     /**
@@ -88,9 +92,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditUserRequest $request, User $user)
     {
-        //
+         $this->userF->updateUser($request->validated(),$user);
+
+        return Redirect::route('users.index')->with('success', 'Usuario modificado con éxito');
     }
 
     /**

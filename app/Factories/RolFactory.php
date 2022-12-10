@@ -12,4 +12,16 @@ class RolFactory
   {
     return Rol::all(['id', 'name']);
   }
+
+  public function findRolWithId(int $id): Rol
+  {
+    return Rol::findOrFail($id);
+  }
+
+  public function updateRol(array $data, $rol): bool
+  {
+    $rol->name = $data['name'];
+
+    return $rol->save();
+  }
 }
