@@ -5,8 +5,19 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import UseTakePhoto from "./UseTakePhoto.vue";
 import UseUploadFiles from "./UseUploadFiles.vue";
-import { currentYear, hasCamera } from "@/Utils/Common/common";
-import { form, getModels, saveVehicle, filterModels } from "../modules/create";
+import UseCreateBrandModal from "./UseCreateBrandModal.vue";
+import UseCreateModelModal from "./UseCreateModelModal.vue";
+import UseCreateColorModal from "./UseCreateColorModal.vue";
+import {
+    form,
+    getModels,
+    saveVehicle,
+    filterModels,
+    showModalBrand,
+    showModalModel,
+    showModalColor,
+    showCamera,
+} from "../modules/create";
 
 const props = defineProps({
     brands: Array,
@@ -34,7 +45,21 @@ const props = defineProps({
             </div>
 
             <div>
-                <InputLabel for="brand" value="Marca" />
+                <div class="flex justify-start gap-3">
+                    <InputLabel for="brand" value="Marca" />
+                    <button
+                        class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-light text-xs text-white uppercase tracking-wide hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                        type="button"
+                        @click.stop="showModalBrand = true"
+                    >
+                        <i class="fas fa-plus"></i>
+                        Nueva marca
+                    </button>
+                    <UseCreateBrandModal
+                        :show="showModalBrand"
+                        @close="showModalBrand = false"
+                    />
+                </div>
                 <select
                     id="brand"
                     class="mt-1 block w-full border-gray-200 border"
@@ -55,7 +80,22 @@ const props = defineProps({
             </div>
 
             <div>
-                <InputLabel for="model" value="Modelo" />
+                <div class="flex justify-start gap-3">
+                    <InputLabel for="model" value="Modelo" />
+                    <button
+                        class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-light text-xs text-white uppercase tracking-wide hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                        type="button"
+                        @click.stop="showModalModel = true"
+                    >
+                        <i class="fas fa-plus"></i>
+                        Nuevo modelo
+                    </button>
+                    <UseCreateModelModal
+                        :show="showModalModel"
+                        :brands="brands"
+                        @close="showModalModel = false"
+                    />
+                </div>
                 <select
                     id="model"
                     class="mt-1 block w-full border-gray-200 border"
@@ -75,7 +115,21 @@ const props = defineProps({
             </div>
 
             <div>
-                <InputLabel for="color" value="Color" />
+                <div class="flex justify-start gap-3">
+                    <InputLabel for="color" value="Color" />
+                    <button
+                        class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-light text-xs text-white uppercase tracking-wide hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                        type="button"
+                        @click.stop="showModalColor = true"
+                    >
+                        <i class="fas fa-plus"></i>
+                        Nuevo color
+                    </button>
+                    <UseCreateColorModal
+                        :show="showModalColor"
+                        @close="showModalColor = false"
+                    />
+                </div>
                 <select
                     id="color"
                     class="mt-1 block w-full border-gray-200 border"
@@ -95,67 +149,28 @@ const props = defineProps({
             </div>
 
             <div>
-                <InputLabel for="year" value="Año" />
-                <TextInput
-                    id="year"
-                    type="number"
-                    class="mt-1 block w-full border-gray-200 border"
-                    v-model="form.year"
-                    step="1"
-                    :max="currentYear"
-                />
-                <InputError class="mt-2" :message="form.errors.year" />
-            </div>
-
-            <div>
-                <InputLabel for="mileage" value="Kilometraje" />
-                <TextInput
-                    id="mileage"
-                    type="text"
-                    class="mt-1 block w-full border-gray-200 border"
-                    v-model="form.mileage"
-                />
-                <InputError class="mt-2" :message="form.errors.mileage" />
-            </div>
-
-            <div>
-                <InputLabel for="price" value="Precio" />
-                <TextInput
-                    id="price"
-                    type="number"
-                    class="mt-1 block w-full border-gray-200 border"
-                    v-model="form.price"
-                    step="0.01"
-                    min="0"
-                    max="9999999999,99"
-                />
-                <InputError class="mt-2" :message="form.errors.price" />
-            </div>
-
-            <div>
-                <InputLabel for="description" value="Descripción" />
-                <textarea
-                    id="description"
-                    class="mt-1 block w-full border-gray-200 border"
-                    v-model="form.description"
-                ></textarea>
-                <InputError class="mt-2" :message="form.errors.description" />
-            </div>
-
-            <div>
-                <InputLabel for="observation" value="Alguna Observación" />
-                <textarea
-                    id="observation"
-                    class="mt-1 block w-full border-gray-200 border"
-                    v-model="form.observation"
-                ></textarea>
-                <InputError class="mt-2" :message="form.errors.observation" />
-            </div>
-
-            <div>
                 <InputLabel value="Tomar fotos" class="font-bold text-2xl" />
-                <UseTakePhoto v-if="hasCamera()" />
-                <UseUploadFiles v-else />
+                <div class="py-3">
+                    <div class="flex gap-3 mb-3">
+                        <button
+                            type="button"
+                            @click.stop="showCamera = true"
+                            class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                        >
+                            Activar cámara
+                        </button>
+                        <span>-</span>
+                        <button
+                            type="button"
+                            @click.stop="showCamera = false"
+                            class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                        >
+                            Subir archivos
+                        </button>
+                    </div>
+                    <UseTakePhoto v-if="showCamera" />
+                    <UseUploadFiles v-else />
+                </div>
             </div>
 
             <div>

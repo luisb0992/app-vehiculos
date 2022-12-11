@@ -14,7 +14,7 @@ const props = defineProps({
     <Head title="Solicitar reparación" />
 
     <Layout>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white py-7 px-5 rounded-md">
                 <div class="w-full pb-5">
                     <div class="overflow-hidden shadow-sm sm:rounded-lg">

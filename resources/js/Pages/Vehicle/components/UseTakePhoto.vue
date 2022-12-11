@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { form } from "../modules/create";
+import { hasCamera } from "@/Utils/Common/common";
 
 const result = document.querySelector("#screenshot-result");
 const video = document.querySelector("video");
@@ -79,7 +80,13 @@ const captureImage = () => {
 };
 </script>
 <template>
-    <div class="flex flex-col justify-center items-center border">
+    <h3 class="font-medium text-lg text-gray-900" v-if="!hasCamera">
+        Parece que tu dispositivo no tiene cámara integrada o disponible
+        <p class="text-base text-gray-500">
+            Intenta subir los archivos desde tu dispositivo
+        </p>
+    </h3>
+    <div class="flex flex-col justify-center items-center border" v-else>
         <video v-show="init"></video>
         <canvas v-show="!init && stop"></canvas>
 

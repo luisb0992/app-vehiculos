@@ -9,13 +9,14 @@ import { computed } from "vue";
 export const currentYear = new Date().getFullYear();
 
 // verificar si hay cámaras disponibles
-export const hasCamera = () => {
-    return navigator &&
+export const hasCamera = computed(() => {
+    const nav =
+        navigator &&
         navigator.mediaDevices &&
-        navigator.mediaDevices.getUserMedia
-        ? true
-        : false;
-};
+        navigator.mediaDevices.getUserMedia;
+
+    return nav ? true : false;
+});
 
 // path públicos
 export const pp = {

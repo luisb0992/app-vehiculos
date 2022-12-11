@@ -54,13 +54,7 @@ const deleteImage = (index) => {
 };
 </script>
 <template>
-    <div class="">
-        <h3 class="font-medium text-lg text-gray-900">
-            Parece que tu dispositivo no tiene cámara integrada o disponible
-            <p class="text-base text-gray-500">
-                Intenta subir los archivos desde tu dispositivo
-            </p>
-        </h3>
+    <div class="bg-gray-100 px-2 rounded">
         <div class="py-5">
             <input
                 type="file"
@@ -75,11 +69,11 @@ const deleteImage = (index) => {
                 <div
                     v-for="(image, index) in images"
                     :key="index"
-                    class="w-1/2 p-2 relative"
+                    class="w-1/2 sm:w-1/3 p-2 relative"
                 >
                     <img
                         :src="image"
-                        class="w-full h-40 object-cover object-center"
+                        class="w-full h-40 sm:w-60 sm:h-60 object-cover object-center"
                     />
 
                     <!-- botón de eliminar -->
@@ -108,6 +102,7 @@ const deleteImage = (index) => {
                 v-if="form.progress"
                 :value="form.progress.percentage"
                 max="100"
+                class="w-full"
             >
                 {{ form.progress.percentage }}%
             </progress>

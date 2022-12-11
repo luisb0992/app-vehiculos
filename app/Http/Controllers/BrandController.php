@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateBrandRequest;
 use App\Models\Brand;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Response;
 
 class BrandController extends Controller
 {
@@ -30,12 +33,14 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  RedirectResponse  $request
+     * @return CreateBrandRequest
      */
-    public function store(Request $request)
+    public function store(CreateBrandRequest $request): RedirectResponse
     {
-        //
+        Brand::create($request->validated());
+
+        return redirect()->route('vehicle.create');
     }
 
     /**

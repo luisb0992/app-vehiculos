@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateColorRequest;
 use App\Models\Color;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ColorController extends Controller
@@ -30,12 +32,14 @@ class ColorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  CreateColorRequest  $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateColorRequest $request): RedirectResponse
     {
-        //
+        Color::create($request->validated());
+
+        return redirect()->route('vehicle.create');
     }
 
     /**

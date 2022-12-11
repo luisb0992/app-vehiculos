@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateModelVehicleRequest;
 use App\Models\ModelVehicle;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ModelVehicleController extends Controller
@@ -30,12 +32,14 @@ class ModelVehicleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  CreateModelVehicleRequest  $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateModelVehicleRequest $request): RedirectResponse
     {
-        //
+        ModelVehicle::create($request->validated());
+
+        return redirect()->route('vehicle.create');
     }
 
     /**

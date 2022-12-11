@@ -1,7 +1,12 @@
 import { useForm } from "@inertiajs/inertia-vue3";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { hasCamera } from "@/Utils/Common/common";
 
 export const filterModels = ref([]);
+export const showModalBrand = ref(false);
+export const showModalModel = ref(false);
+export const showModalColor = ref(false);
+export const showCamera = ref(false);
 
 export const form = useForm({
     chassis_number: "",
@@ -46,3 +51,9 @@ export const saveVehicle = () => {
         onSuccess: (resp) => clearForm(),
     });
 };
+
+onMounted(() => {
+    if (hasCamera.value) {
+        showCamera.value = true;
+    }
+});
