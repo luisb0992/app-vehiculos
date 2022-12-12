@@ -34,7 +34,7 @@ class CreateVehicleRequest extends FormRequest
             'description' => 'nullable|string',
             'observation' => 'nullable|string',
             'status' => 'nullable|integer',
-            'gallery' => 'nullable|array',
+            'gallery' => 'required|array|min:1',
         ];
     }
 
@@ -61,7 +61,9 @@ class CreateVehicleRequest extends FormRequest
             'description.string' => 'La descripción debe ser una cadena de texto',
             'observation.string' => 'La observación debe ser una cadena de texto',
             'status.integer' => 'El estado debe ser un número entero',
-            'gallery.array' => 'La galería debe ser un arreglo de imagenes',
+            'gallery.required' => 'La imagenes son requeridas',
+            'gallery.array' => 'La imagenes deben ser un arreglo',
+            'gallery.min' => 'La galería debe tener al menos una imagen',
         ];
     }
 }

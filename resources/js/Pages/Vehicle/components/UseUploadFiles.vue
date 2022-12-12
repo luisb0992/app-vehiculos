@@ -97,15 +97,6 @@ const deleteImage = (index) => {
                     </button>
                 </div>
             </div>
-
-            <progress
-                v-if="form.progress"
-                :value="form.progress.percentage"
-                max="100"
-                class="w-full"
-            >
-                {{ form.progress.percentage }}%
-            </progress>
         </div>
     </div>
 </template>

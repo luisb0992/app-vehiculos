@@ -8,6 +8,16 @@ import { computed } from "vue";
 // año en curso
 export const currentYear = new Date().getFullYear();
 
+// devolver la fecha actual en formato mm/dd/yyyy
+export const currentDate = computed(() => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    return `${year}-${month}-${day}`;
+});
+
 // verificar si hay cámaras disponibles
 export const hasCamera = computed(() => {
     const nav =

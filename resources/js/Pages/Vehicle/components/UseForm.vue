@@ -171,6 +171,18 @@ const props = defineProps({
                     <UseTakePhoto v-if="showCamera" />
                     <UseUploadFiles v-else />
                 </div>
+                <InputError class="mt-2" :message="form.errors.gallery" />
+            </div>
+
+            <div>
+                <progress
+                    v-if="form.progress"
+                    :value="form.progress.percentage"
+                    max="100"
+                    class="w-full"
+                >
+                    {{ form.progress.percentage }}%
+                </progress>
             </div>
 
             <div>
