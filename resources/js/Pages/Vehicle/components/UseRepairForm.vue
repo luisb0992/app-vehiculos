@@ -103,7 +103,10 @@ const props = defineProps({
                 class="pb-5 animate-fade-in-down flex flex-col gap-3"
                 v-show="continueRepair"
             >
-                <div class="border border-green-800 p-2 rounded">
+                <div
+                    class="border border-green-800 p-2 rounded"
+                    v-show="warrantySubcategories.length"
+                >
                     <InputLabel
                         for="warranty"
                         value="Garantías seleccionadas"
@@ -150,7 +153,10 @@ const props = defineProps({
                         :message="form.errors.selectedWarranty"
                     />
                 </div>
-                <div class="border border-blue-800 p-2 rounded">
+                <div
+                    class="border border-blue-800 p-2 rounded"
+                    v-show="dockSubcategories.length"
+                >
                     <InputLabel
                         for="dock"
                         value="Muelles seleccionados"
@@ -245,12 +251,15 @@ const props = defineProps({
                 <div v-if="form.orders.length">
                     <div class="flex flex-col gap-2">
                         <div
-                            v-for="order in form.orders"
+                            v-for="(order, index) in form.orders"
                             :key="order.id"
-                            class="border border-gray-200 p-2 rounded"
+                            class="border border-gray-300 p-2 rounded"
                         >
                             <div class="flex flex-col justify-between">
                                 <div>
+                                    <span class="font-bold text-blue-800">
+                                        Orden {{ index + 1 }} |&nbsp;
+                                    </span>
                                     <span class="font-bold text-gray-800">
                                         {{
                                             getWorkshopName(
@@ -297,9 +306,8 @@ const props = defineProps({
                 >
                     <span class="px-6 py-3 uppercase"> Continuar </span>
                 </PrimaryButton>
-
                 <PrimaryButton
-                    class="w-full md:w-1/2 flex justify-center mb-3"
+                    class="w-full md:w-1/2 flex justify-center mb-3 bg-blue-600 hover:bg-blue-700"
                     type="button"
                     v-if="continueRepair"
                     @click.stop="continueRepair = false"
@@ -308,7 +316,12 @@ const props = defineProps({
                 </PrimaryButton>
                 <PrimaryButton
                     class="w-full md:w-1/2 flex justify-center"
-                    :class="{ 'opacity-25': form.processing }"
+                    :class="{
+                        'opacity-25':
+                            form.processing ||
+                            hasSubToAssign ||
+                            !form.orders.length,
+                    }"
                     :disabled="
                         form.processing || hasSubToAssign || !form.orders.length
                     "
