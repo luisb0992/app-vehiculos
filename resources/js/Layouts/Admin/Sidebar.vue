@@ -28,6 +28,13 @@
                     <span class="text-[15px] ml-4 text-gray-200">Usuarios</span>
                 </SideLink>
                 <SideLink
+                    :href="route('workshops.index')"
+                    :active="route().current('workshops.*')"
+                    :icon="'fa-solid fa-screwdriver-wrench'"
+                >
+                    <span class="text-[15px] ml-4 text-gray-200">Taller</span>
+                </SideLink>
+                <SideLink
                     :href="route('roles.index')"
                     :active="route().current('roles.*')"
                     :icon="'bi bi-award-fill'"
