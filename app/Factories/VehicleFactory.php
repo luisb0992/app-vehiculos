@@ -2,6 +2,9 @@
 
 namespace App\Factories;
 
+use App\Enum\StatusVehicleEnum;
+use App\Models\RepairOrder;
+use App\Models\RepairSubCategory;
 use App\Models\Vehicle;
 use App\Utils\AppStorage;
 use App\Utils\IntervationImage;
@@ -23,6 +26,7 @@ class VehicleFactory
       'brand_id' => $data['brand_id'],
       'model_id' => $data['model_id'],
       'color_id' => $data['color_id'],
+      'user_id' => auth()->user()->id,
       'year' => $data['year'],
       'mileage' => $data['mileage'],
       'price' => $data['price'],
@@ -35,6 +39,8 @@ class VehicleFactory
   /**
    * Guardar galeria de imagenes y optimizarlas
    *
+   * @param Vehicle $vehicle
+   * @param array $files
    */
   public function saveGallery($vehicle, $files): mixed
   {
@@ -77,6 +83,51 @@ class VehicleFactory
           }
         }
       }
+    });
+
+    return $ts;
+  }
+
+  /**
+   * Guardar nuevas ordenes de reparación
+   *
+   * @param array $data
+   */
+  public function storeRepair(array $data): mixed
+  {
+    $ts = DB::transaction(function () use ($data) {
+
+      // user
+      $user = auth()->user();
+
+      // iterar ordenes de reparación
+      foreach ($data['orders'] as $order) {
+
+        // guardar orden de reparación
+        $newOrder = RepairOrder::create([
+          'vehicle_id' => $data['vehicle_id'],
+          'user_id' => $user->id,
+          'workshop_id' => $order['workshop_id'],
+          'send_date' => $order['send_date'],
+          'status' => StatusVehicleEnum::PENDING,
+        ]);
+
+        // guardar categorias y subcategorias
+        foreach ($order['subs'] as $sub) {
+
+          // obtener categoría
+          $RepairSub = RepairSubCategory::find($sub['sub_id']);
+
+          // guardar categoría
+          $newOrder->categories()->attach($RepairSub->repair_category_id, [
+            'repair_sub_category_id' => $sub['sub_id'],
+            'warranty' => isset($sub['warranty']) ? $sub['warranty'] : false,
+            'dock' => isset($sub['dock']) ? $sub['dock'] : false,
+          ]);
+        }
+      }
+
+      return true;
     });
 
     return $ts;

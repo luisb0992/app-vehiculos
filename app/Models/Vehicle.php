@@ -45,6 +45,14 @@ class Vehicle extends Model
     }
 
     /**
+     * Get the user that owns the vehicle.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Get the gallery for the vehicle.
      *
      * @return HasMany
@@ -59,7 +67,7 @@ class Vehicle extends Model
      *
      * @return HasMany
      */
-    public function repairOrder(): HasMany
+    public function repairOrders(): HasMany
     {
         return $this->hasMany(RepairOrder::class, 'vehicle_id');
     }

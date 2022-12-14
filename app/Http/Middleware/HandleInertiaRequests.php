@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enum\StatusVehicleEnum;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -57,6 +58,18 @@ class HandleInertiaRequests extends Middleware
                     'original' => config('storage.vehicle.original_pp'),
                 ],
             ],
+
+            // status generales
+            'status' => [
+                // status de vehículos
+                'vehicle' => [
+                    'available' => StatusVehicleEnum::AVAILABLE,
+                    'pending' => StatusVehicleEnum::PENDING,
+                    'maintenance' => StatusVehicleEnum::MAINTENANCE,
+                    'repair' => StatusVehicleEnum::REPAIR,
+                    'deleted' => StatusVehicleEnum::DELETED,
+                ],
+            ]
         ]);
     }
 }

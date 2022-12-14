@@ -21,12 +21,8 @@ class RepairOrder extends Model
         'vehicle_id',
         'user_id',
         'workshop_id',
-        'warranty',
-        'dock',
-        'bills',
         'send_date',
         'status',
-        'observation',
     ];
 
     /**

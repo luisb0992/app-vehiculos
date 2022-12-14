@@ -23,7 +23,6 @@ class RepairVehicleCategory extends Model
      * @var array
      */
     protected $fillable = [
-        'vehicle_id',
         'repair_category_id',
         'repair_sub_category_id',
         'repair_order_id',
@@ -31,15 +30,11 @@ class RepairVehicleCategory extends Model
         'warranty',
     ];
 
-    /**
-     * Get the vehicle that owns the repair vehicle category.
-     *
-     * @return BelongsTo
-     */
-    public function vehicle(): BelongsTo
-    {
-        return $this->belongsTo(Vehicle::class, 'vehicle_id');
-    }
+    // caster para los campos booleanos
+    protected $casts = [
+        'dock' => 'boolean',
+        'warranty' => 'boolean',
+    ];
 
     /**
      * Get the repair category that owns the repair vehicle category.

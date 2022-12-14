@@ -36,11 +36,13 @@ class VehicleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index()
+    public function index(): Response
     {
-        //
+        return Inertia::render('Vehicle/Index', [
+            'vehicles' => $this->db->getVehiclesByUser(),
+        ]);
     }
 
     /**
@@ -141,14 +143,18 @@ class VehicleController extends Controller
      * ALmacena los datos de la reparación
      *
      * @param CreateOrderRepairRequest $request
+     * @return RedirectResponse
      */
-    public function storeRepair(CreateOrderRepairRequest $request)
+    public function storeRepair(CreateOrderRepairRequest $request): RedirectResponse
     {
-        // $vehicle = $this->db->getVehicleByIdWithRelation($id);
+        $orders = $this->vehicleF->storeRepair($request->validated());
 
-        // return Inertia::render('Vehicle/Repair', [
-        //     'vehicle' => $vehicle,
-        //     'categories' => $this->dbCat->getAllCategories(),
-        // ]);
+        if ($orders === null) {
+            return Redirect::route('vehicle.repair', ['id' => $request->vehicle_id])
+                ->with('error', 'No se pudo generar la orden de reparación, verifique los datos.');
+        }
+
+        return Redirect::route('vehicle.index')
+            ->with('success', 'Orden(es) generadas correctamente.');
     }
 }
