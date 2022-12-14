@@ -8,8 +8,8 @@ import {
     form,
     saveRepair,
     addOrRemoveToArray,
-    hasSubcategory,
     continueRepair,
+    hasSubcategory,
     warrantySubcategories,
     dockSubcategories,
     canSendWorkshop,
@@ -18,6 +18,7 @@ import {
     canCreateOrder,
     getWorkshopName,
     hasSubToAssign,
+    deleteOrder,
 } from "../modules/repair";
 
 const props = defineProps({
@@ -25,6 +26,8 @@ const props = defineProps({
     categories: Array,
     workshops: Array,
 });
+
+form.vehicle_id = props.vehicle.id;
 </script>
 <template>
     <div class="border-b border-gray-200 pb-3 mb-5">
@@ -103,6 +106,7 @@ const props = defineProps({
                 class="pb-5 animate-fade-in-down flex flex-col gap-3"
                 v-show="continueRepair"
             >
+                <!-- check garantías -->
                 <div
                     class="border border-green-800 p-2 rounded"
                     v-show="warrantySubcategories.length"
@@ -153,6 +157,8 @@ const props = defineProps({
                         :message="form.errors.selectedWarranty"
                     />
                 </div>
+
+                <!-- check muelle -->
                 <div
                     class="border border-blue-800 p-2 rounded"
                     v-show="dockSubcategories.length"
@@ -196,6 +202,8 @@ const props = defineProps({
                     </div>
                     <InputError class="mt-2" :message="form.errors.dock" />
                 </div>
+
+                <!-- taller -->
                 <div v-if="canSendWorkshop">
                     <InputLabel
                         for="workshop_id"
@@ -222,6 +230,8 @@ const props = defineProps({
                         :message="form.errors.workshop_id"
                     />
                 </div>
+
+                <!-- fecha -->
                 <div v-if="canSendWorkshop">
                     <InputLabel
                         for="send_date"
@@ -238,6 +248,8 @@ const props = defineProps({
                     />
                     <InputError class="mt-2" :message="form.errors.send_date" />
                 </div>
+
+                <!-- enviar al taller -->
                 <div v-if="canSendWorkshop">
                     <button
                         type="button"
@@ -248,6 +260,8 @@ const props = defineProps({
                         Enviar al taller
                     </button>
                 </div>
+
+                <!-- ordenes -->
                 <div v-if="form.orders.length">
                     <div class="flex flex-col gap-2">
                         <div
@@ -285,6 +299,7 @@ const props = defineProps({
                                 </div>
                                 <div>
                                     <button
+                                        @click.stop="deleteOrder(index)"
                                         type="button"
                                         class="px-3 py-2 bg-red-800 hover:bg-red-900 animate-shadow-drop-center rounded text-white uppercase text-xs font-light"
                                     >
@@ -303,17 +318,21 @@ const props = defineProps({
                     class="w-full md:w-1/2 flex justify-center"
                     @click.stop="continueRepair = true"
                     v-if="!continueRepair"
+                    :class="{
+                        'opacity-25': !form.categories.length,
+                    }"
+                    :disabled="form.processing || !form.categories.length"
                 >
                     <span class="px-6 py-3 uppercase"> Continuar </span>
                 </PrimaryButton>
-                <PrimaryButton
+                <!-- <PrimaryButton
                     class="w-full md:w-1/2 flex justify-center mb-3 bg-blue-600 hover:bg-blue-700"
                     type="button"
                     v-if="continueRepair"
                     @click.stop="continueRepair = false"
                 >
                     <span class="px-6 py-3 uppercase"> Volver a opciones </span>
-                </PrimaryButton>
+                </PrimaryButton> -->
                 <PrimaryButton
                     class="w-full md:w-1/2 flex justify-center"
                     :class="{

@@ -3,11 +3,8 @@ import { computed, ref } from "vue";
 import { currentDate } from "@/Utils/Common/common";
 
 export const form = useForm({
+    // cargar el id del vehículo desde el parámetro recibido
     vehicle_id: "",
-    warranty: "",
-    bills: "",
-    dock: "",
-    workshop_id: "",
     send_date: currentDate,
     categories: [],
 
@@ -42,10 +39,25 @@ export const saveRepair = () => {
     });
 };
 
+// obtener el nombre del taller
+export const getWorkshopName = (workshops, id) => {
+    return (
+        workshops.find((item) => item.id === id)?.name || "Taller sin nombre"
+    );
+};
+
 // filtrar las opciones de las subcategorias
 const filterOptions = (item) => {
     return item.sub_ids.filter((subcat) => subcat.dock || subcat.warranty);
 };
+
+// verifica si puede crear la orden
+export const canCreateOrder = computed(() => {
+    return (
+        form.selectedOptions.length &&
+        form.selectedOptions.some((sub) => sub.warranty || sub.dock)
+    );
+});
 
 // agregar o eliminar una categoría, subcategoria y opciones
 export const addOrRemoveToArray = (e, cat, sub, option, subName) => {
@@ -103,6 +115,8 @@ export const addOrRemoveToArray = (e, cat, sub, option, subName) => {
         form.categories.map((item) => (item.sub_ids = filterOptions(item)));
         form.categories = form.categories.filter((item) => item.sub_ids.length);
     }
+
+    // console.log(form.categories);
 };
 
 // verificar en una propiedad computada
@@ -111,8 +125,7 @@ export const hasSubcategory = computed(() => {
     return form.categories.some((item) => item.sub_ids.length);
 });
 
-// obtener subcategorias que solo tienen garantia
-// solo los ids y el name
+// array de subcategorias con garantia
 export const warrantySubcategories = computed(() => {
     return form.categories
         .map((item) => {
@@ -121,8 +134,7 @@ export const warrantySubcategories = computed(() => {
         .flat();
 });
 
-// obtener subcategorias que solo tienen dock
-// solo los ids y el name
+// array de subcategorias con dock
 export const dockSubcategories = computed(() => {
     return form.categories
         .map((item) => {
@@ -196,22 +208,35 @@ export const loadOrder = () => {
     form.selectedOptions = [];
 };
 
-// verifica si puede crear la orden
-export const canCreateOrder = computed(() => {
-    // debe haber seleccionado un taller
-    // una fecha de envió
-    // y al menos una subcategoria
-    return (
-        form.workshop_id &&
-        form.send_date &&
-        form.selectedOptions.length &&
-        form.selectedOptions.some((sub) => sub.warranty || sub.dock)
-    );
-});
+// elimina la orden y vuelve a agregar
+// las sub categorias a las opciones seleccionadas anteriormente
+// selectedOptions es un array de objetos
+// { sub_id: 1, sub_name: 'nombre', warranty: true, dock: false }
+export const deleteOrder = (index) => {
+    // obtener las sub categorias de la orden
+    const subs = form.orders[index].subs;
 
-// obtener el nombre del taller
-export const getWorkshopName = (workshops, id) => {
-    return (
-        workshops.find((item) => item.id === id)?.name || "Taller sin nombre"
-    );
+    // agregar las sub categorias a las categorias
+    // seleccionadas
+    subs.forEach((sub) => {
+        form.categories.map((item) => {
+            const hasSub = item.sub_ids.some(
+                (subcat) => subcat.sub_id === sub.sub_id
+            );
+
+            if (hasSub) {
+                item.sub_ids.map((subcat) => {
+                    if (subcat.sub_id === sub.sub_id) {
+                        subcat.warranty = sub.warranty;
+                        subcat.dock = sub.dock;
+                    }
+                });
+            } else {
+                item.sub_ids.push(sub);
+            }
+        });
+    });
+
+    // eliminar la orden
+    form.orders.splice(index, 1);
 };

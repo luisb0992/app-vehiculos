@@ -9,6 +9,7 @@ use App\Factories\BrandFactory;
 use App\Factories\ColorFactory;
 use App\Factories\ModelVehicleFactory;
 use App\Factories\VehicleFactory;
+use App\Http\Requests\CreateOrderRepairRequest;
 use App\Http\Requests\CreateVehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\RedirectResponse;
@@ -139,9 +140,9 @@ class VehicleController extends Controller
     /**
      * ALmacena los datos de la reparación
      *
-     * @param int $id
+     * @param CreateOrderRepairRequest $request
      */
-    public function storeRepair(Request $request)
+    public function storeRepair(CreateOrderRepairRequest $request)
     {
         // $vehicle = $this->db->getVehicleByIdWithRelation($id);
 
