@@ -59,6 +59,14 @@
                     >
                         <span class="text-[15px] ml-4 text-gray-200">Crear</span>
                     </SideLink>
+                    <SideLink
+                        :href="route('vehicle.index')"
+                        :active="route().current('vehicle.index')"
+                        :icon="'bi bi-arrow-right-square'"
+                        class="hover:bg-blue-600"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">Listado</span>
+                    </SideLink>
                     <!-- <h1 class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Personal</h1>
                     <h1 class="cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-1">Friends</h1> -->
                 </div>

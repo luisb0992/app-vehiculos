@@ -18,7 +18,7 @@ export const form = useForm({
     price: "",
     description: "",
     observation: "",
-    status: 1,
+    status: 2,
     gallery: [],
 });
 

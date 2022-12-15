@@ -13,8 +13,8 @@ final class StatusVehicleEnum
   public const AVAILABLE = 1;
   public const PENDING = 2;
   public const MAINTENANCE = 3;
-  public const REPAIR = 4;
-  public const DELETED = 5;
+  public const IN_REPAIR = 4;
+  public const REPAIRED = 5;
 
   public static function getValues(): array
   {
@@ -22,8 +22,8 @@ final class StatusVehicleEnum
       self::AVAILABLE,
       self::PENDING,
       self::MAINTENANCE,
-      self::REPAIR,
-      self::DELETED,
+      self::IN_REPAIR,
+      self::REPAIRED,
     ];
   }
 
@@ -33,8 +33,8 @@ final class StatusVehicleEnum
       self::AVAILABLE => 'Disponible',
       self::PENDING => 'Pendiente',
       self::MAINTENANCE => 'En mantenimiento',
-      self::REPAIR => 'Reparado',
-      self::DELETED => 'Eliminado',
+      self::IN_REPAIR => 'En Reparación',
+      self::REPAIRED => 'Reparado',
     ];
 
     if ($status) {

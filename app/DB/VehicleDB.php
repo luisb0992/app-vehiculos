@@ -41,7 +41,7 @@ class VehicleDB
   public function getVehiclesByUser(): Collection
   {
     return $this->vehicle
-      ->with(['repairOrders', 'color', 'brand', 'model'])
+      ->with(['repairOrders', 'color', 'brand', 'model', 'gallery'])
       ->where('user_id', auth()->user()->id)
       ->get();
   }

@@ -66,8 +66,8 @@ class HandleInertiaRequests extends Middleware
                     'available' => StatusVehicleEnum::AVAILABLE,
                     'pending' => StatusVehicleEnum::PENDING,
                     'maintenance' => StatusVehicleEnum::MAINTENANCE,
-                    'repair' => StatusVehicleEnum::REPAIR,
-                    'deleted' => StatusVehicleEnum::DELETED,
+                    'in_repair' => StatusVehicleEnum::IN_REPAIR,
+                    'repaired' => StatusVehicleEnum::REPAIRED,
                 ],
             ]
         ]);

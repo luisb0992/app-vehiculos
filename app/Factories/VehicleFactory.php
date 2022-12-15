@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Enum\StatusRepairOrderEnum;
 use App\Enum\StatusVehicleEnum;
 use App\Models\RepairOrder;
 use App\Models\RepairSubCategory;
@@ -32,7 +33,7 @@ class VehicleFactory
       'price' => $data['price'],
       'description' => $data['description'],
       'observation' => $data['observation'],
-      'status' => $data['status'],
+      'status' => StatusVehicleEnum::PENDING,
     ]);
   }
 
@@ -109,7 +110,7 @@ class VehicleFactory
           'user_id' => $user->id,
           'workshop_id' => $order['workshop_id'],
           'send_date' => $order['send_date'],
-          'status' => StatusVehicleEnum::PENDING,
+          'status' => StatusRepairOrderEnum::OPEN,
         ]);
 
         // guardar categorias y subcategorias
