@@ -9,8 +9,8 @@ export const clearForm = () => {
 };
 
 
-export const handleSaveRol = () => {
-    form.post(route("roles.store"), {
+export const handleSaveWorkshop = () => {
+    form.post(route("workshops.store"), {
         onStart: () => console.log("start"),
         onFinish: () => console.log("finish"),
         onError: (error) => console.log(error),

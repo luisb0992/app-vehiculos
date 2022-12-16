@@ -6,14 +6,14 @@ import UseForm from "./components/UseForm.vue";
 
 </script>
 <template>
-    <Head title="Rol" />
+    <Head title="Talleres" />
     <Layout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="bg-white p-7 rounded-md">
                 <div class="w-full pb-5">
                     <div class="overflow-hidden shadow-sm sm:rounded-lg">
                         <h3 class="text-gray-900 text-2xl font-bold">
-                            Crear Rol
+                            Crear Taller
                         </h3>
                     </div>
                 </div>
