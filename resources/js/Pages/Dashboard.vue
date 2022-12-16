@@ -1,6 +1,21 @@
 <script setup>
 import Layout from "@/Layouts/Layout.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+
+const userIs = {
+    super_admin:
+        usePage().props.value.auth.user.rol_id ===
+        usePage().props.value.roles.super_admin,
+    recorder:
+        usePage().props.value.auth.user.rol_id ===
+        usePage().props.value.roles.recorder,
+    supervisor:
+        usePage().props.value.auth.user.rol_id ===
+        usePage().props.value.roles.supervisor,
+    supplier:
+        usePage().props.value.auth.user.rol_id ===
+        usePage().props.value.roles.supplier,
+};
 </script>
 
 <template>
@@ -15,14 +30,26 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
         <div class="py-12 mx-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-white py-5">
-                    <div class="flex justify-center md:justify-start items-center">
-                        <div class="py-10 px-5">
+                    <div
+                        class="flex justify-center md:justify-start items-center"
+                    >
+                        <div class="py-10 px-5 flex gap-5">
                             <Link
                                 :href="route('vehicle.create')"
                                 class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
+                                v-if="userIs.recorder"
                             >
                                 <span class="uppercase font-medium text-lg">
                                     Nuevo ingreso vehicular
+                                </span>
+                            </Link>
+                            <Link
+                                :href="route('workshop_quotes.index')"
+                                class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
+                                v-if="userIs.supplier"
+                            >
+                                <span class="uppercase font-medium text-lg">
+                                    Solicitudes de reparación
                                 </span>
                             </Link>
                         </div>
@@ -30,5 +57,5 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
                 </div>
             </div>
         </div>
-    </Layout >
+    </Layout>
 </template>

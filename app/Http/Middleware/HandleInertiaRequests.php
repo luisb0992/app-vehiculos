@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Enum\RoleEnum;
+use App\Enum\StatusRepairOrderEnum;
 use App\Enum\StatusVehicleEnum;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -62,14 +64,14 @@ class HandleInertiaRequests extends Middleware
             // status generales
             'status' => [
                 // status de vehículos
-                'vehicle' => [
-                    'available' => StatusVehicleEnum::AVAILABLE,
-                    'pending' => StatusVehicleEnum::PENDING,
-                    'maintenance' => StatusVehicleEnum::MAINTENANCE,
-                    'in_repair' => StatusVehicleEnum::IN_REPAIR,
-                    'repaired' => StatusVehicleEnum::REPAIRED,
-                ],
-            ]
+                'vehicle' => StatusVehicleEnum::getArrayKeyValue(),
+
+                // status de ordenes de reparación
+                'repair_order' => StatusRepairOrderEnum::getArrayKeyValue(),
+            ],
+
+            // roles de usuario
+            'roles' => RoleEnum::getArrayKeyValue(),
         ]);
     }
 }
