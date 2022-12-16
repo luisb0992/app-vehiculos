@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <AlertDismiss
                 :show-success="$page.props.flash.success ? true : false"
-                :show-danger="$page.props.flash.danger ? true : false"
+                :show-danger="$page.props.flash.error ? true : false"
             />
         </div>
         <main>

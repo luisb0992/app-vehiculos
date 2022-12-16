@@ -14,6 +14,10 @@ Route::middleware('auth')->prefix('rol')->group(function () {
     Route::resource('workshops', WorkshopController::class);
 });
 
+Route::middleware('auth')->prefix('workshop')->group(function () {
+    Route::resource('workshops', WorkshopController::class);
+});
+
 
 require __DIR__ . '/modules/profile.php';
 

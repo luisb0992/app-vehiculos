@@ -6,11 +6,11 @@ import EditForm from "./components/EditForm.vue";
 import ButtonBack from "@/Components/ButtonBack.vue";
 
 const props = defineProps({
-    rol : Object
+    workshop : Object
 });
 </script>
 <template>
-    <Head title="Editar Rol" />
+    <Head title="Editar Taller" />
 
     <Layout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -18,17 +18,17 @@ const props = defineProps({
                 <div class="w-full pb-5">
                     <div class="flex justify-between overflow-hidden shadow-sm sm:rounded-lg">
                         <h3 class="text-gray-900 text-2xl font-bold">
-                            Editar Rol
+                            Editar Taller
                         </h3>
                         <ButtonBack
                             class="flex justify-center"
-                            :href="route('roles.index')"
+                            :href="route('workshops.index')"
                         />
                     </div>
                 </div>
                 <div class="w-full">
                     <EditForm
-                        :rol = "rol"
+                        :workshop = "workshop"
                     />
                 </div>
             </div>

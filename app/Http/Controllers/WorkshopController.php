@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Workshop\{CreateWorkshopRequest, EditWorkshopRequest};
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use App\Factories\{WorkshopFactory};
 use Inertia\Inertia;
+use App\Models\Workshop;
 
 class WorkshopController extends Controller
 {
@@ -31,7 +34,7 @@ class WorkshopController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Workshop/Create');
     }
 
     /**
@@ -40,9 +43,13 @@ class WorkshopController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateWorkshopRequest $request): RedirectResponse
     {
-        //
+        Workshop::create([
+            'name' => strtoupper($request->name),
+        ]);
+
+        return Redirect::route('workshops.index')->with('success', 'Taller agregado con éxito');
     }
 
     /**
@@ -64,7 +71,9 @@ class WorkshopController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Workshop/Edit',[
+            'workshop' => $this->workshopF->findRolWithId($id),
+        ]);
     }
 
     /**
@@ -74,9 +83,11 @@ class WorkshopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditWorkshopRequest $request, Workshop $workshop)
     {
-        //
+        $this->workshopF->updateRol($request->validated(),$workshop);
+
+        return Redirect::route('workshops.index')->with('success', 'Taller modificado con éxito');
     }
 
     /**
@@ -85,8 +96,13 @@ class WorkshopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Workshop $workshop)
     {
-        //
+        //dd($workshop->user);
+        if($workshop->user){
+            return Redirect::route('workshops.index')->with('error', 'No se puede eliminar el taller, tiene usuarios asociados');
+        }
+        $workshop->delete();
+        return Redirect::route('workshops.index')->with('success', 'Taller eliminado con éxito');
     }
 }

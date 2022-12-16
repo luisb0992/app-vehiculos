@@ -7,14 +7,14 @@ import TextInput from "@/Components/TextInput.vue";
 import {
     form,
     clearForm,
-    handleSaveRol
+    handleSaveWorkshop
 } from "../modules/create";
 
 
 clearForm();
 </script>
 <template>
-    <form @submit.prevent="handleSaveRol">
+    <form @submit.prevent="handleSaveWorkshop">
         <div class="flex flex-col gap-5">
             <div>
                 <InputLabel for="name" value="Nombre" />

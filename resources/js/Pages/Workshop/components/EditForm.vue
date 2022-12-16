@@ -7,21 +7,21 @@ import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import {
     clearForm,
-    handleUpdateRol
+    handleUpdateWorkshop
 } from "../modules/edit";
 
 const props = defineProps({
-    rol: Object,
+    workshop: Object,
 });
 
 const form = useForm({
-    name: props.rol.name,
+    name: props.workshop.name,
 });
 
 clearForm(form);
 </script>
 <template>
-    <form @submit.prevent="handleUpdateRol(form,props.rol.id)">
+    <form @submit.prevent="handleUpdateWorkshop(form,props.workshop.id)">
         <div class="flex flex-col gap-5">
             <div>
                 <InputLabel for="name" value="Nombre" />

@@ -10,5 +10,17 @@ class WorkshopFactory
   {
     return Workshop::all(['id', 'name']);
   }
+
+  public function findRolWithId(int $id): Workshop
+  {
+    return Workshop::findOrFail($id);
+  }
+
+  public function updateRol(array $data, $workshop): bool
+  {
+    $workshop->name = $data['name'];
+
+    return $workshop->save();
+  }
 }
 

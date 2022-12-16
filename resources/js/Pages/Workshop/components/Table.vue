@@ -1,5 +1,5 @@
 <template lang="">
-    <DataTable :value="roles" :paginator="true" :rows="10"
+    <DataTable :value="workshops" :paginator="true" :rows="10"
             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             :rowsPerPageOptions="[10,20,50]" responsiveLayout="scroll"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters1" filterDisplay="menu" >
@@ -15,10 +15,10 @@
         <Column style="min-width:8rem">
             <template #body="{data}">
                 <div class="flex ">
-                <Link :href="route('roles.edit',data.id)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                <Link :href="route('workshops.edit',data.id)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                     <i class="pi pi-pencil" />
                 </Link>
-                <button type="button" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                <button type="button" @click="handleDeleteWorkshop(data.id)" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                     <i class="pi pi-trash" />
                 </button>
                 </div>
@@ -31,14 +31,20 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import {ref} from 'vue'
+import {ref,inject} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
 import { Link } from '@inertiajs/inertia-vue3'
+import {
+    handleDeleteWorkshop
+} from "../modules/delete";
 
+const Swal = inject("$swal");
 const props = defineProps({
-    roles: Array,
+    workshops: Array,
 });
+
+
 const filters1 = ref({
     'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
 });
@@ -48,6 +54,10 @@ const initFilters1 = () => {
         'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
     }
 };
+
+
+
+
 
 
 </script>
