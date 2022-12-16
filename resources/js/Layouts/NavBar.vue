@@ -23,12 +23,12 @@
                                 >
                                     Dashboard
                                 </NavLink>
-                                <NavLink
+                               <!--  <NavLink
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
                                 >
                                     Usuario
-                                </NavLink>
+                                </NavLink> -->
                             </div>
                         </div>
 
