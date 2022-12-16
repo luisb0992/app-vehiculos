@@ -30,10 +30,9 @@ export const hasCamera = computed(() => {
 
 // path públicos
 export const pp = {
-    resizeImgVehicle: computed(
-        () => usePage().props?.value?.path?.vehicle?.resize
-    ),
+    resizeImgVehicle: computed(() => usePage().props.value.path.vehicle.resize),
     originalImgVehicle: computed(
-        () => usePage().props?.value?.path?.vehicle?.original
+        () => usePage().props.value.path.vehicle.original
     ),
 };
+

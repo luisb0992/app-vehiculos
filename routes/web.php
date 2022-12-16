@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{RolController,WorkshopController};
+use App\Http\Controllers\{RolController, WorkshopController};
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,3 +26,5 @@ require __DIR__ . '/modules/brands.php';
 require __DIR__ . '/modules/models.php';
 
 require __DIR__ . '/modules/colors.php';
+
+require __DIR__ . '/modules/workshop_quotes.php';

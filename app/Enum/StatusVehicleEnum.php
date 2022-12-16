@@ -43,4 +43,16 @@ final class StatusVehicleEnum
 
     return $labels;
   }
+
+  // array clave valor
+  public static function getArrayKeyValue(): array
+  {
+    return [
+      'available' => self::AVAILABLE,
+      'pending' => self::PENDING,
+      'maintenance' => self::MAINTENANCE,
+      'in_repair' => self::IN_REPAIR,
+      'repaired' => self::REPAIRED,
+    ];
+  }
 }
