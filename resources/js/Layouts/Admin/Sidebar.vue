@@ -26,7 +26,7 @@ const dropDownWorkshop = () => {
 
 <template>
     <span
-        class="md:hidden lg:hidden fixed flex items-center justify-center text-white text-4xl inset-x-0 bottom-2 cursor-pointer"
+        class="md:hidden lg:hidden fixed flex items-center justify-center z-10 text-white text-4xl inset-x-0 bottom-2 cursor-pointer"
         @click="Openbar()"
     >
         <i class="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
