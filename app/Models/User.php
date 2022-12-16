@@ -51,6 +51,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFullNameAttribute(){
+        return $this->name.' '.$this->last_name;
+    }
+
     protected function password(): Attribute
     {
         return Attribute::make(
@@ -65,4 +69,9 @@ class User extends Authenticatable
     public function workshop(){
         return $this->belongsTo(Workshop::class);
     }
+
+    public function vehiculo(){
+        return $this->hasMany(Vehiculo::class);
+    }
+
 }

@@ -98,10 +98,10 @@ class WorkshopController extends Controller
      */
     public function destroy(Workshop $workshop)
     {
-        //dd($workshop->user);
         if($workshop->user){
             return Redirect::route('workshops.index')->with('error', 'No se puede eliminar el taller, tiene usuarios asociados');
         }
+
         $workshop->delete();
         return Redirect::route('workshops.index')->with('success', 'Taller eliminado con éxito');
     }

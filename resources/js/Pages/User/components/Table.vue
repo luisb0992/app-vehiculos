@@ -40,14 +40,13 @@
         <Column style="min-width:8rem">
             <template #body="{data}">
                 <div class="flex justify-between">
-                <Link :href="route('users.edit',data.id)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                    <i class="pi pi-pencil" />
-                </Link>
-                <button type="button" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                    <i class="pi pi-trash" />
-                </button>
+                    <Link :href="route('users.edit',data.id)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                        <i class="pi pi-pencil" />
+                    </Link>
+                    <button type="button" @click="handleDeleteUser(data.id)" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                        <i class="pi pi-trash" />
+                    </button>
                 </div>
-
             </template>
         </Column>
     </DataTable>
@@ -61,6 +60,9 @@ import {ref} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
 import { Link } from '@inertiajs/inertia-vue3'
+import {
+    handleDeleteUser
+} from "../modules/delete";
 
 const props = defineProps({
     users: Array,

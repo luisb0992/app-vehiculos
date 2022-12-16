@@ -99,8 +99,12 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Rol $role)
     {
-        //
+        if($role->user){
+            return Redirect::route('roles.index')->with('error', 'No se puede eliminar el Rol, tiene usuarios asociados');
+        }
+        $role->delete();
+        return Redirect::route('roles.index')->with('success', 'Rol eliminado con éxito');
     }
 }

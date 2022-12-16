@@ -33,7 +33,7 @@ class UserFactory
   }
 
   public function getUsersWithRelationShip(){
-    return User::with('rol','workshop')->get();
+    return User::with('rol','workshop')->where('id','!=',auth()->user()->id)->get();
   }
 
   public function findUserWithId($id)

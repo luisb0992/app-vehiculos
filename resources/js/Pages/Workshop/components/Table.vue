@@ -14,13 +14,13 @@
         <Column field="name" header="Nombre" :sortable="true" class="w-full"></Column>
         <Column style="min-width:8rem">
             <template #body="{data}">
-                <div class="flex ">
-                <Link :href="route('workshops.edit',data.id)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                    <i class="pi pi-pencil" />
-                </Link>
-                <button type="button" @click="handleDeleteWorkshop(data.id)" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                    <i class="pi pi-trash" />
-                </button>
+                <div class="flex justify-between">
+                    <Link :href="route('workshops.edit',data.id)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                        <i class="pi pi-pencil" />
+                    </Link>
+                    <button type="button" @click="handleDeleteWorkshop(data.id)" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                        <i class="pi pi-trash" />
+                    </button>
                 </div>
 
             </template>
@@ -31,7 +31,7 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import {ref,inject} from 'vue'
+import {ref} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
 import { Link } from '@inertiajs/inertia-vue3'
@@ -39,7 +39,6 @@ import {
     handleDeleteWorkshop
 } from "../modules/delete";
 
-const Swal = inject("$swal");
 const props = defineProps({
     workshops: Array,
 });
