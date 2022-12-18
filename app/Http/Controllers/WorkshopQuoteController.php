@@ -18,7 +18,7 @@ class WorkshopQuoteController extends Controller
     /**
      * Devuelve las ordenes de cotización por taller
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(): Response
     {
@@ -30,11 +30,13 @@ class WorkshopQuoteController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create()
+    public function createQuote(int $id): Response
     {
-        //
+        return Inertia::render('WorkshopQuotes/Create', [
+            'order' => $this->db->getOrderById($id)
+        ]);
     }
 
     /**

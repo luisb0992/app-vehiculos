@@ -127,20 +127,36 @@ export const hasSubcategory = computed(() => {
 
 // array de subcategorias con garantia
 export const warrantySubcategories = computed(() => {
-    return form.categories
-        .map((item) => {
-            return item.sub_ids.filter((subcat) => subcat.warranty);
-        })
-        .flat();
+    const data = form.categories.map((item) => {
+        return item.sub_ids.filter((subcat) => subcat.warranty);
+    });
+
+    // eliminar los duplicados
+    return data.flat().filter((item, index, self) => {
+        return (
+            index ===
+            self.findIndex(
+                (t) => t.sub_id === item.sub_id && t.sub_name === item.sub_name
+            )
+        );
+    });
 });
 
 // array de subcategorias con dock
 export const dockSubcategories = computed(() => {
-    return form.categories
-        .map((item) => {
-            return item.sub_ids.filter((subcat) => subcat.dock);
-        })
-        .flat();
+    const data = form.categories.map((item) => {
+        return item.sub_ids.filter((subcat) => subcat.dock);
+    });
+
+    // eliminar los duplicados
+    return data.flat().filter((item, index, self) => {
+        return (
+            index ===
+            self.findIndex(
+                (t) => t.sub_id === item.sub_id && t.sub_name === item.sub_name
+            )
+        );
+    });
 });
 
 // verificar si hay subcategorias aun por asignar
@@ -185,23 +201,17 @@ export const loadOrder = () => {
         subs: form.selectedOptions,
     });
 
-    // una vez cargada la orden
-    // eliminar las categorias agregadas
-    // del array de categorias
-    form.selectedOptions.forEach((sub) => {
-        form.categories.map((item) => {
-            const index = item.sub_ids.findIndex(
-                (subcat) => subcat.sub_id === sub.sub_id
-            );
+    // una vez agregada la orden
+    // eliminar las subcategorias que coincidan
+    // con las seleccionadas
+    form.selectedOptions.forEach((obj) => {
+        form.categories.forEach((item) => {
+            const subID = obj.sub_id;
+            const array = item.sub_ids;
 
-            item.sub_ids.splice(index, 1);
+            // eliminar donde coincida el id
+            item.sub_ids = array.filter((subcat) => subcat.sub_id !== subID);
         });
-    });
-
-    // agregar al backup de categorias
-    // las categories seleccionadas
-    form.selectedOptions.forEach((sub) => {
-        catBackup.value.push(sub);
     });
 
     // vaciar el array de seleccionadas
@@ -214,26 +224,13 @@ export const loadOrder = () => {
 // { sub_id: 1, sub_name: 'nombre', warranty: true, dock: false }
 export const deleteOrder = (index) => {
     // obtener las sub categorias de la orden
-    const subs = form.orders[index].subs;
+    const order = form.orders[index];
+    const subs = order.subs;
 
-    // agregar las sub categorias a las categorias
-    // seleccionadas
+    // agregar las sub categorias a las categorias anteriores
     subs.forEach((sub) => {
-        form.categories.map((item) => {
-            const hasSub = item.sub_ids.some(
-                (subcat) => subcat.sub_id === sub.sub_id
-            );
-
-            if (hasSub) {
-                item.sub_ids.map((subcat) => {
-                    if (subcat.sub_id === sub.sub_id) {
-                        subcat.warranty = sub.warranty;
-                        subcat.dock = sub.dock;
-                    }
-                });
-            } else {
-                item.sub_ids.push(sub);
-            }
+        form.categories.map((obj) => {
+            obj.sub_ids.push(sub);
         });
     });
 

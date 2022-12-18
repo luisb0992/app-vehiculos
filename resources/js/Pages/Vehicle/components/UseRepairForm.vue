@@ -9,7 +9,6 @@ import {
     saveRepair,
     addOrRemoveToArray,
     continueRepair,
-    hasSubcategory,
     warrantySubcategories,
     dockSubcategories,
     canSendWorkshop,

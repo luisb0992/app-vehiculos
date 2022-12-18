@@ -18,6 +18,21 @@ class WorkshopQuoteDB
     $user = auth()->user();
     return RepairOrder::where('workshop_id', $user->workshop_id)
       ->with(['vehicle.brand', 'vehicle.model', 'vehicle.color', 'vehicle.gallery'])
+      ->orderByDesc('created_at')
       ->get();
+  }
+
+  /**
+   * Devuelve la orden de cotización por id
+   *
+   * @param int $id
+   * @return RepairOrder
+   */
+  public static function getOrderById(int $id): RepairOrder
+  {
+    return RepairOrder::with([
+      'vehicle.brand', 'vehicle.model', 'vehicle.color', 'vehicle.gallery',
+      'workshop', 'categories', 'subcategories'
+    ])->find($id);
   }
 }

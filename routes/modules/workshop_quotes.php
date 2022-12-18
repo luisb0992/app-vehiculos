@@ -12,9 +12,9 @@ Route::middleware('auth')->prefix('workshop_quotes')->group(function () {
 
   // crear una cotización a partir de un vehículo
   Route::get('create-quote/{id}', [WorkshopQuoteController::class, 'createQuote'])
-    ->name('workshop_quotes.create-quote');
+    ->name('workshop_quotes.createQuote');
 
   // guardar una cotización
   Route::post('store', [WorkshopQuoteController::class, 'store'])
-    ->name('workshop_quotes.store');
+    ->name('workshop_quotes.storeQuote');
 });

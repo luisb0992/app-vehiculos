@@ -8,6 +8,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { FilterMatchMode } from "primevue/api";
 import { ref } from "vue";
 import StatusOrder from "./components/StatusOrder.vue";
+import ActionButtons from "./components/ActionButtons.vue";
 
 const props = defineProps({
     orders: Array,
@@ -95,7 +96,10 @@ const filter = ref({
                         </Column>
                         <Column field="-" header="Cotización" :sortable="true">
                             <template #body="{ data }">
-                                <StatusOrder :status="data.status" />
+                                <ActionButtons
+                                    :status="data.status"
+                                    :id="data.id"
+                                />
                             </template>
                         </Column>
                     </DataTable>

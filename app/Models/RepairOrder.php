@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RepairOrder extends Model
@@ -54,8 +55,16 @@ class RepairOrder extends Model
     /**
      * Get the repair for the repair order.
      */
-    public function categories()
+    public function categories(): BelongsToMany
     {
         return $this->belongsToMany(RepairCategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_category_id');
+    }
+
+    /**
+     * Devolver las subcategorias de la orden de reparación
+     */
+    public function subcategories(): BelongsToMany
+    {
+        return $this->belongsToMany(RepairSubcategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_sub_category_id');
     }
 }

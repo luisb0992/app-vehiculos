@@ -36,3 +36,8 @@ export const pp = {
     ),
 };
 
+// devolver el valor en el formato 1.000,00
+// formato europeo
+export const numberToDecimal = (value) => {
+    return new Intl.NumberFormat("de-DE").format(value);
+};

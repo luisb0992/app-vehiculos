@@ -43,6 +43,7 @@ class VehicleDB
     return $this->vehicle
       ->with(['repairOrders', 'color', 'brand', 'model', 'gallery'])
       ->where('user_id', auth()->user()->id)
+      ->orderByDesc('created_at')
       ->get();
   }
 }
