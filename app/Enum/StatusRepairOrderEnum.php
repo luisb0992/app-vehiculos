@@ -19,6 +19,9 @@ class StatusRepairOrderEnum
   // status rechazada
   public const REPAIRED = 5;
 
+  // enviada
+  public const SEND = 6;
+
   // getValues
   public static function getValues(): array
   {
@@ -28,6 +31,7 @@ class StatusRepairOrderEnum
       self::REPAIRED,
       self::CLOSED,
       self::CANCELED,
+      self::SEND,
     ];
   }
 
@@ -40,6 +44,7 @@ class StatusRepairOrderEnum
       self::CLOSED => 'Cerrada',
       self::CANCELED => 'Cancelada',
       self::REPAIRED => 'Reparada',
+      self::SEND => 'Enviada',
     ];
   }
 
@@ -52,6 +57,7 @@ class StatusRepairOrderEnum
       'closed' => self::CLOSED,
       'canceled' => self::CANCELED,
       'repaired' => self::REPAIRED,
+      'send' => self::SEND,
     ];
   }
 }

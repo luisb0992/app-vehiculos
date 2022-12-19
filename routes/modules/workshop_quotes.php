@@ -15,6 +15,10 @@ Route::middleware('auth')->prefix('workshop_quotes')->group(function () {
     ->name('workshop_quotes.createQuote');
 
   // guardar una cotización
-  Route::post('store', [WorkshopQuoteController::class, 'store'])
+  Route::post('store-quote', [WorkshopQuoteController::class, 'store'])
     ->name('workshop_quotes.storeQuote');
+
+  // descargar la orden de cotización
+  Route::get('download-quote/{id}', [WorkshopQuoteController::class, 'downloadQuote'])
+    ->name('workshop_quotes.downloadPDFQuote');
 });

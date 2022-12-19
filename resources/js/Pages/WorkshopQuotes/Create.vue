@@ -1,50 +1,41 @@
 <script setup>
 import Layout from "@/Layouts/Layout.vue";
-import { Head, useForm } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/inertia-vue3";
 import CardVehicle from "../Vehicle/components/CardVehicle.vue";
 import InputNumber from "primevue/inputNumber";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { numberToDecimal } from "@/Utils/Common/common";
+import Gallery from "../Vehicle/components/Gallery.vue";
+import {
+    saveQuote,
+    form,
+    taxString,
+    subtotal,
+    total,
+    hasZero,
+} from "./modules/create-quote";
+import InputError from "@/Components/InputError.vue";
 
 const props = defineProps({
     order: Object,
 });
 
-const form = useForm({
-    subs: [],
-    subtotal: 0,
-    tax: 0,
-    total: 0,
-});
+const images = computed(() =>
+    props.order.vehicle.gallery.filter((_, i) => i !== 0)
+);
 
-const tax = ref(7);
-const taxString = computed(() => {
-    return `${tax.value}%`;
-});
+// order_id
+form.repair_order_id = props.order.id;
 
-const subtotal = computed(() => {
-    return form.subs.reduce((acc, sub) => {
-        return acc + sub.cost;
-    }, 0);
-});
-
-const total = computed(() => {
-    return subtotal.value + (subtotal.value * tax.value) / 100;
-});
-
-// crear prop cost por cada subcategoria
-const createCost = () => {
-    props.order.subcategories.forEach((sub) => {
-        form.subs.push({
-            id: sub.id,
-            name: sub.name,
-            cost: 0,
-        });
+// inyecta cost
+props.order.subcategories.forEach((sub) => {
+    form.subs.push({
+        id: sub.id,
+        name: sub.name,
+        cost: 0,
     });
-};
-
-createCost();
+});
 </script>
 <template>
     <Head title="Cotización de vehículo" />
@@ -70,6 +61,7 @@ createCost();
                     </div>
                     <div class="py-5">
                         <CardVehicle :vehicle="order.vehicle" />
+                        <Gallery :images="images" />
                     </div>
                 </div>
                 <div class="w-full">
@@ -119,6 +111,11 @@ createCost();
                                     <span class="bg-gray-100 p-3 rounded">
                                         {{ numberToDecimal(subtotal) }}
                                     </span>
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.subtotal"
+                                    />
                                 </p>
                             </div>
                             <div>
@@ -127,6 +124,11 @@ createCost();
                                     <span class="bg-gray-100 p-3 rounded">
                                         {{ taxString }}
                                     </span>
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.tax"
+                                    />
                                 </p>
                             </div>
                             <div>
@@ -135,14 +137,35 @@ createCost();
                                     <span class="bg-gray-100 p-3 rounded">
                                         {{ numberToDecimal(total) }}
                                     </span>
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.total"
+                                    />
                                 </p>
                             </div>
+                        </div>
+
+                        <div class="w-full">
+                            <progress
+                                v-if="form.progress"
+                                :value="form.progress.percentage"
+                                max="100"
+                                class="w-full"
+                            >
+                                {{ form.progress.percentage }}%
+                            </progress>
                         </div>
 
                         <div class="flex justify-end">
                             <PrimaryButton
                                 type="button"
                                 class="px-7 py-4 text-lg uppercase"
+                                :class="{
+                                    'opacity-50': hasZero,
+                                }"
+                                @click.stop="saveQuote"
+                                :disabled="hasZero"
                             >
                                 Cotizar
                             </PrimaryButton>

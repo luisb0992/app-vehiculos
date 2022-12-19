@@ -96,10 +96,7 @@ const filter = ref({
                         </Column>
                         <Column field="-" header="Cotización" :sortable="true">
                             <template #body="{ data }">
-                                <ActionButtons
-                                    :status="data.status"
-                                    :id="data.id"
-                                />
+                                <ActionButtons :order="data" />
                             </template>
                         </Column>
                     </DataTable>

@@ -16,6 +16,8 @@ defineProps({
                 status === $page.props.status.repair_order.canceled,
             'text-purple-600 text-xs font-bold':
                 status === $page.props.status.repair_order.closed,
+            'text-blue-400 text-xs font-bold':
+                status === $page.props.status.repair_order.send,
         }"
     >
         <span v-if="status === $page.props.status.repair_order.open">
@@ -32,6 +34,9 @@ defineProps({
         </span>
         <span v-else-if="status === $page.props.status.repair_order.closed">
             Cerrado
+        </span>
+        <span v-else-if="status === $page.props.status.repair_order.send">
+            Enviada
         </span>
     </div>
 </template>

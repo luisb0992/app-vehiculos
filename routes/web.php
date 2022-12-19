@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\{RolController, WorkshopController};
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

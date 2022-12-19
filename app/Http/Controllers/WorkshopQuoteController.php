@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\DB\WorkshopQuoteDB;
+use App\Factories\WorkshopQuoteFactory;
+use App\Http\Requests\CreateWorkshopQuoteRequest;
 use App\Models\WorkshopQuote;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response as HttpResponse;
 
 class WorkshopQuoteController extends Controller
 {
 
-    public function __construct(private WorkshopQuoteDB $db)
-    {
+    public function __construct(
+        private WorkshopQuoteDB $db,
+        private WorkshopQuoteFactory $factory
+    ) {
     }
 
     /**
@@ -40,58 +47,39 @@ class WorkshopQuoteController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda una nueva cotización para un vehículo
+     * y un taller
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateWorkshopQuoteRequest $request): RedirectResponse
     {
-        //
+        $quota = $this->factory->storeQuota($request->validated());
+
+        if ($quota) {
+            return redirect()
+                ->route('workshop_quotes.index')
+                ->with('success', 'Cotización creada con éxito');
+        }
+
+        return redirect()
+            ->route('workshop_quotes.index')
+            ->with('error', 'No se pudo crear la cotización');
     }
 
     /**
-     * Display the specified resource.
+     * Descarga la cotización en formato pdf
      *
-     * @param  \App\Models\WorkshopQuote  $workshopQuote
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return HttpResponse
      */
-    public function show(WorkshopQuote $workshopQuote)
+    public function downloadQuote(int $id): HttpResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\WorkshopQuote  $workshopQuote
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(WorkshopQuote $workshopQuote)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\WorkshopQuote  $workshopQuote
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, WorkshopQuote $workshopQuote)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\WorkshopQuote  $workshopQuote
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(WorkshopQuote $workshopQuote)
-    {
-        //
+        // crear pdf
+        $data = $this->db->getQuotationByID($id);
+        $pdf = Pdf::loadView('pdf.quotation', ['quota' => $data]);
+        $name = 'cotización-' . $id . '.pdf';
+        return $pdf->stream($name);
     }
 }

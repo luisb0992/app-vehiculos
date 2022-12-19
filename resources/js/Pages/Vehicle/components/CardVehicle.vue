@@ -44,32 +44,32 @@ const color = computed(() => {
         <div class="w-full md:w-[30%] mb-3">
             <img
                 :src="imgFullPath"
-                class="w-full h-full object-cover object-center"
+                class="w-full h-full object-cover object-center rounded aspect-video"
             />
         </div>
         <div class="w-full md:w-[70%]">
             <div class="flex flex-wrap justify-start md:px-4">
                 <div class="w-full pb-2">
                     <label class="text-zinc-800 font-bold"> Nº chasis</label>
-                    <p class="bg-zinc-200 p-3 rounded text-sm">
+                    <p class="bg-zinc-200 p-2 rounded text-sm">
                         {{ vehicle.chassis_number }}
                     </p>
                 </div>
                 <div class="w-4/12 pr-3">
                     <label class="text-zinc-800 font-bold"> Marca </label>
-                    <p class="bg-zinc-200 p-3 rounded text-sm">
+                    <p class="bg-zinc-200 p-2 rounded text-sm">
                         {{ brand }}
                     </p>
                 </div>
                 <div class="w-4/12 pr-3">
                     <label class="text-zinc-800 font-bold"> Modelo </label>
-                    <p class="bg-zinc-200 p-3 rounded text-sm">
+                    <p class="bg-zinc-200 p-2 rounded text-sm">
                         {{ model }}
                     </p>
                 </div>
                 <div class="w-4/12">
                     <label class="text-zinc-800 font-bold"> Color </label>
-                    <p class="bg-zinc-200 p-3 rounded text-sm">
+                    <p class="bg-zinc-200 p-2 rounded text-sm">
                         {{ color }}
                     </p>
                 </div>

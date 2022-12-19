@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RepairOrder extends Model
@@ -65,6 +66,14 @@ class RepairOrder extends Model
      */
     public function subcategories(): BelongsToMany
     {
-        return $this->belongsToMany(RepairSubcategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_sub_category_id');
+        return $this->belongsToMany(RepairSubcategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_sub_category_id')->withPivot(['cost']);
+    }
+
+    /**
+     * Get the quotation for the repair order.
+     */
+    public function quotation(): HasOne
+    {
+        return $this->hasOne(Quotation::class, 'repair_order_id');
     }
 }
