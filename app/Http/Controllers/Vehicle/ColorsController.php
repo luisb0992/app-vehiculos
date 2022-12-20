@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Vehicle;
 
-use App\Http\Requests\Roles\{CreateRolRequest, EditRolRequest};
+use App\Http\Requests\Vehicle\{CreateColorsRequest, EditColorsRequest};
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
-use App\Factories\{RolFactory};
+use App\Http\Controllers\Controller;
+use App\Factories\{ColorFactory};
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Rol;
+use App\Models\Color;
 
-class RolController extends Controller
+class ColorsController extends Controller
 {
-
     public function __construct(
-        private RolFactory $rolF,
+        private ColorFactory $colorF,
     ) {
     }
 
@@ -25,8 +25,8 @@ class RolController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Roles/Index',[
-            'roles' => $this->rolF->getRoles()
+        return Inertia::render('Color/Index',[
+            'colors' => $this->colorF->getColors()
         ]);
     }
 
@@ -37,7 +37,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Roles/Create');
+        return Inertia::render('Color/Create');
     }
 
     /**
@@ -46,13 +46,13 @@ class RolController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRolRequest $request): RedirectResponse
+    public function store(CreateColorsRequest $request): RedirectResponse
     {
-        Rol::create([
+        Color::create([
             'name' => $request->name,
         ]);
 
-        return Redirect::route('roles.index')->with('success', 'Rol agregado con éxito');
+        return Redirect::route('colors.index')->with('success', 'Color agregado con éxito');
     }
 
     /**
@@ -74,8 +74,8 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        return Inertia::render('Roles/Edit',[
-            'rol' => $this->rolF->findRolWithId($id),
+        return Inertia::render('Color/Edit',[
+            'color' => $this->colorF->findRolWithId($id),
         ]);
     }
 
@@ -86,11 +86,11 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditRolRequest $request, Rol $role)
+    public function update(EditColorsRequest $request, Color $color)
     {
-        $this->rolF->updateRol($request->validated(),$role);
+        $this->colorF->updateColor($request->validated(),$color);
 
-        return Redirect::route('roles.index')->with('success', 'Rol modificado con éxito');
+        return Redirect::route('colors.index')->with('success', 'Color modificado con éxito');
     }
 
     /**
@@ -99,12 +99,12 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rol $role)
+    public function destroy(Color $color)
     {
-        if($role->user){
-            return Redirect::route('roles.index')->with('error', 'No se puede eliminar el Rol, tiene usuarios asociados');
+        if($color->vehicles->count() >= 1){
+            return Redirect::route('colors.index')->with('error', 'No se puede eliminar el Color, tiene vehiculos asociados');
         }
-        $role->delete();
-        return Redirect::route('roles.index')->with('success', 'Rol eliminado con éxito');
+        $color->delete();
+        return Redirect::route('colors.index')->with('success', 'Color eliminado con éxito');
     }
 }

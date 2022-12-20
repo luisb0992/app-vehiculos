@@ -31,7 +31,7 @@ const form = useForm({
 
 // guardar la marca y cerrar modal
 const saveBrand = () => {
-    form.post(route("colors.store"), {
+    form.post(route("colors.vehicle.store"), {
         onError: (error) => console.log(error),
         onSuccess: () => {
             form.reset("name");

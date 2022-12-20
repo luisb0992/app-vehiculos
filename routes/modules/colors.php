@@ -8,5 +8,5 @@ Route::middleware('auth')->prefix('colors')->group(function () {
 
   // guardar un nuevo color
   Route::post('store', [ColorController::class, 'store'])
-    ->name('colors.store');
+    ->name('colors.vehicle.store');
 });

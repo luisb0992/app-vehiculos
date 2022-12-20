@@ -1,7 +1,8 @@
 <template>
     <SideBar />
-    <NavBar />
-    <div class="main-content flex flex-col flex-grow md:lg:pl-[100px] py-4">
+
+    <div class="main-content flex flex-col flex-grow md:pl-[300px] md:pr-[50px] py-2">
+        <NavBar />
         <!-- <h1 class="font-bold text-2xl text-gray-700">Inicio</h1> -->
         <div class="flex flex-col flex-grow bg-white rounded mt-4">
             <!-- mostrar mensaje -->

@@ -12,4 +12,16 @@ class ColorFactory
   {
     return Color::orderBy('name')->get(['id', 'name']);
   }
+
+  public function findRolWithId(int $id): Color
+  {
+    return Color::findOrFail($id);
+  }
+
+  public function updateColor(array $data, $color): bool
+  {
+    $color->name = $data['name'];
+
+    return $color->save();
+  }
 }

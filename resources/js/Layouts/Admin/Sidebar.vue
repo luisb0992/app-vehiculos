@@ -32,7 +32,7 @@ const dropDownWorkshop = () => {
         <i class="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
     </span>
     <div
-        class="sidebar fixed top-0 bottom-0 lg:left-0 left-[-300px] z-10 duration-1000 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 shadow h-screen"
+        class="sidebar absolute top-0 bottom-0 lg:left-0 left-[-300px] z-10 duration-1000 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 shadow h-screen"
     >
         <div class="text-gray-100 text-xl">
             <div class="p-2.5 mt-1 flex items-center rounded-md">
@@ -119,6 +119,57 @@ const dropDownWorkshop = () => {
                     >
                         <span class="text-[15px] ml-4 text-gray-200">
                             Listado
+                        </span>
+                    </SideLink>
+                </div>
+                <div
+                    class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
+                >
+                    <i class="fas fa-car"></i>
+                    <div
+                        class="flex justify-between w-full items-center"
+                        @click="dropDown()"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Utilidades
+                        </span>
+                        <span class="text-sm rotate-180" id="arrow">
+                            <i class="bi bi-arrow-down-square"></i>
+                        </span>
+                    </div>
+                </div>
+                <div
+                    class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
+                    id="submenu"
+                >
+                    <SideLink
+                        :href="route('colors.index')"
+                        :active="route().current('colors.*')"
+                        :icon="'bi bi-arrow-right-square'"
+                        class="hover:bg-blue-600"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Color
+                        </span>
+                    </SideLink>
+                    <SideLink
+                        :href="route('vehicle.index')"
+                        :active="route().current('vehicle.index')"
+                        :icon="'bi bi-arrow-right-square'"
+                        class="hover:bg-blue-600"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Modelo
+                        </span>
+                    </SideLink>
+                    <SideLink
+                        :href="route('vehicle.index')"
+                        :active="route().current('vehicle.index')"
+                        :icon="'bi bi-arrow-right-square'"
+                        class="hover:bg-blue-600"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Marca
                         </span>
                     </SideLink>
                 </div>

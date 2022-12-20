@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/inertia-vue3'
 
 export const form = useForm();
  export const requestDelete = (id) => {
-    form.delete(route("roles.destroy",id), {
+    form.delete(route("colors.destroy",id), {
         onStart: () => console.log("start"),
         onFinish: () => console.log("finish"),
         onError: (error) => console.log(error),
@@ -14,9 +14,9 @@ const swalWithBootstrapButtons = Swal.mixin({
     buttonsStyling: true
 })
 
-export const handleDeleteRol = (id) => {
+export const handleDelete = (id) => {
     swalWithBootstrapButtons.fire({
-        title: '¿Estas seguro que quieres eliminar este Rol?',
+        title: '¿Estas seguro que quieres eliminar este color?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Si, estoy seguro.',
@@ -30,7 +30,7 @@ export const handleDeleteRol = (id) => {
         ) {
             swalWithBootstrapButtons.fire(
             'Cancelado',
-            'No se ha eliminado el Rol.',
+            'No se ha eliminado el color.',
             'error'
             )
         }

@@ -1,23 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Vehicle;
 
-use App\Http\Requests\Roles\{CreateRolRequest, EditRolRequest};
+use App\Http\Requests\Vehicle\{CreateColorsRequest, EditColorsRequest};
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
-use App\Factories\{RolFactory};
+use App\Http\Controllers\Controller;
+use App\Factories\{ColorFactory};
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Rol;
+use App\Models\ModelVehicle;
 
-class RolController extends Controller
+class ModelsController extends Controller
 {
-
-    public function __construct(
-        private RolFactory $rolF,
-    ) {
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +20,7 @@ class RolController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Roles/Index',[
-            'roles' => $this->rolF->getRoles()
-        ]);
+        //
     }
 
     /**
@@ -37,7 +30,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Roles/Create');
+        //
     }
 
     /**
@@ -46,13 +39,9 @@ class RolController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRolRequest $request): RedirectResponse
+    public function store(Request $request)
     {
-        Rol::create([
-            'name' => $request->name,
-        ]);
-
-        return Redirect::route('roles.index')->with('success', 'Rol agregado con éxito');
+        //
     }
 
     /**
@@ -74,9 +63,7 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        return Inertia::render('Roles/Edit',[
-            'rol' => $this->rolF->findRolWithId($id),
-        ]);
+        //
     }
 
     /**
@@ -86,11 +73,9 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditRolRequest $request, Rol $role)
+    public function update(Request $request, $id)
     {
-        $this->rolF->updateRol($request->validated(),$role);
-
-        return Redirect::route('roles.index')->with('success', 'Rol modificado con éxito');
+        //
     }
 
     /**
@@ -99,12 +84,8 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rol $role)
+    public function destroy($id)
     {
-        if($role->user){
-            return Redirect::route('roles.index')->with('error', 'No se puede eliminar el Rol, tiene usuarios asociados');
-        }
-        $role->delete();
-        return Redirect::route('roles.index')->with('success', 'Rol eliminado con éxito');
+        //
     }
 }

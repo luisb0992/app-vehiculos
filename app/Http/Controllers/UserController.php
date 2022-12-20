@@ -56,7 +56,7 @@ class UserController extends Controller
     {
          $user = $this->userF->createUser($request->validated());
 
-         return Redirect::route('users.create')->with('success', 'Usuario agregado con éxito');
+         return Redirect::route('users.index')->with('success', 'Usuario agregado con éxito');
     }
 
     /**

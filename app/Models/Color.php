@@ -17,4 +17,9 @@ class Color extends Model
     protected $table = 'colors';
 
     protected $guarded = [];
+
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
 }
