@@ -27,6 +27,8 @@
         "@fortawesome/free-regular-svg-icons": "^6.2.1",
         "@fortawesome/free-solid-svg-icons": "^6.2.1",
         "@fortawesome/vue-fontawesome": "^3.0.2",
+        "pinia": "^2.0.28",
+        "pinia-plugin-persistedstate": "^3.0.1",
         "primeicons": "^6.0.1",
         "primevue": "^3.21.0",
         "vue-sweetalert2": "^5.0.5"

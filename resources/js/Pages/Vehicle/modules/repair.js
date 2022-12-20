@@ -1,11 +1,11 @@
 import { useForm } from "@inertiajs/inertia-vue3";
 import { computed, ref } from "vue";
-import { currentDate } from "@/Utils/Common/common";
+import Swal from "sweetalert2";
 
 export const form = useForm({
     // cargar el id del vehículo desde el parámetro recibido
     vehicle_id: "",
-    send_date: currentDate,
+    send_date: "",
     categories: [],
 
     // garantia y dock seleccionados
@@ -27,6 +27,11 @@ export const continueRepair = ref(false);
 // cuando se inicializa el componente
 export const clearForm = () => {
     form.reset("vehicle_id", "");
+    form.reset("send_date", "");
+    form.reset("categories", []);
+    form.reset("selectedOptions", []);
+    form.reset("orders", []);
+    continueRepair.value = false;
 };
 
 // formulario de reparación
@@ -195,6 +200,16 @@ export const addOrRemoveOption = (e, subID, subName, option) => {
 // cargar la orden con las sub categorias
 // seleccionadas
 export const loadOrder = () => {
+    // validar
+    if (!form.send_date || !form.workshop_id || !form.selectedOptions.length) {
+        Swal.fire({
+            icon: "error",
+            title: "Aviso",
+            text: "Debe seleccionar una fecha de envío y un taller",
+        });
+        return;
+    }
+
     form.orders.push({
         workshop_id: form.workshop_id,
         send_date: form.send_date,

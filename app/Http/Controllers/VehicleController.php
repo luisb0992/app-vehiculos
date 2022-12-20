@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\DB\RepairCategoryDB;
-use App\DB\VehicleDB;
-use App\DB\WorkshopDB;
-use App\Factories\BrandFactory;
-use App\Factories\ColorFactory;
-use App\Factories\ModelVehicleFactory;
-use App\Factories\VehicleFactory;
 use App\Http\Requests\CreateOrderRepairRequest;
 use App\Http\Requests\CreateVehicleRequest;
-use App\Models\Vehicle;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
+use App\Factories\ModelVehicleFactory;
+use Illuminate\Http\RedirectResponse;
+use App\Factories\VehicleFactory;
+use App\Factories\ColorFactory;
+use App\Factories\BrandFactory;
+use App\DB\RepairCategoryDB;
+// use Illuminate\Http\Request;
+use App\DB\WorkshopDB;
+use App\DB\VehicleDB;
 use Inertia\Response;
+use Inertia\Inertia;
 
 class VehicleController extends Controller
 {
@@ -80,58 +79,22 @@ class VehicleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Vehicle $vehicle)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Vehicle $vehicle)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Vehicle $vehicle)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Vehicle $vehicle)
-    {
-        //
-    }
-
-
-    /**
      * Solicitar reparación de un vehículo
      *
      * @param int $id
      */
-    public function repair(int $id): Response
+    public function repair(int $id): Response|RedirectResponse
     {
+        if (!$this->db->getVehicleById($id)) {
+            abort(404);
+        }
+
+        // verificar que el vehículo no posea ya alguna orden de reparación
+        if ($this->db->checkVehicleHasRepairOrders($id)) {
+            return Redirect::route('vehicle.index')
+                ->with('error', 'El vehículo ya posee orden de reparación.');
+        }
+
         return Inertia::render('Vehicle/Repair', [
             'vehicle' => $this->db->getVehicleByIdWithRelation($id),
             'categories' => $this->dbCat->getAllCategories(),

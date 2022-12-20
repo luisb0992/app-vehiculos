@@ -6,6 +6,8 @@ import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
 // sweetalert2
 import VueSweetalert2 from "vue-sweetalert2";
@@ -32,12 +34,15 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.vue")
         ),
     setup({ el, app, props, plugin }) {
+        const pinia = createPinia();
+        pinia.use(piniaPluginPersistedstate);
         const VueApp = createApp({ render: () => h(app, props) });
 
         // use
         VueApp.use(plugin)
             .use(VueSweetalert2)
             .use(PrimeVue)
+            .use(pinia)
             .use(ZiggyVue, Ziggy);
 
         // mount app

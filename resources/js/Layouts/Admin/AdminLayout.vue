@@ -15,13 +15,11 @@
                 <slot />
             </main>
         </div>
-      </div>
-
+    </div>
 </template>
 
 <script setup>
 import SideBar from "@/Layouts/Admin/Sidebar.vue";
 import NavBar from "@/Layouts/NavBar.vue";
 import AlertDismiss from "@/Components/AlertDismiss.vue";
-
 </script>
