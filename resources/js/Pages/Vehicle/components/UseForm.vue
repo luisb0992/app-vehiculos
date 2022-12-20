@@ -8,6 +8,7 @@ import UseUploadFiles from "./UseUploadFiles.vue";
 import UseCreateBrandModal from "./UseCreateBrandModal.vue";
 import UseCreateModelModal from "./UseCreateModelModal.vue";
 import UseCreateColorModal from "./UseCreateColorModal.vue";
+import { useGalleryStore } from "@/Store/gallery";
 import {
     form,
     getModels,
@@ -18,15 +19,25 @@ import {
     showModalColor,
     showCamera,
 } from "../modules/create";
+import { onMounted } from "vue";
 
 const props = defineProps({
     brands: Array,
     models: Array,
     colors: Array,
 });
+
+const submitVehicle = () => {
+    form.gallery = useGalleryStore().getImages();
+    saveVehicle();
+};
+
+onMounted(() => {
+    form.gallery = useGalleryStore().getImages();
+});
 </script>
 <template>
-    <form @submit.prevent="saveVehicle">
+    <form @submit.prevent="submitVehicle">
         <div class="flex flex-col gap-5">
             <div>
                 <InputLabel for="chassis" value="Chasis" />

@@ -3,11 +3,18 @@ import { Head } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/Layout.vue";
 import UseRepairForm from "./components/UseRepairForm.vue";
 import CardVehicle from "./components/CardVehicle.vue";
+import { useGalleryStore } from "@/Store/gallery";
+import { onMounted } from "vue";
 
 const props = defineProps({
     vehicle: Object,
     categories: Array,
     workshops: Array,
+});
+
+onMounted(() => {
+    useGalleryStore().clearImages();
+    useGalleryStore().clearSessionStorage();
 });
 </script>
 <template>

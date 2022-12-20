@@ -15,6 +15,7 @@ final class StatusVehicleEnum
   public const MAINTENANCE = 3;
   public const IN_REPAIR = 4;
   public const REPAIRED = 5;
+  public const ADD = 6;
 
   public static function getValues(): array
   {
@@ -24,6 +25,7 @@ final class StatusVehicleEnum
       self::MAINTENANCE,
       self::IN_REPAIR,
       self::REPAIRED,
+      self::ADD,
     ];
   }
 
@@ -35,6 +37,7 @@ final class StatusVehicleEnum
       self::MAINTENANCE => 'En mantenimiento',
       self::IN_REPAIR => 'En Reparación',
       self::REPAIRED => 'Reparado',
+      self::ADD => 'Agregado',
     ];
 
     if ($status) {
@@ -53,6 +56,7 @@ final class StatusVehicleEnum
       'maintenance' => self::MAINTENANCE,
       'in_repair' => self::IN_REPAIR,
       'repaired' => self::REPAIRED,
+      'add' => self::ADD,
     ];
   }
 }

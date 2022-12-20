@@ -18,7 +18,9 @@ import {
     getWorkshopName,
     hasSubToAssign,
     deleteOrder,
+    clearForm,
 } from "../modules/repair";
+import { onMounted } from "vue";
 
 const props = defineProps({
     vehicle: Object,
@@ -26,7 +28,10 @@ const props = defineProps({
     workshops: Array,
 });
 
-form.vehicle_id = props.vehicle.id;
+onMounted(() => {
+    clearForm();
+    form.vehicle_id = props.vehicle.id;
+});
 </script>
 <template>
     <div class="border-b border-gray-200 pb-3 mb-5">

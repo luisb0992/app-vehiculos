@@ -1,13 +1,13 @@
 <script setup>
-import { ref, inject } from "vue";
-import { form } from "../modules/create";
-// import { swal } from "@/Utils/Helpers/alerts";
+import { inject } from "vue";
+import { useGalleryStore } from "@/Store/gallery";
+
+const galleryStore = useGalleryStore();
 
 // formatos de archivos permitidos
 const ALLOWED_FORMATS = ["image/png", "image/jpeg", "image/jpg"];
 
 // variables
-const images = ref([]);
 const swal = inject("$swal");
 
 // cargar los archivos en la propiedad y mostrar preview
@@ -31,43 +31,29 @@ const loadFiles = (e) => {
             continue;
         }
 
-        // agregar y mostrar la preview
-        const preview = URL.createObjectURL(file);
-        images.value.push(preview);
-
         // agregar el archivo al array de archivos
-        form.gallery.push(file);
-    }
-};
-
-const deleteImage = (index) => {
-    // eliminar la imagen del array de imágenes
-    images.value.splice(index, 1);
-
-    // eliminar el archivo del array de archivos
-    form.gallery.splice(index, 1);
-
-    // si se eliminaron todos los archivos, limpiar el input
-    if (!form.gallery.length) {
-        document.querySelector("input[type=file]").value = null;
+        galleryStore.addImage(file);
     }
 };
 </script>
 <template>
     <div class="bg-gray-100 px-2 rounded">
         <div class="py-5">
-            <input
-                type="file"
-                accept="image/png, image/jpeg, image/jpg"
-                multiple
-                @change="loadFiles"
-                class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-            />
+            <label class="block">
+                <span class="sr-only">Seleccionar archivos</span>
+                <input
+                    type="file"
+                    accept="image/png, image/jpeg, image/jpg"
+                    multiple
+                    @change="loadFiles"
+                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-200 file:text-blue-700 hover:file:bg-blue-300"
+                />
+            </label>
 
             <!-- preview imagenes -->
-            <div class="flex flex-wrap pt-5" v-if="images.length">
+            <div class="flex flex-wrap pt-5" v-if="galleryStore.hasImages()">
                 <div
-                    v-for="(image, index) in images"
+                    v-for="(image, index) in galleryStore.getPreviewImages()"
                     :key="index"
                     class="w-1/2 sm:w-1/3 p-2 relative"
                 >
@@ -79,7 +65,7 @@ const deleteImage = (index) => {
                     <!-- botón de eliminar -->
                     <button
                         class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex justify-center items-center"
-                        @click="deleteImage(index)"
+                        @click="galleryStore.removeImage(index)"
                         type="button"
                     >
                         <svg

@@ -13,12 +13,7 @@ export const form = useForm({
     brand_id: "",
     model_id: "",
     color_id: "",
-    year: "",
-    mileage: "",
-    price: "",
-    description: "",
-    observation: "",
-    status: 2,
+    // status: 2, // no necesario
     gallery: [],
 });
 
@@ -34,21 +29,15 @@ export const clearForm = () => {
     form.reset("brand_id", "");
     form.reset("model_id", "");
     form.reset("color_id", "");
-    form.reset("year", "");
-    form.reset("mileage", "");
-    form.reset("price", "");
-    form.reset("description", "");
-    form.reset("observation", "");
-    form.reset("status", 1);
     form.reset("gallery", []);
 };
 
 export const saveVehicle = () => {
     form.post(route("vehicle.store"), {
-        onStart: () => console.log("start"),
-        onFinish: () => console.log("finish"),
+        // onStart: () => console.log("start"),
         onError: (error) => console.log(error),
         onSuccess: (resp) => clearForm(),
+        onFinish: (resp) => console.log(resp),
     });
 };
 

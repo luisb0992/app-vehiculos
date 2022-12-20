@@ -18,7 +18,7 @@ class VehicleDB
    * @param int $id
    * @return Vehicle
    */
-  public function getVehicleById(int $id): Vehicle
+  public function getVehicleById(int $id): ?Vehicle
   {
     return $this->vehicle->find($id);
   }
@@ -27,9 +27,17 @@ class VehicleDB
    * @param int $id
    * @return Vehicle
    */
-  public function getVehicleByIdWithRelation(int $id): Vehicle
+  public function getVehicleByIdWithRelation(int $id): ?Vehicle
   {
     return $this->vehicle->with(['brand', 'color', 'model', 'gallery'])->find($id);
+  }
+
+  /**
+   * Comprueba Si el vehículo tiene ordenes de reparación
+   */
+  public function checkVehicleHasRepairOrders(int $id): null|bool
+  {
+    return $this->getVehicleById($id)?->repairOrders()?->exists();
   }
 
   /**
@@ -42,6 +50,7 @@ class VehicleDB
   {
     return $this->vehicle
       ->with(['repairOrders', 'color', 'brand', 'model', 'gallery'])
+      ->withCount('repairOrders')
       ->where('user_id', auth()->user()->id)
       ->orderByDesc('created_at')
       ->get();

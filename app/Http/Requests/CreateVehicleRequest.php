@@ -28,12 +28,12 @@ class CreateVehicleRequest extends FormRequest
             'brand_id' => 'required|integer',
             'model_id' => 'required|integer',
             'color_id' => 'required|integer',
-            'year' => 'nullable|string',
-            'mileage' => 'nullable|string',
-            'price' => 'nullable|integer',
-            'description' => 'nullable|string',
-            'observation' => 'nullable|string',
-            'status' => 'nullable|integer',
+            // 'year' => 'nullable|string',
+            // 'mileage' => 'nullable|string',
+            // 'price' => 'nullable|integer',
+            // 'description' => 'nullable|string',
+            // 'observation' => 'nullable|string',
+            // 'status' => 'nullable|integer',
             'gallery' => 'required|array|min:1',
         ];
     }

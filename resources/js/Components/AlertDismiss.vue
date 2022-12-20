@@ -90,7 +90,7 @@ defineProps({
             class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-red-200 dark:text-red-600 dark:hover:bg-red-300"
             data-dismiss-target="#alert-error"
             aria-label="Close"
-            @click="showError = false"
+            @click="showDanger = false"
         >
             <span class="sr-only">Close</span>
             <svg

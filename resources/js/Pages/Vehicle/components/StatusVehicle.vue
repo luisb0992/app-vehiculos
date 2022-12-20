@@ -10,19 +10,18 @@ defineProps({
                 status === $page.props.status.vehicle.repaired,
             'text-yellow-600 text-xs font-bold':
                 status === $page.props.status.vehicle.pending,
-            'text-gray-600 text-xs font-bold':
-                status !== $page.props.status.vehicle.repaired &&
-                status !== $page.props.status.vehicle.pending,
+            'text-blue-600 text-xs font-bold':
+                status === $page.props.status.vehicle.add,
         }"
     >
         <span v-if="status === $page.props.status.vehicle.pending">
-            Pendiente
+            Pendiente por reparar
         </span>
         <span v-else-if="status === $page.props.status.vehicle.repaired">
             Reparado
         </span>
-        <span v-else>
-            No definido
+        <span v-else-if="status === $page.props.status.vehicle.add">
+            Agregado
         </span>
     </div>
 </template>

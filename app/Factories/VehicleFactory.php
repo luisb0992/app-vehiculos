@@ -28,12 +28,7 @@ class VehicleFactory
       'model_id' => $data['model_id'],
       'color_id' => $data['color_id'],
       'user_id' => auth()->user()->id,
-      'year' => $data['year'],
-      'mileage' => $data['mileage'],
-      'price' => $data['price'],
-      'description' => $data['description'],
-      'observation' => $data['observation'],
-      'status' => StatusVehicleEnum::PENDING,
+      'status' => StatusVehicleEnum::ADD,
     ]);
   }
 
