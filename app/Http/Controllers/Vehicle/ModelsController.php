@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers\Vehicle;
 
-use App\Http\Requests\Vehicle\{CreateColorsRequest, EditColorsRequest};
+use App\Http\Requests\Vehicle\{CreateModelRequest, EditModelRequest};
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
-use App\Factories\{ColorFactory};
+use App\Factories\{ModelVehicleFactory,BrandFactory};
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\ModelVehicle;
 
 class ModelsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct(
+        private ModelVehicleFactory $modelF,
+        private BrandFactory $brandF,
+    ) {
+    }
     public function index()
     {
-        //
+        return Inertia::render('Models/Index',[
+            'models' => $this->modelF->getModelsWithBrand()
+        ]);
     }
 
     /**
@@ -30,7 +32,9 @@ class ModelsController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Models/Create',[
+            'brands' =>$this->brandF->getBrands(),
+        ]);
     }
 
     /**
@@ -39,9 +43,13 @@ class ModelsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateModelRequest $request): RedirectResponse
     {
-        //
+        ModelVehicle::create([
+            'name' => $request->name,
+        ]);
+
+        return Redirect::route('utils.models.index')->with('success', 'Modelo agregado con éxito');
     }
 
     /**
@@ -63,7 +71,9 @@ class ModelsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Models/Edit',[
+            'model' => $this->modelF->findModelWithId($id),
+        ]);
     }
 
     /**
@@ -73,9 +83,11 @@ class ModelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditModelRequest $request, ModelVehicle $model)
     {
-        //
+        $this->modelF->updateModel($request->validated(),$model);
+
+        return Redirect::route('utils.models.index')->with('success', 'Modelo modificado con éxito');
     }
 
     /**
@@ -84,8 +96,12 @@ class ModelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ModelVehicle $model)
     {
-        //
+        if($model->vehicles->count() >= 1){
+            return Redirect::route('utils.models.index')->with('error', 'No se puede eliminar el Modelo, tiene vehiculos asociados');
+        }
+        $model->delete();
+        return Redirect::route('utils.models.index')->with('success', 'Modelo eliminado con éxito');
     }
 }

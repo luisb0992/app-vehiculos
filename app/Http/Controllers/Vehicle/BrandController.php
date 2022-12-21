@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers\Vehicle;
 
+use App\Http\Requests\Vehicle\{CreateBrandsRequest, EditBrandsRequest};
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use App\Factories\{BrandFactory};
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Models\Brand;
 
 class BrandController extends Controller
 {
+
+    public function __construct(
+        private BrandFactory $brandF,
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +26,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Brands/Index',[
+            'brands' => $this->brandF->getBrands()
+        ]);
     }
 
     /**
@@ -24,7 +38,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Brands/Create');
     }
 
     /**
@@ -33,9 +47,13 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBrandsRequest $request): RedirectResponse
     {
-        //
+        Brand::create([
+            'name' => $request->name,
+        ]);
+
+        return Redirect::route('utils.brands.index')->with('success', 'Marca agregada con éxito');
     }
 
     /**
@@ -57,7 +75,9 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Brands/Edit',[
+            'brand' => $this->brandF->findBrandWithId($id),
+        ]);
     }
 
     /**
@@ -67,9 +87,11 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditBrandsRequest $request, Brand $brand)
     {
-        //
+        $this->brandF->updateBrand($request->validated(),$brand);
+
+        return Redirect::route('utils.brands.index')->with('success', 'Marca modificada con éxito');
     }
 
     /**
@@ -78,8 +100,12 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
-        //
+        if($brand->vehicles->count() >= 1){
+            return Redirect::route('utils.brands.index')->with('error', 'No se puede eliminar esta Marca, tiene vehiculos asociados');
+        }
+        $brand->delete();
+        return Redirect::route('utils.brands.index')->with('success', 'Marca eliminada con éxito');
     }
 }

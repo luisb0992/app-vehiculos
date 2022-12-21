@@ -12,4 +12,23 @@ class ModelVehicleFactory
   {
     return ModelVehicle::orderBy('name')->get(['id', 'name', 'brand_id']);
   }
+
+  public function findModelWithId(int $id): ModelVehicle
+   {
+     return ModelVehicle::findOrFail($id);
+   }
+
+   public function updateModel(array $data, $model): bool
+   {
+     $model->name = $data['name'];
+     $model->brand_id = $data['brand_id'];
+
+     return $model->save();
+   }
+
+   public function getModelsWithBrand(){
+
+    return ModelVehicle::with('brand')->get();
+
+  }
 }

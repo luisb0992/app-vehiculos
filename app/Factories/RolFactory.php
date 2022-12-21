@@ -10,7 +10,7 @@ class RolFactory
 {
   public function getRoles(): Collection
   {
-    return Rol::all(['id', 'name']);
+    return Rol::orderBy('id', 'DESC')->get(['id', 'name']);
   }
 
   public function findRolWithId(int $id): Rol

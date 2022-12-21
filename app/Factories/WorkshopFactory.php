@@ -8,7 +8,7 @@ class WorkshopFactory
 {
   public function getWorkshops(): Collection
   {
-    return Workshop::all(['id', 'name']);
+    return Workshop::orderBy('id', 'DESC')->get(['id', 'name']);
   }
 
   public function findRolWithId(int $id): Workshop

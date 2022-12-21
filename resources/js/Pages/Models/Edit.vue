@@ -10,7 +10,7 @@ const props = defineProps({
 });
 </script>
 <template>
-    <Head title="Editar Color" />
+    <Head title="Editar Taller" />
 
     <Layout>
         <div class="mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -18,7 +18,7 @@ const props = defineProps({
                 <div class="w-full pb-5">
                     <div class="flex justify-between overflow-hidden shadow-sm sm:rounded-lg">
                         <h3 class="text-gray-900 text-2xl font-bold">
-                            Editar Color
+                            Editar Taller
                         </h3>
                         <ButtonBack
                             class="flex justify-center"
