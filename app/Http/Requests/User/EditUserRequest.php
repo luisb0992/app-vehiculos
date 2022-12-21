@@ -29,7 +29,7 @@ class EditUserRequest extends FormRequest
             'dni' =>  [ 'required','unique:users,email,'.$this->user->id],
             'email' => [ 'required','email','unique:users,email,'.$this->user->id],
             'rol_id' => 'required',
-            'workshop_id' => 'required|exclude_if:rol_id,4',
+            'workshop_id' => 'nullable',
         ];
     }
 

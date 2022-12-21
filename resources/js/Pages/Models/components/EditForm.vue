@@ -7,11 +7,13 @@ import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import {
     clearForm,
-    handleUpdate
+    handleUpdate,
+    getBrands
 } from "../modules/edit";
 
 const props = defineProps({
     model: Object,
+    brands: Array
 });
 const form = useForm({
     name: props.model.name,
@@ -21,7 +23,7 @@ const form = useForm({
 clearForm(form);
 </script>
 <template>
-    <form @submit.prevent="handleUpdate(form,props.brand.id)">
+    <form @submit.prevent="handleUpdate(form,props.model.id)">
         <div class="flex flex-col gap-5">
             <div>
                 <InputLabel for="name" value="Nombre" />
@@ -39,6 +41,27 @@ clearForm(form);
                 />
             </div>
 
+            <div>
+                <InputLabel for="marca" value="Marca" />
+                <select
+                    id="marca"
+                    class="mt-1 block w-full border-gray-200 border"
+                    v-model="form.brand_id"
+                    required
+                    @change="getBrands(brands,form)"
+                >
+                    <option value="">Seleccione una marca</option>
+                    <option
+                        v-for="brand in brands"
+                        :key="brand.id"
+                        :value="brand.id"
+                    >
+                        {{ brand.name }}
+                    </option>
+                </select>
+                <InputError class="mt-2" :message="form.errors.brand_id" />
+            </div>
+
             <div class="flex flex-col md:lg:flex-row gap-2">
                 <PrimaryButton
                     class="w-full  flex justify-center"
@@ -48,7 +71,7 @@ clearForm(form);
                 >
                     <span class="px-6 py-3 uppercase"> Guardar </span>
                 </PrimaryButton>
-                <SecondaryButton @click="clearForm()" class="w-full  flex justify-center">
+                <SecondaryButton @click="clearForm(form)" class="w-full  flex justify-center">
                      <span class="px-6 py-3 uppercase"> Limpiar </span>
                 </SecondaryButton>
             </div>

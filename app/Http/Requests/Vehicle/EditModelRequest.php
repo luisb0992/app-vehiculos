@@ -13,7 +13,7 @@ class EditModelRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class EditModelRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3|max:60 unique:model_vehicles,name,'.$this->model->id,
+            'brand_id' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        // mensajes en español
+        return [
+            'name.required' => 'El nombre es requerido.',
+            'name.unique' => 'Este modelo ya existe.',
+            'name.min' => 'El nombre debe tener un minimo de 3 caracteres.',
+            'brand_id.required' => 'La marca es un campo requerido.',
         ];
     }
 }

@@ -1,11 +1,15 @@
-import { useForm,defineProps } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 
 export const filterModels = ref([]);
 
+
 export const getRol = (models,form) => {
     const data = models.filter((model) => model.rol_id === form.rol_id);
     filterModels.value = data;
+    if(form.rol_id != 4){
+        form.workshop_id = "";
+    }
 };
 
 export const getWorkshop = (models,form) => {

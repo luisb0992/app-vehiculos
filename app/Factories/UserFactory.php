@@ -20,13 +20,12 @@ class UserFactory
 
   public function updateUser(array $data,$user)
   {
-
     $user->name = $data['name'];
     $user->last_name = $data['last_name'];
     $user->rol_id = $data['rol_id'];
     $user->email = $data['email'];
     $user->dni = $data['dni'];
-    $user->workshop_id = $data['workshop_id'] ?? null;
+    $user->workshop_id = $data['workshop_id'];
 
     return $user->save();
 

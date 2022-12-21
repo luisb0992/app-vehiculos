@@ -6,7 +6,8 @@ import EditForm from "./components/EditForm.vue";
 import ButtonBack from "@/Components/ButtonBack.vue";
 
 const props = defineProps({
-    color : Object
+    model : Object,
+    brands : Array
 });
 </script>
 <template>
@@ -22,13 +23,14 @@ const props = defineProps({
                         </h3>
                         <ButtonBack
                             class="flex justify-center"
-                            :href="route('utils.colors.index')"
+                            :href="route('utils.models.index')"
                         />
                     </div>
                 </div>
                 <div class="w-full">
                     <EditForm
-                        :color = "color"
+                        :model = "model"
+                        :brands="brands"
                     />
                 </div>
             </div>

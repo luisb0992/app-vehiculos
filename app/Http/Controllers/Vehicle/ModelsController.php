@@ -74,6 +74,7 @@ class ModelsController extends Controller
     {
         return Inertia::render('Models/Edit',[
             'model' => $this->modelF->findModelWithId($id),
+            'brands' =>$this->brandF->getBrands(),
         ]);
     }
 
