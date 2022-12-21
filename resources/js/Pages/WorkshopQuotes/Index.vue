@@ -22,7 +22,7 @@ const filter = ref({
     <Head title="Listado de solicitudes de reparación" />
 
     <Layout>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white py-7 px-5 rounded-md">
                 <div class="w-full pb-5">
                     <div class="overflow-hidden shadow-sm sm:rounded-lg">

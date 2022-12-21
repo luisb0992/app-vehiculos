@@ -13,7 +13,7 @@ const props = defineProps({
     <Head title="Editar Taller" />
 
     <Layout>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="bg-white p-7 rounded-md">
                 <div class="w-full pb-5">
                     <div class="flex justify-between overflow-hidden shadow-sm sm:rounded-lg">
@@ -22,7 +22,7 @@ const props = defineProps({
                         </h3>
                         <ButtonBack
                             class="flex justify-center"
-                            :href="route('colors.index')"
+                            :href="route('utils.colors.index')"
                         />
                     </div>
                 </div>

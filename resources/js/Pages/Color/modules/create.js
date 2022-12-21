@@ -10,7 +10,7 @@ export const clearForm = () => {
 
 
 export const handleSave = () => {
-    form.post(route("colors.store"), {
+    form.post(route("utils.colors.store"), {
         onStart: () => console.log("start"),
         onFinish: () => console.log("finish"),
         onError: (error) => console.log(error),

@@ -4,7 +4,7 @@ export const clearForm = (form) => {
 };
 
 export const handleUpdate = (form,id) => {
-    form.put(route("colors.update",id), {
+    form.put(route("utils.colors.update",id), {
         onStart: () => console.log("start"),
         onFinish: () => console.log("finish"),
         onError: (error) => console.log(error),

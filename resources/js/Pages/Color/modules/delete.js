@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/inertia-vue3'
 
 export const form = useForm();
  export const requestDelete = (id) => {
-    form.delete(route("colors.destroy",id), {
+    form.delete(route("utils.colors.destroy",id), {
         onStart: () => console.log("start"),
         onFinish: () => console.log("finish"),
         onError: (error) => console.log(error),

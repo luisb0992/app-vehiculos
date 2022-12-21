@@ -52,7 +52,7 @@ class ColorsController extends Controller
             'name' => $request->name,
         ]);
 
-        return Redirect::route('colors.index')->with('success', 'Color agregado con éxito');
+        return Redirect::route('utils.colors.index')->with('success', 'Color agregado con éxito');
     }
 
     /**
@@ -90,7 +90,7 @@ class ColorsController extends Controller
     {
         $this->colorF->updateColor($request->validated(),$color);
 
-        return Redirect::route('colors.index')->with('success', 'Color modificado con éxito');
+        return Redirect::route('utils.colors.index')->with('success', 'Color modificado con éxito');
     }
 
     /**
@@ -102,9 +102,9 @@ class ColorsController extends Controller
     public function destroy(Color $color)
     {
         if($color->vehicles->count() >= 1){
-            return Redirect::route('colors.index')->with('error', 'No se puede eliminar el Color, tiene vehiculos asociados');
+            return Redirect::route('utils.colors.index')->with('error', 'No se puede eliminar el Color, tiene vehiculos asociados');
         }
         $color->delete();
-        return Redirect::route('colors.index')->with('success', 'Color eliminado con éxito');
+        return Redirect::route('utils.colors.index')->with('success', 'Color eliminado con éxito');
     }
 }

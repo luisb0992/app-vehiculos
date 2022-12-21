@@ -103,7 +103,7 @@ clearForm();
                 <InputError class="mt-2" :message="form.errors.rol_id" />
             </div>
 
-            <div v-if="($page.props.auth.user.rol_id == 1)">
+            <div v-if="($page.props.auth.user.rol_id == 4)">
                 <InputLabel for="workshop" value="Taller" />
                 <select
                     id="workshop"

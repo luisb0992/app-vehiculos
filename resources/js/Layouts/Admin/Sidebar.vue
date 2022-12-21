@@ -15,12 +15,23 @@ let Openbar = () => {
 
 let dropDown = () => {
     const submenu = document.querySelector("#submenu");
+    const arrowVehicle = document.querySelector("#arrowVehicle");
+    arrowVehicle.classList.toggle("rotate-0");
     submenu.classList.toggle("hidden");
 };
 
 const dropDownWorkshop = () => {
     const submenuWorkshop = document.querySelector("#submenuWorkshop");
     submenuWorkshop.classList.toggle("hidden");
+    const arrowWorkshop = document.querySelector("#arrowWorkshop");
+    arrowWorkshop.classList.toggle("rotate-0");
+};
+
+const dropDownUtils = () => {
+    const submenuUtils = document.querySelector("#submenuUtils");
+    submenuUtils.classList.toggle("hidden");
+    const arrowUtils = document.querySelector("#arrowUtils");
+    arrowUtils.classList.toggle("rotate-0");
 };
 </script>
 
@@ -32,7 +43,7 @@ const dropDownWorkshop = () => {
         <i class="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
     </span>
     <div
-        class="sidebar absolute top-0 bottom-0 lg:left-0 left-[-300px] z-10 duration-1000 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 shadow h-screen"
+        class="sidebar fixed min-h-screen top-0 bottom-0 lg:left-0 left-[-300px] md:left-0 z-10 duration-1000 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 shadow h-full"
     >
         <div class="text-gray-100 text-xl">
             <div class="p-2.5 mt-1 flex items-center rounded-md">
@@ -92,14 +103,16 @@ const dropDownWorkshop = () => {
                         <span class="text-[15px] ml-4 text-gray-200">
                             Vehiculos
                         </span>
-                        <span class="text-sm rotate-180" id="arrow">
-                            <i class="bi bi-arrow-down-square"></i>
+                        <span class="text-sm rotate-180 transition duration-700" id="arrowVehicle">
+                            <i class="bi bi-arrow-down-square" ></i>
                         </span>
                     </div>
                 </div>
                 <div
                     class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
                     id="submenu"
+                    :class="{'visible': route().current('vehicle.*'),
+                             'hidden': !route().current('vehicle.*')}"
                 >
                     <SideLink
                         :href="route('vehicle.create')"
@@ -125,26 +138,28 @@ const dropDownWorkshop = () => {
                 <div
                     class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
                 >
-                    <i class="fas fa-car"></i>
+                    <i class="fas fa-wrench"></i>
                     <div
                         class="flex justify-between w-full items-center"
-                        @click="dropDown()"
+                        @click="dropDownUtils()"
                     >
                         <span class="text-[15px] ml-4 text-gray-200">
                             Utilidades
                         </span>
-                        <span class="text-sm rotate-180" id="arrow">
+                        <span class="text-sm rotate-180  transition duration-700" id="arrowUtils">
                             <i class="bi bi-arrow-down-square"></i>
                         </span>
                     </div>
                 </div>
                 <div
                     class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
-                    id="submenu"
+                    id="submenuUtils"
+                    :class="{'visible': route().current('utils.*'),
+                             'hidden': !route().current('utils.*')}"
                 >
                     <SideLink
-                        :href="route('colors.index')"
-                        :active="route().current('colors.*')"
+                        :href="route('utils.colors.index')"
+                        :active="route().current('utils.colors.*')"
                         :icon="'bi bi-arrow-right-square'"
                         class="hover:bg-blue-600"
                     >
@@ -153,8 +168,8 @@ const dropDownWorkshop = () => {
                         </span>
                     </SideLink>
                     <SideLink
-                        :href="route('vehicle.index')"
-                        :active="route().current('vehicle.index')"
+                        :href="route('utils.models.index')"
+                        :active="route().current('utils.models.index')"
                         :icon="'bi bi-arrow-right-square'"
                         class="hover:bg-blue-600"
                     >
@@ -163,8 +178,8 @@ const dropDownWorkshop = () => {
                         </span>
                     </SideLink>
                     <SideLink
-                        :href="route('vehicle.index')"
-                        :active="route().current('vehicle.index')"
+                        :href="route('utils.brands.index')"
+                        :active="route().current('utils.brands.index')"
                         :icon="'bi bi-arrow-right-square'"
                         class="hover:bg-blue-600"
                     >
@@ -186,7 +201,7 @@ const dropDownWorkshop = () => {
                         <span class="text-[15px] ml-4 text-gray-200">
                             Cotizaciones
                         </span>
-                        <span class="text-sm rotate-180" id="arrow">
+                        <span class="text-sm rotate-180  transition duration-700" id="arrowWorkshop">
                             <i class="bi bi-arrow-down-square"></i>
                         </span>
                     </div>
@@ -194,6 +209,8 @@ const dropDownWorkshop = () => {
                 <div
                     class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
                     id="submenuWorkshop"
+                    :class="{'visible': route().current('workshop_quotes.*'),
+                             'hidden': !route().current('workshop_quotes.*')}"
                 >
                     <!-- <SideLink
                         :href="route('workshop.create')"

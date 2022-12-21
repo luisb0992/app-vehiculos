@@ -14,10 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (!User::count()) {
+
+        /* if (!User::count()) {
             \App\Models\Rol::factory()->create();
             \App\Models\User::factory()->create();
-        }
+        } */
 
         $this->call([
             BrandSeeder::class,
@@ -26,6 +27,8 @@ class DatabaseSeeder extends Seeder
             WorkshopSeeder::class,
             RepairCategorySeeder::class,
             RepairSubCategorySeeder::class,
+            RolSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\{RolController, WorkshopController};
-use App\Http\Controllers\Vehicle\{ColorsController, ModelsController};
+use App\Http\Controllers\Vehicle\{ColorsController, ModelsController,BrandController};
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,8 +17,10 @@ Route::middleware('auth')->prefix('workshop')->group(function () {
     Route::resource('workshops', WorkshopController::class);
 });
 
-Route::middleware('auth')->prefix('utils')->group(function () {
+Route::name('utils.')->middleware('auth')->prefix('utils')->group(function () {
     Route::resource('colors', ColorsController::class);
+    Route::resource('models', ModelsController::class);
+    Route::resource('brands', BrandController::class);
 });
 
 

@@ -1,12 +1,12 @@
 <template>
     <SideBar />
 
-    <div class="main-content flex flex-col flex-grow md:pl-[300px] md:pr-[50px] py-2">
+    <div class="main-content relative flex flex-col flex-grow md:pl-[300px] md:pr-[50px]">
         <NavBar />
         <!-- <h1 class="font-bold text-2xl text-gray-700">Inicio</h1> -->
         <div class="flex flex-col flex-grow bg-white rounded mt-4">
             <!-- mostrar mensaje -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8">
                 <AlertDismiss
                     :show-success="$page.props.flash.success ? true : false"
                     :show-danger="$page.props.flash.error ? true : false"

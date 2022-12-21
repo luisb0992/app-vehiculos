@@ -2,7 +2,7 @@
     <DataTable :value="roles" :paginator="true" :rows="10"
             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             :rowsPerPageOptions="[10,20,50]" responsiveLayout="scroll"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters1" filterDisplay="menu" >
+            currentPageReportTemplate="Viendo {first} al {last} de {totalRecords}" v-model:filters="filters1" filterDisplay="menu" >
         <template #header>
             <div class="flex justify-between">
                 <span class="p-input-icon-left">
