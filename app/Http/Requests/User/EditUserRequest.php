@@ -29,7 +29,16 @@ class EditUserRequest extends FormRequest
             'dni' =>  [ 'required','unique:users,email,'.$this->user->id],
             'email' => [ 'required','email','unique:users,email,'.$this->user->id],
             'rol_id' => 'required',
-            'workshop_id' => 'required',
+            'workshop_id' => 'required|exclude_unless:rol_id,4',
+        ];
+    }
+
+    public function messages()
+    {
+        // mensajes en español
+        return [
+            'workshop_id.required' => 'El taller es requerido.',
+            'rol_id.required' => 'El  rol es requerido.',
         ];
     }
 }

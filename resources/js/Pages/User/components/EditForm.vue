@@ -113,13 +113,13 @@ clearForm(form);
                 <InputError class="mt-2" :message="form.errors.rol_id" />
             </div>
 
-            <div v-if="($page.props.auth.user.rol_id == 1)">
+            <div v-if="($page.props.auth.user.rol_id == 4 || form.rol_id == 4)">
                 <InputLabel for="workshop" value="Taller" />
                 <select
                     id="workshop"
                     class="mt-1 block w-full border-gray-200 border"
                     v-model="form.workshop_id"
-                    required
+                    :required="form.rol_id == 4"
                     @change="getWorkshop(workshops,form)"
                 >
                     <option value="">Seleccione un taller</option>

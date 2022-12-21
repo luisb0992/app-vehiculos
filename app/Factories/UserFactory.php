@@ -14,7 +14,7 @@ class UserFactory
         'email' => $data['email'],
         'dni' => $data['dni'],
         'password' => $data['password'],
-        'workshop_id' => $data['workshop_id'],
+        'workshop_id' => $data['workshop_id'] ?? null,
       ]);
   }
 

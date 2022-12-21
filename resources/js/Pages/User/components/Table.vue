@@ -18,7 +18,7 @@
         <Column field="email" header="Email" :sortable="true"></Column>
         <Column header="Taller" :sortable="true" >
             <template #body="{data}">
-                {{data.workshop.name}}
+                {{data.workshop == null ? 'Sin Taller' : data.workshop.name}}
             </template>
         </Column>
         <Column field="rol_id" header="Rol" :filterMenuStyle="{'width':'14rem'}" :sortable="true">

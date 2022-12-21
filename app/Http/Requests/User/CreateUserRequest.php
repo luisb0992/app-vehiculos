@@ -27,10 +27,19 @@ class CreateUserRequest extends FormRequest
             'name' => 'required|min:3|max:60',
             'email' => 'email:unique:users,email',
             'last_name' => 'required|min:3|max:80',
-            'dni' => 'required|min:15|max:20|unique:users,dni',
+            'dni' => 'required|min:5|max:20|unique:users,dni',
             'rol_id' => 'required',
-            'workshop_id' => 'required',
+            'workshop_id' => 'required|exclude_unless:rol_id,4',
             'password' => 'required|confirmed|min:6',
+        ];
+    }
+
+    public function messages()
+    {
+        // mensajes en español
+        return [
+            'workshop_id.required' => 'El taller es requerido.',
+            'rol_id.required' => 'El  rol es requerido.',
         ];
     }
 }

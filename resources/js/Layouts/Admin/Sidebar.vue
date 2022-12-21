@@ -85,13 +85,13 @@ const dropDownUtils = () => {
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Talleres</span>
                 </SideLink>
-                <SideLink
+               <!--  <SideLink
                     :href="route('roles.index')"
                     :active="route().current('roles.*')"
                     :icon="'bi bi-award-fill'"
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Roles</span>
-                </SideLink>
+                </SideLink> -->
                 <div
                     class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
                 >
