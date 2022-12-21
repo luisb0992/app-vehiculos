@@ -20,12 +20,15 @@ export const getWorkshop = (models,form) => {
 // limpiar los datos del formulario
 // cuando se inicializa el componente
 export const clearForm = (form) => {
-    form.reset("rol_id", "");
-    form.reset("workshop_id", "");
-    form.reset("name", "");
-    form.reset("last_name", "");
-    form.reset("email", "");
-    form.reset("dni", "");
+    console.log(form.update_password)
+    form.rol_id = "";
+    form.workshop_id = "";
+    form.name = "";
+    form.last_name = "";
+    form.email = "";
+    form.dni = "";
+    form.update_password = false;
+
 };
 
 export const handleUpdateUser = (form,id) => {

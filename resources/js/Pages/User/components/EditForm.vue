@@ -6,6 +6,8 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
+import Checkbox from "@/Components/Checkbox.vue";
+
 import {
     getRol,
     getWorkshop,
@@ -21,15 +23,21 @@ const props = defineProps({
 });
 
 const form = useForm({
+    //checked para cambiar contraseña
+    update_password: false,
+
+    //data form
     rol_id: props.user.rol_id,
     workshop_id: props.user.workshop_id,
     name: props.user.name,
     last_name: props.user.last_name,
     email: props.user.email,
     dni: props.user.dni,
+    password: "",
+    password_confirmation: "",
 });
 
-clearForm(form);
+
 </script>
 <template>
     <form @submit.prevent="handleUpdateUser(form,props.user.id)">
@@ -134,12 +142,18 @@ clearForm(form);
                 </select>
                 <InputError class="mt-2" :message="form.errors.workshop_id" />
             </div>
-            <!-- <div>
+            <div>
+                <label class="flex items-center">
+                    <Checkbox name="remember" v-model:checked="form.update_password" />
+                    <span class="ml-2 text-sm text-gray-600">¿Deseas Cambiar la contraseña de este usuario?</span>
+                </label>
+            </div>
+            <div v-if="form.update_password">
                 <InputLabel for="password" value="Contraseña" />
                 <TextInput
                     id="password"
                     type="password"
-                    class="mt-1 block w-full border-gray-200 border"
+                    class="mt-1 block w-full border-gray-200 border  animate-fade-in-down"
                     v-model="form.password"
                     required
                 />
@@ -148,12 +162,12 @@ clearForm(form);
                     :message="form.errors.password"
                 />
             </div>
-            <div>
+            <div v-if="form.update_password">
                 <InputLabel for="password_confirmation" value="Repetir Contraseña" />
                 <TextInput
                     id="password_confirmation"
                     type="password"
-                    class="mt-1 block w-full border-gray-200 border"
+                    class="mt-1 block w-full border-gray-200 border  animate-fade-in-down"
                     v-model="form.password_confirmation"
                     required
                 />
@@ -161,7 +175,7 @@ clearForm(form);
                     class="mt-2"
                     :message="form.errors.password_confirmation"
                 />
-            </div> -->
+            </div>
 
             <div class="flex flex-col md:lg:flex-row gap-2">
                 <PrimaryButton
@@ -172,7 +186,7 @@ clearForm(form);
                 >
                     <span class="px-6 py-3 uppercase"> Guardar </span>
                 </PrimaryButton>
-                <SecondaryButton @click="clearForm()" class="w-full  flex justify-center">
+                <SecondaryButton @click="clearForm(form)" class="w-full  flex justify-center">
                      <span class="px-6 py-3 uppercase"> Limpiar </span>
                 </SecondaryButton>
             </div>

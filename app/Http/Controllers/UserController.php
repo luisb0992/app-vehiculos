@@ -94,6 +94,7 @@ class UserController extends Controller
      */
     public function update(EditUserRequest $request, User $user)
     {
+        //dd($request->all());
          $this->userF->updateUser($request->validated(),$user);
 
         return Redirect::route('users.index')->with('success', 'Usuario modificado con éxito');

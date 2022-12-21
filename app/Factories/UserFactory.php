@@ -27,6 +27,10 @@ class UserFactory
     $user->dni = $data['dni'];
     $user->workshop_id = $data['workshop_id'];
 
+    if(isset($data['password'])){
+      $user->password = $data['password'];
+    }
+
     return $user->save();
 
   }

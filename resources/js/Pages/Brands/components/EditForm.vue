@@ -17,7 +17,6 @@ const form = useForm({
     name: props.brand.name,
 });
 
-clearForm(form);
 </script>
 <template>
     <form @submit.prevent="handleUpdate(form,props.brand.id)">
@@ -47,7 +46,7 @@ clearForm(form);
                 >
                     <span class="px-6 py-3 uppercase"> Guardar </span>
                 </PrimaryButton>
-                <SecondaryButton @click="clearForm()" class="w-full  flex justify-center">
+                <SecondaryButton @click="clearForm(form)" class="w-full  flex justify-center">
                      <span class="px-6 py-3 uppercase"> Limpiar </span>
                 </SecondaryButton>
             </div>

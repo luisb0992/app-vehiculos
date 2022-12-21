@@ -8,7 +8,7 @@ export const getBrands = (brands,form) => {
 };
 export const clearForm = (form) => {
     form.name = "";
-    form.workshop_id = null;
+    form.brand_id = null;
 };
 
 export const handleUpdate = (form,id) => {

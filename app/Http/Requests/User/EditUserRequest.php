@@ -27,9 +27,10 @@ class EditUserRequest extends FormRequest
             'name' => 'required|min:3|max:60',
             'last_name' => 'required|min:3|max:80',
             'dni' =>  [ 'required','unique:users,email,'.$this->user->id],
-            'email' => [ 'required','email','unique:users,email,'.$this->user->id],
+            'email' => ['required','email','unique:users,email,'.$this->user->id],
             'rol_id' => 'required',
             'workshop_id' => 'nullable',
+            'password' => 'exclude_if:update_password,false|required_if:update_password,true|confirmed|min:6',
         ];
     }
 
@@ -39,6 +40,9 @@ class EditUserRequest extends FormRequest
         return [
             'workshop_id.required' => 'El taller es requerido.',
             'rol_id.required' => 'El  rol es requerido.',
+            'password.required_if' => 'La contraseña es requerida.',
+            'password.confirmed' => 'Las contraseñas no coinciden.'
+
         ];
     }
 }

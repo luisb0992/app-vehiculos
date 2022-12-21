@@ -1,6 +1,6 @@
 
 export const clearForm = (form) => {
-    form.reset("name", "");
+    form.name = "";
 };
 
 export const handleUpdate = (form,id) => {
