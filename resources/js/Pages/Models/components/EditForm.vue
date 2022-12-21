@@ -20,7 +20,6 @@ const form = useForm({
     brand_id : props.model.brand_id
 });
 
-clearForm(form);
 </script>
 <template>
     <form @submit.prevent="handleUpdate(form,props.model.id)">

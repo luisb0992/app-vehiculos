@@ -169,7 +169,7 @@ const dropDownUtils = () => {
                     </SideLink>
                     <SideLink
                         :href="route('utils.models.index')"
-                        :active="route().current('utils.models.index')"
+                        :active="route().current('utils.models.*')"
                         :icon="'bi bi-arrow-right-square'"
                         class="hover:bg-blue-600"
                     >
@@ -179,7 +179,7 @@ const dropDownUtils = () => {
                     </SideLink>
                     <SideLink
                         :href="route('utils.brands.index')"
-                        :active="route().current('utils.brands.index')"
+                        :active="route().current('utils.brands.*')"
                         :icon="'bi bi-arrow-right-square'"
                         class="hover:bg-blue-600"
                     >
