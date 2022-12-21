@@ -13,18 +13,24 @@ class CreateModelRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3|max:60',
+            'brand_id' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        // mensajes en español
+        return [
+            'name.required' => 'El nombre es requerido.',
+            'name.min' => 'El nombre debe tener un minimo de 3 caracteres.',
+            'brand_id.required' => 'La marca es un campo requerido.',
         ];
     }
 }

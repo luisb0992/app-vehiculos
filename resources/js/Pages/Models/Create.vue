@@ -3,6 +3,9 @@ import { Head } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/Layout.vue";
 import UseForm from "./components/UseForm.vue";
 
+const props = defineProps({
+    brands: Array,
+});
 
 </script>
 <template>
@@ -18,7 +21,9 @@ import UseForm from "./components/UseForm.vue";
                     </div>
                 </div>
                 <div class="w-full">
-                    <UseForm/>
+                    <UseForm
+                        :brands="brands"
+                    />
                 </div>
             </div>
         </div>

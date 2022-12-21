@@ -29,7 +29,7 @@ class CreateUserRequest extends FormRequest
             'last_name' => 'required|min:3|max:80',
             'dni' => 'required|min:5|max:20|unique:users,dni',
             'rol_id' => 'required',
-            'workshop_id' => 'required|exclude_if:rol_id,4',
+            //'workshop_id' => 'required|required_if:rol_id,==,4',
             'password' => 'required|confirmed|min:6',
         ];
     }

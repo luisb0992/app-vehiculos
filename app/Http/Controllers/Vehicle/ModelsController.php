@@ -47,6 +47,7 @@ class ModelsController extends Controller
     {
         ModelVehicle::create([
             'name' => $request->name,
+            'brand_id' => $request->brand_id,
         ]);
 
         return Redirect::route('utils.models.index')->with('success', 'Modelo agregado con éxito');
