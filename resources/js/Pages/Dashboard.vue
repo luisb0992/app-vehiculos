@@ -1,4 +1,5 @@
 <script setup>
+import AdminLayout from "@/Layouts/Admin/AdminLayout.vue";
 import Layout from "@/Layouts/Layout.vue";
 import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 
