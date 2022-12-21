@@ -59,7 +59,7 @@ const loadFiles = (e) => {
                 >
                     <img
                         :src="image"
-                        class="w-full h-40 sm:w-60 sm:h-60 object-cover object-center"
+                        class="w-full object-cover object-center aspect-square rounded"
                     />
 
                     <!-- botón de eliminar -->
