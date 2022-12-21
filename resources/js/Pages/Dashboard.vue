@@ -34,24 +34,42 @@ const userIs = {
                         class="flex justify-center md:justify-start items-center"
                     >
                         <div class="py-10 px-5 flex gap-5">
-                            <Link
-                                :href="route('vehicle.create')"
-                                class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
-                                v-if="userIs.recorder"
-                            >
-                                <span class="uppercase font-medium text-lg">
-                                    Nuevo ingreso vehicular
-                                </span>
-                            </Link>
-                            <Link
-                                :href="route('workshop_quotes.index')"
-                                class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
-                                v-if="userIs.supplier"
-                            >
-                                <span class="uppercase font-medium text-lg">
-                                    Solicitudes de reparación
-                                </span>
-                            </Link>
+                            <div v-if="userIs.recorder">
+                                <Link
+                                    :href="route('vehicle.index')"
+                                    class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
+                                >
+                                    <span class="uppercase font-medium text-lg">
+                                        Listado de Vehiculos
+                                    </span>
+                                </Link>
+                                <!-- <Link
+                                    :href="route('vehicle.create')"
+                                    class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
+                                >
+                                    <span class="uppercase font-medium text-lg">
+                                        Nuevo ingreso vehicular
+                                    </span>
+                                </Link> -->
+                            </div>
+                            <div v-if="userIs.supplier">
+                                <Link
+                                    :href="route('workshop_quotes.index')"
+                                    class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
+                                >
+                                    <span class="uppercase font-medium text-lg">
+                                        Solicitudes de reparación
+                                    </span>
+                                </Link>
+                                <!-- <Link
+                                    :href="route('workshop_quotes.index')"
+                                    class="border p-5 md:p-10 shadow-md bg-gray-50 hover:animate-shadow-drop-center"
+                                >
+                                    <span class="uppercase font-medium text-lg">
+                                        Solicitudes de reparación
+                                    </span>
+                                </Link> -->
+                            </div>
                         </div>
                     </div>
                 </div>
