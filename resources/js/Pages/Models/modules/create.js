@@ -1,5 +1,7 @@
 import { useForm } from "@inertiajs/inertia-vue3";
+import { ref } from "vue";
 
+export const filterBrands = ref([]);
 export const form = useForm({
     name: "",
     brand_id: "",

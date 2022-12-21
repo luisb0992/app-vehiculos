@@ -13,6 +13,11 @@ class ModelVehicleFactory
     return ModelVehicle::orderBy('name')->get(['id', 'name', 'brand_id']);
   }
 
+  public function getAllModelsOrderASC(): Collection
+  {
+    return ModelVehicle::with('brand')->orderBy('id', 'DESC')->get(['id', 'name', 'brand_id']);
+  }
+
   public function findModelWithId(int $id): ModelVehicle
    {
      return ModelVehicle::findOrFail($id);

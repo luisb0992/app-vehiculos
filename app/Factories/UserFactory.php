@@ -26,7 +26,7 @@ class UserFactory
     $user->rol_id = $data['rol_id'];
     $user->email = $data['email'];
     $user->dni = $data['dni'];
-    $user->workshop_id = $data['workshop_id'];
+    $user->workshop_id = $data['workshop_id'] ?? null;
 
     return $user->save();
 

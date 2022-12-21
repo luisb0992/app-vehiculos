@@ -21,7 +21,7 @@ class ModelsController extends Controller
     public function index()
     {
         return Inertia::render('Models/Index',[
-            'models' => $this->modelF->getModelsWithBrand()
+            'models' => $this->modelF->getAllModelsOrderASC()
         ]);
     }
 
