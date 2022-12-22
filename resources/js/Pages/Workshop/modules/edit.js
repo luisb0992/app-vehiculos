@@ -8,6 +8,6 @@ export const handleUpdateWorkshop = (form,id) => {
         onStart: () => console.log("start"),
         onFinish: () => console.log("finish"),
         onError: (error) => console.log(error),
-        onSuccess: () => clearForm(),
+        onSuccess: () => clearForm(form),
     });
 };
