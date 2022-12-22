@@ -24,7 +24,7 @@ class EditModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:60|unique:model_vehicles,name,'.$this->model->id.',id,deleted_at,NULL',
+            'name' => 'required|min:3|max:60|unique:model_vehicles,name,'.$this->model->id.',id,brand_id,'.$this->input('brand_id').',deleted_at,NULL',
             'brand_id' => 'required',
         ];
     }
@@ -34,7 +34,7 @@ class EditModelRequest extends FormRequest
         // mensajes en español
         return [
             'name.required' => 'El nombre es requerido.',
-            'name.unique' => 'Este modelo ya existe.',
+            'name.unique' => 'Ya existe un modelo con esta marca.',
             'name.min' => 'El nombre debe tener un minimo de 3 caracteres.',
             'brand_id.required' => 'La marca es un campo requerido.',
         ];
