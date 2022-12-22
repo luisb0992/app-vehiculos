@@ -94,7 +94,6 @@ class UserController extends Controller
      */
     public function update(EditUserRequest $request, User $user)
     {
-        //dd($request->all());
          $this->userF->updateUser($request->validated(),$user);
 
         return Redirect::route('users.index')->with('success', 'Usuario modificado con éxito');
@@ -108,10 +107,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if($user->vehiculos){
-            return Redirect::route('users.index')->with('error', 'No se puede eliminar el Usuario, tiene usuarios asociados');
+        if($user->vehiculo->count() >= 1){
+            return Redirect::route('users.index')->with('error', 'No se puede eliminar este usuario por que ha registrado vehiculos.');
         }
         $user->delete();
-        return Redirect::route('users.index')->with('success', 'Usuario eliminado con éxito');
+        return Redirect::route('users.index')->with('success', 'Usuario eliminado con éxito.');
     }
 }

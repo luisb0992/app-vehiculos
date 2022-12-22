@@ -72,7 +72,12 @@ class User extends Authenticatable
     }
 
     public function vehiculo(){
-        return $this->hasMany(Vehiculo::class);
+        return $this->hasMany(Vehicle::class);
+    }
+
+    //usuario inactivo
+    public function inactive(){
+        return $this->status == 2;
     }
 
 }
