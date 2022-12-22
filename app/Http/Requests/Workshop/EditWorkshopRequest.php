@@ -24,7 +24,7 @@ class EditWorkshopRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' =>  [ 'required','string','unique:workshops,name,'.$this->workshop->id],
+            'name' =>  [ 'required','string','unique:workshops,name,'.$this->workshop->id.',id,deleted_at,NULL'],
         ];
     }
 

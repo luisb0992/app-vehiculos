@@ -19,8 +19,8 @@ class CreateModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:60',
-            'brand_id' => 'required',
+            'name' => 'required|string|max:255|unique:model_vehicles,name,NULL,id,deleted_at,NULL',
+            'brand_id' => 'required|integer|exists:brands,id',
         ];
     }
 

@@ -19,7 +19,7 @@ class EditBrandsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|unique:brands,name,'.$this->brand->id,
+            'name' => 'required|string|max:255|unique:brands,name,'.$this->brand->id.',id,deleted_at,NULL',
         ];
     }
 

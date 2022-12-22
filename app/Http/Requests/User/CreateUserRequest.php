@@ -25,9 +25,9 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:60',
-            'email' => 'email|unique:users,email',
+            'email' => 'email|unique:users,email,NULL,id,deleted_at,NULL',
             'last_name' => 'required|min:3|max:80',
-            'dni' => 'required|min:5|max:20|unique:users,dni',
+            'dni' => 'required|min:5|max:20|unique:users,dni,NULL,id,deleted_at,NULL',
             'rol_id' => 'required',
             //'workshop_id' => 'required|required_if:rol_id,==,4',
             'password' => 'required|confirmed|min:6',

@@ -24,7 +24,7 @@ class CreateBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:brands,name',
+            'name' => 'required|string|unique:brands,name,NULL,id,deleted_at,NULL',
         ];
     }
 

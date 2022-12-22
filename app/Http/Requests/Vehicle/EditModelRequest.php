@@ -24,7 +24,7 @@ class EditModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:60|unique:model_vehicles,name,'.$this->model->id,
+            'name' => 'required|min:3|max:60|unique:model_vehicles,name,'.$this->model->id.',id,deleted_at,NULL',
             'brand_id' => 'required',
         ];
     }

@@ -19,7 +19,7 @@ class EditColorsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|unique:colors,name,'.$this->color->id,
+            'name' => 'required|string|max:255|unique:colors,name,'.$this->color->id.',id,deleted_at,NULL',
         ];
     }
 
