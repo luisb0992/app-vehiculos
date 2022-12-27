@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Contracts\Activity;
+use App\Traits\DeviceDetected;
 
 class Workshop extends Model
 {
-    use SoftDeletes,LogsActivity;
+    use SoftDeletes,LogsActivity,DeviceDetected;
 
     /**
      * The table associated with the model.
@@ -31,14 +32,16 @@ class Workshop extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['name']);
+        ->logOnly(['name', 'user.name'])
+        ->useLogName('Taller');
         // Chain fluent methods for configuration options
     }
 
     public function tapActivity(Activity $activity, string $eventName)
     {
+
         $activity->ip = request()->ip();
-        $activity->user_agent = request()->userAgent();
+        $activity->user_agent = $this->nameDevicePlatorm();
     }
 
     public function user(){

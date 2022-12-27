@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{RolController, WorkshopController};
+use App\Http\Controllers\{ActivityLogController, RolController, WorkshopController};
 use App\Http\Controllers\Vehicle\{ColorsController, ModelsController,BrandController};
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,6 +21,11 @@ Route::name('utils.')->middleware('auth')->prefix('utils')->group(function () {
     Route::resource('colors', ColorsController::class);
     Route::resource('models', ModelsController::class);
     Route::resource('brands', BrandController::class);
+});
+
+Route::name('logs.')->middleware('auth')->prefix('logs')->group(function () {
+    Route::get('log-activity', [ActivityLogController::class, 'index'])
+    ->name('index');
 });
 
 
