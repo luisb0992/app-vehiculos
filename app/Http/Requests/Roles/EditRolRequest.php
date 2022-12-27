@@ -24,7 +24,7 @@ class EditRolRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' =>  [ 'required','string','unique:roles,name,'.$this->role->id],
+            'name' =>  [ 'required','string','unique:roles,name,'.$this->role->id.',id,deleted_at,NULL'],
         ];
     }
 

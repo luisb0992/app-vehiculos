@@ -26,8 +26,8 @@ class EditUserRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:60',
             'last_name' => 'required|min:3|max:80',
-            'dni' =>  [ 'required','unique:users,email,'.$this->user->id],
-            'email' => ['required','email','unique:users,email,'.$this->user->id],
+            'dni' =>  [ 'required','unique:users,email,'.$this->user->id.',id,deleted_at,NULL'],
+            'email' => ['required','email','unique:users,email,'.$this->user->id.',id,deleted_at,NULL'],
             'rol_id' => 'required',
             'workshop_id' => 'nullable',
             'password' => 'exclude_if:update_password,false|required_if:update_password,true|confirmed|min:6',

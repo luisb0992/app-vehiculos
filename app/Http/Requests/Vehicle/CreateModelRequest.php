@@ -18,9 +18,10 @@ class CreateModelRequest extends FormRequest
 
     public function rules()
     {
+        //dd($this->input('brand_id'));
         return [
-            'name' => 'required|min:3|max:60',
-            'brand_id' => 'required',
+            'name' => 'required|string|max:255|unique:model_vehicles,name,NULL,id,brand_id,'.$this->input('brand_id').',deleted_at,NULL',
+            'brand_id' => 'required|integer|exists:brands,id',
         ];
     }
 
@@ -29,6 +30,7 @@ class CreateModelRequest extends FormRequest
         // mensajes en español
         return [
             'name.required' => 'El nombre es requerido.',
+            'name.unique' => 'Ya existe un modelo con esta marca.',
             'name.min' => 'El nombre debe tener un minimo de 3 caracteres.',
             'brand_id.required' => 'La marca es un campo requerido.',
         ];

@@ -5,6 +5,7 @@
  */
 
 import { defineStore } from "pinia";
+import Swal from "sweetalert2";
 
 export const useGalleryStore = defineStore("gallery", {
     state: () => ({
@@ -14,6 +15,34 @@ export const useGalleryStore = defineStore("gallery", {
         // agregar imagen al array de imagenes
         // convertir imagen a base64
         addImage(image) {
+            // comprobar espacio disponible del
+            // sessionStorage
+            const storage = sessionStorage.getItem("gallery");
+            if (storage) {
+                const size = storage.length;
+                console.log(size);
+                if (size > 1000000) {
+                    Swal.fire(
+                        "Error",
+                        "No se puede agregar más imagenes",
+                        "error"
+                    );
+                    return;
+                }
+
+                // comprobar si la imagen se se puede agregar
+                // por su size
+                const sizeImage = image.size;
+                if (sizeImage > 1000000) {
+                    Swal.fire(
+                        "Error",
+                        "Las imagen(es) superan el tamaño permitido",
+                        "error"
+                    );
+                    return;
+                }
+            }
+
             const reader = new FileReader();
             reader.readAsDataURL(image);
             reader.onload = () => {

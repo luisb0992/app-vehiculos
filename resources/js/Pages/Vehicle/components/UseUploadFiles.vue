@@ -1,18 +1,16 @@
 <script setup>
-import { inject } from "vue";
 import { useGalleryStore } from "@/Store/gallery";
+import Swal from "sweetalert2";
 
 const galleryStore = useGalleryStore();
 
 // formatos de archivos permitidos
 const ALLOWED_FORMATS = ["image/png", "image/jpeg", "image/jpg"];
 
-// variables
-const swal = inject("$swal");
-
 // cargar los archivos en la propiedad y mostrar preview
 const loadFiles = (e) => {
     const files = e.target.files;
+    let errors = [];
 
     // recorrer los archivos
     for (let i = 0; i < files.length; i++) {
@@ -20,21 +18,33 @@ const loadFiles = (e) => {
 
         // validar el formato del archivo
         if (!ALLOWED_FORMATS.includes(file.type)) {
-            swal({
-                icon: "error",
-                title: "Aviso!",
-                text: "Ha seleccionado un formato de archivo no permitido",
-            });
-
-            // eliminar el archivo del input
-            e.target.value = null;
-            continue;
+            errors.push(
+                `El archivo ${
+                    file.name
+                } no es una imagen válida. Formatos permitidos: ${ALLOWED_FORMATS.join(
+                    ", "
+                )}`
+            );
         }
+
+        // errors
+        if (errors.length) {
+            e.target.value = null;
+            Swal.fire({
+                title: "Error",
+                text: errors.join(""),
+                icon: "error",
+            });
+            return;
+        }
+
+        console.log(file.type);
 
         // agregar el archivo al array de archivos
         galleryStore.addImage(file);
     }
 };
+console.log(globalThis.sessionStorage.length);
 </script>
 <template>
     <div class="bg-gray-100 px-2 rounded">

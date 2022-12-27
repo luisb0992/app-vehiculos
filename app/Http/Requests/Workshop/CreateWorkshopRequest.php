@@ -24,7 +24,7 @@ class CreateWorkshopRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:workshops',
+            'name' => 'required|string|unique:workshops,name,NULL,id,deleted_at,NULL',
         ];
     }
 

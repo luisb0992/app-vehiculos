@@ -12,7 +12,7 @@
             </div>
         </template>
         <Column field="name" header="Nombre" :sortable="true" class="w-full"></Column>
-        <Column header="Marca" :sortable="true" >
+        <Column header="Marca" :sortable="true" filterField="brand.name" sortField="brand.name">
             <template #body="{data}">
                 {{data.brand == null ? 'Sin Marca' : data.brand.name}}
             </template>

@@ -3,14 +3,14 @@ import SideLink from "@/Components/Admin/Sidebar/SideLink.vue";
 
 let Openbar = () => {
     const sidebar = document.querySelector(".sidebar");
-    const arrow = document.querySelector("#arrow");
     const submenu = document.querySelector("#submenu");
     const submenuWorkshop = document.querySelector("#submenuWorkshop");
+    const submenuUtils = document.querySelector("#submenuUtils");
     sidebar.classList.toggle("left-0");
     sidebar.classList.toggle("left-[-300px]");
-    arrow.classList.toggle("rotate-180");
-    submenu.classList.toggle("hidden");
-    submenuWorkshop.classList.toggle("hidden");
+    submenu.classList.add("hidden");
+    submenuWorkshop.classList.add("hidden");
+    submenuUtils.classList.add("hidden");
 };
 
 let dropDown = () => {

@@ -24,7 +24,7 @@ class CreateColorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|unique:colors,name',
+            'name' => 'required|string|max:255|unique:colors,name,NULL,id,deleted_at,NULL',
         ];
     }
 
