@@ -1,14 +1,16 @@
 <?php
 namespace App\Traits;
 
-trait DeviceDetected {
+trait UtilsLogs {
+
+
 
     public function nameDevicePlatorm(){
 
         return $this->device() .' / '.$this->platform();
     }
 
-    public function device()
+    protected function device()
     {
         if($this->mobile()){
             if($this->tablet()){
@@ -23,7 +25,7 @@ trait DeviceDetected {
         return $device;
     }
 
-    public function platform()
+    protected function platform()
     {
 
         if($this->iphone()){
@@ -39,26 +41,36 @@ trait DeviceDetected {
     }
 
     //platforms
-    public function windows(){
+    protected function windows(){
         return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "windows"));
     }
 
-    public function android(){
+    protected function android(){
         return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "android"));
     }
 
-    public function iphone(){
+    protected function iphone(){
         return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "iphone"));
     }
 
     //device
-    public function mobile(){
+    protected function mobile(){
         return  is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "mobile"));
     }
 
-    public function tablet()
+    protected function tablet()
     {
         return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "tablet"));
+    }
+
+    public function eventName($name){
+        $event = [
+            'Creación' => 'created',
+            'Actualización' => 'updated',
+            'Eliminado' => 'deleted'
+        ];
+
+        return array_search($name, $event);
     }
 }
 

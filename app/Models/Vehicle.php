@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activity;
+use App\Traits\UtilsLogs;
+
 
 class Vehicle extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,LogsActivity,UtilsLogs;
 
     /**
      * The table associated with the model.
@@ -19,6 +24,19 @@ class Vehicle extends Model
     protected $table = 'vehicles';
 
     protected $guarded = [];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->setDescriptionForEvent(fn(string $eventName) => "Vehiculo :  {$this->eventName($eventName)}")
+        ->useLogName('Vehiculo');
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->ip = request()->ip();
+        $activity->user_agent = $this->nameDevicePlatorm();
+    }
 
     /**
      * Get the brand that owns the vehicle.

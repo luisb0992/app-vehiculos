@@ -4,20 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\Models\Activity;
 
-class Activity extends Model
+class ActivityCustom extends Activity
 {
     use HasFactory;
 
-    protected $table = 'activity_log';
+    //protected $table = 'activity_log';
 
-
-    public function user(): BelongsTo
+    public function user()
     {
+        //dd($this->morphTo());
         return $this->belongsTo(User::class,'causer_id');
     }
-
-
 
 }
