@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activity;
+use App\Traits\UtilsLogs;
 
 class Quotation extends Model
 {
+    use LogsActivity,UtilsLogs;
+
     protected $table = 'quotations';
     protected $fillable = [
         'repair_order_id',
@@ -15,6 +21,20 @@ class Quotation extends Model
         'iva',
         'total',
     ];
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->setDescriptionForEvent(fn(string $eventName) => "Cotización :  {$this->eventName($eventName)}")
+        ->useLogName('Cotización');
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->ip = request()->ip();
+        $activity->user_agent = $this->nameDevicePlatorm();
+    }
 
     /**
      * La orden de reparación

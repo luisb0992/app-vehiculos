@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activity;
+use App\Traits\UtilsLogs;
 
 class RepairOrder extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,LogsActivity,UtilsLogs;
 
     /**
      * The table associated with the model.
@@ -26,6 +30,19 @@ class RepairOrder extends Model
         'send_date',
         'status',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->setDescriptionForEvent(fn(string $eventName) => "Orden de reparación :  {$this->eventName($eventName)}")
+        ->useLogName('Orden de reparación');
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->ip = request()->ip();
+        $activity->user_agent = $this->nameDevicePlatorm();
+    }
 
     /**
      * Get the vehicle that owns the repair order.

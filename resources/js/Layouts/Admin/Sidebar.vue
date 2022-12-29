@@ -74,7 +74,8 @@ const dropDownUtils = () => {
                 <SideLink
                     :href="route('logs.index')"
                     :active="route().current('logs.*')"
-                    :icon="'bi bi-house-door-fill'"
+                    :icon="'fa fa-list'"
+                    v-if="($page.props.auth.user.rol_id == 1)"
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Bítacora</span>
                 </SideLink>

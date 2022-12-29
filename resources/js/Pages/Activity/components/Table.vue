@@ -1,5 +1,5 @@
 <template lang="">
-    <DataTable :value="logs" :paginator="true" :rows="10"
+    <DataTable :value="logs" :paginator="true" :rows="10" ref="dt"
             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             :rowsPerPageOptions="[10,20,50]" responsiveLayout="scroll"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters1" filterDisplay="menu" >
@@ -11,16 +11,16 @@
                 </span>
                 <div style="text-align: left">
                     <PrimaryButton icon="pi pi-external-link" label="Export" @click="exportCSV($event)">
-                        <span class="px-6 py-3 uppercase"> Exportar CSV </span>
+                        <span class="px-3 py-1 uppercase"> Exportar CSV </span>
                     </PrimaryButton>
                 </div>
             </div>
         </template>
-        <Column field="module" header="Modulo" :sortable="true"></Column>
-        <Column field="user" header="Usuario" :sortable="true" class="w-full"></Column>
-        <Column field="subject" header="Sujeto" :sortable="true" class="w-full"></Column>
-        <Column field="date" header="Fecha" :sortable="true" class="w-full"></Column>
-        <Column field="user_agent" header="Plataforma" :sortable="true" class="w-full"></Column>
+        <Column field="module" header="Modulo" :sortable="true" class="w-1/4" exportHeader="Modulo"></Column>
+        <Column field="user" header="Usuario" :sortable="true" class="w-full" exportHeader="Usuario"></Column>
+        <Column field="subject" header="Sujeto" :sortable="true" class="w-full" exportHeader="Sujeto"></Column>
+        <Column field="date" header="Fecha" :sortable="true" class="w-full" exportHeader="Fecha"></Column>
+        <Column field="user_agent" header="Plataforma" :sortable="true" class="w-full" exportHeader="Plataforma"></Column>
     </DataTable>
 </template>
 
@@ -40,8 +40,6 @@ const props = defineProps({
     logs: Array,
 });
 
-console.log(props.logs)
-
 
 const filters1 = ref({
     'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
@@ -54,7 +52,7 @@ const initFilters1 = () => {
 };
 const dt = ref();
 const exportCSV = () => {
-            dt.exportCSV();
+            dt.value.exportCSV();
         };
 
 
