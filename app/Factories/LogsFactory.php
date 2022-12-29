@@ -14,7 +14,9 @@ class LogsFactory
             'user' => $item->causer->email.' | '.$item->causer->name.' '.$item->causer->workshopUser(),
             'subject' => $item->subject->name,
             'date' => $item->created_at->diffForHumans(),
-            'user_agent' => $item->user_agent
+            'user_agent' => $item->user_agent,
+            'ip' => $item->ip,
+            'proceso' => $item->description
         ];
     });
 

@@ -151,14 +151,14 @@
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                Mi Perfil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"
                                 as="button"
                             >
-                                Log Out
+                                Salir
                             </ResponsiveNavLink>
                         </div>
                     </div>
@@ -172,4 +172,6 @@
     import NavLink from "@/Components/NavLink.vue";
     import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
     import { Link } from "@inertiajs/inertia-vue3";
+    import { ref } from "vue";
+    const showingNavigationDropdown = ref(false);
 </script>

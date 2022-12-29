@@ -4,12 +4,12 @@
             :rowsPerPageOptions="[10,20,50]" responsiveLayout="scroll"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters1" filterDisplay="menu" >
         <template #header>
-            <div class="flex justify-between">
-                <span class="p-input-icon-left">
+            <div class="flex justify-content-center align-center align-items-center justify-center md:lg:justify-between flex-col md:lg:flex-row">
+                <span class="p-input-icon-left mb-5">
                     <i class="pi pi-search" />
                     <InputText v-model="filters1['global'].value" placeholder="Busqueda..." />
                 </span>
-                <div style="text-align: left">
+                <div class="align-center">
                     <PrimaryButton icon="pi pi-external-link" label="Export" @click="exportCSV($event)">
                         <span class="px-3 py-1 uppercase"> Exportar CSV </span>
                     </PrimaryButton>
@@ -21,6 +21,8 @@
         <Column field="subject" header="Sujeto" :sortable="true" class="w-full" exportHeader="Sujeto"></Column>
         <Column field="date" header="Fecha" :sortable="true" class="w-full" exportHeader="Fecha"></Column>
         <Column field="user_agent" header="Plataforma" :sortable="true" class="w-full" exportHeader="Plataforma"></Column>
+        <Column field="ip" header="IP" :sortable="true" class="w-full" exportHeader="IP"></Column>
+        <Column field="proceso" header="Proceso" :sortable="true" class="w-full" exportHeader="Proceso"></Column>
     </DataTable>
 </template>
 
