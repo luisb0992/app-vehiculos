@@ -2,8 +2,6 @@
 import { Head } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/Layout.vue";
 import Table from './components/Table.vue'
-import LinkButton from "@/Components/LinkButton.vue";
-
 
 const props = defineProps({
     logs: Array,
@@ -19,13 +17,6 @@ const props = defineProps({
                         <h3 class="text-gray-900 text-2xl font-bold">
                             Bítacora
                         </h3>
-                       <!--  <LinkButton
-                            class="flex justify-center"
-                            :href="route('log.logs.create')"
-                        >
-                        <i class="bi bi-plus-circle"></i>
-                        </LinkButton> -->
-
                     </div>
                 </div>
                 <div class="w-full">

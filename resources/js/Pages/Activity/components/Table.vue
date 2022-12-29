@@ -34,9 +34,7 @@ import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
 import { Link } from '@inertiajs/inertia-vue3'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-/* import {
-    handleDelete
-} from "../modules/delete"; */
+
 
 const props = defineProps({
     logs: Array,
