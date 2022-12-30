@@ -26,6 +26,9 @@ Route::name('utils.')->middleware('auth')->prefix('utils')->group(function () {
 Route::name('logs.')->middleware('auth')->prefix('logs')->group(function () {
     Route::get('log-activity', [ActivityLogController::class, 'index'])
     ->name('index');
+
+    //export to PDF
+    Route::get('log-activity/pdf', [ActivityLogController::class, 'downloadPDF'])->name('pdf');
 });
 
 

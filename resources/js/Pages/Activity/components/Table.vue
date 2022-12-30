@@ -6,14 +6,22 @@
         <template #header>
             <div class="flex justify-content-center align-center align-items-center justify-center md:lg:justify-between flex-col md:lg:flex-row">
                 <span class="p-input-icon-left mb-5">
-                    <i class="pi pi-search" />
                     <InputText v-model="filters1['global'].value" placeholder="Busqueda..." />
                 </span>
-                <div class="align-center">
-                    <PrimaryButton icon="pi pi-external-link" label="Export" @click="exportCSV($event)">
-                        <span class="px-3 py-1 uppercase"> Exportar CSV </span>
-                    </PrimaryButton>
+                <div class="flex gap-4">
+                    <div class="align-center">
+                        <PrimaryButton icon="pi pi-file-excel" @click="exportEXCEL($event)">
+                            <span class="px-3 py-1 uppercase"> Excel </span>
+                        </PrimaryButton>
+                    </div>
+                    <div class="align-center">
+                        <a target="_blank" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150" :href="route('logs.pdf')">
+                            <i class="pi pi-file-pdf"></i>
+                            <span class="px-3 py-1 uppercase"> PDF </span>
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </template>
         <Column field="module" header="Modulo" :sortable="true" class="w-1/4" exportHeader="Modulo"></Column>
@@ -34,11 +42,14 @@ import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
 import { Link } from '@inertiajs/inertia-vue3'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import DangerButton from "@/Components/DangerButton.vue";
 
 
 const props = defineProps({
     logs: Array,
 });
+
+const showdropdownDowload = ref(true);
 
 
 const filters1 = ref({
@@ -51,9 +62,14 @@ const initFilters1 = () => {
     }
 };
 const dt = ref();
-const exportCSV = () => {
-            dt.value.exportCSV();
+const exportEXCEL = () => {
+            //dt.value.exportEXCEL();
+            alert('Excel')
         };
+
+const exportPDF = () => {
+   alert('PDF')
+};
 
 
 </script>
