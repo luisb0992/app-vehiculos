@@ -12,7 +12,7 @@ class LogsFactory
         return[
             'module' => $item->log_name,
             'user' => $item->causer->email.' | '.$item->causer->name.' '.$item->causer->workshopUser(),
-            'subject' => $item->subject->name,
+            'subject' => $item->subject->name ?? '---',
             'date' => $item->created_at->diffForHumans(),
             'date_report' => $item->created_at->format('d-m-Y H:i:s'),
             'user_agent' => $item->user_agent,

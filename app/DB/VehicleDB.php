@@ -55,4 +55,16 @@ class VehicleDB
       ->orderByDesc('created_at')
       ->get();
   }
+
+  public function getVehiclesReportsFilter($brand,$model,$dates){
+    $vehicles = $this->vehicle
+                ->with(['repairOrders', 'color', 'brand', 'model', 'gallery'])
+                ->withCount('repairOrders')
+                //->where('user_id', auth()->user()->id)
+                ->brand($brand)
+                ->model($model)
+                ->dateBetween($dates);
+
+    return $vehicles->get();
+  }
 }

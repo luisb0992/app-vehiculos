@@ -3,6 +3,7 @@
 use App\Http\Controllers\{ActivityLogController, RolController, WorkshopController};
 use App\Http\Controllers\Vehicle\{ColorsController, ModelsController,BrandController};
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use Inertia\Inertia;
 
 
@@ -29,6 +30,20 @@ Route::name('logs.')->middleware('auth')->prefix('logs')->group(function () {
 
     //export to PDF
     Route::get('log-activity/pdf', [ActivityLogController::class, 'downloadPDF'])->name('pdf');
+});
+
+
+// storage link
+Route::get('/storagelink', function () { //ejecutar este primero
+    Artisan::call('storage:link');
+});
+
+// storage link
+Route::get('/symlink', function () { //ejecutar de segundo
+    $targetFolder = storage_path('app/public');
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
+    symlink($targetFolder,$linkFolder);
+    return "Listo Fck!";
 });
 
 

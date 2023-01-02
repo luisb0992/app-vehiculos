@@ -40,9 +40,7 @@ import Column from 'primevue/column';
 import {ref} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
-import { Link } from '@inertiajs/inertia-vue3'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import DangerButton from "@/Components/DangerButton.vue";
 
 
 const props = defineProps({
