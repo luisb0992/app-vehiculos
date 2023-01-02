@@ -28,6 +28,6 @@ class RepairCategory extends Model
      */
     public function repairSubcategories()
     {
-        return $this->hasMany(RepairSubcategory::class);
+        return $this->hasMany(RepairSubCategory::class);
     }
 }

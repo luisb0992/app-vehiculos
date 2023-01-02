@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\{ActivityLogController, RolController, WorkshopController};
-use App\Http\Controllers\Vehicle\{ColorsController, ModelsController,BrandController};
+use App\Http\Controllers\Vehicle\{ColorsController, ModelsController, BrandController};
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,10 +26,27 @@ Route::name('utils.')->middleware('auth')->prefix('utils')->group(function () {
 
 Route::name('logs.')->middleware('auth')->prefix('logs')->group(function () {
     Route::get('log-activity', [ActivityLogController::class, 'index'])
-    ->name('index');
+        ->name('index');
 
     //export to PDF
     Route::get('log-activity/pdf', [ActivityLogController::class, 'downloadPDF'])->name('pdf');
+});
+
+// storage link
+Route::get('/storagelink', function () {
+    Artisan::call('storage:link');
+});
+
+// clear all cache
+Route::get('/optimizeclear', function () {
+    Artisan::call('optimize:clear');
+    return 'Cache cleared';
+});
+
+// migrate
+Route::get('/migrateall', function () {
+    Artisan::call('migrate');
+    return 'Migrated';
 });
 
 

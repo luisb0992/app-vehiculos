@@ -3,10 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate
 {
@@ -18,14 +16,20 @@ class Authenticate
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
+        if (!$request->expectsJson()) {
             return route('login');
         }
     }
 
     public function handle(Request $request, Closure $next, ...$guards)
     {
-         if(auth()->user()->inactive()){
+        // verificar si esta logueado
+        if (!auth()->check()) {
+            return redirect('/')->with('error', 'No puedes ingresar al sistema, debes iniciar sesión.');
+        }
+
+        // verificar si esta logueado e inactivo
+        if (auth()->check() && auth()->user()->inactive()) {
             $this->logout($request);
             return redirect('/')->with('error', 'No puedes ingresar al sistema, tu estatus es inactivo.');;
         }
@@ -33,7 +37,8 @@ class Authenticate
         return $next($request);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
 
         Auth::guard('web')->logout();
 

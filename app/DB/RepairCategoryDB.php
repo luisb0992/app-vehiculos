@@ -20,6 +20,6 @@ class RepairCategoryDB
    */
   public function getAllCategories(): Collection
   {
-    return $this->repairCategory->with('repairSubcategories')->get();
+    return $this->repairCategory->with(['repairSubcategories'])->get();
   }
 }

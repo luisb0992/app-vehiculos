@@ -14,7 +14,7 @@ use App\Traits\UtilsLogs;
 
 class RepairOrder extends Model
 {
-    use SoftDeletes,LogsActivity,UtilsLogs;
+    use SoftDeletes, LogsActivity, UtilsLogs;
 
     /**
      * The table associated with the model.
@@ -34,8 +34,8 @@ class RepairOrder extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->setDescriptionForEvent(fn(string $eventName) => "Orden de reparación :  {$this->eventName($eventName)}")
-        ->useLogName('Orden de reparación');
+            ->setDescriptionForEvent(fn (string $eventName) => "Orden de reparación :  {$this->eventName($eventName)}")
+            ->useLogName('Orden de reparación');
     }
 
     public function tapActivity(Activity $activity, string $eventName)
@@ -83,7 +83,7 @@ class RepairOrder extends Model
      */
     public function subcategories(): BelongsToMany
     {
-        return $this->belongsToMany(RepairSubcategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_sub_category_id')->withPivot(['cost']);
+        return $this->belongsToMany(RepairSubCategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_sub_category_id')->withPivot(['cost']);
     }
 
     /**
