@@ -17,31 +17,31 @@ export const useGalleryStore = defineStore("gallery", {
         addImage(image) {
             // comprobar espacio disponible del
             // sessionStorage
-            const storage = sessionStorage.getItem("gallery");
-            if (storage) {
-                const size = storage.length;
-                console.log(size);
-                if (size > 1000000) {
-                    Swal.fire(
-                        "Error",
-                        "No se puede agregar más imagenes",
-                        "error"
-                    );
-                    return;
-                }
+            // const storage = sessionStorage.getItem("gallery");
+            // if (storage) {
+            //     const size = storage.length;
+            //     console.log(size);
+            //     if (size > 1000000) {
+            //         Swal.fire(
+            //             "Error",
+            //             "No se puede agregar más imagenes",
+            //             "error"
+            //         );
+            //         return;
+            //     }
 
-                // comprobar si la imagen se se puede agregar
-                // por su size
-                const sizeImage = image.size;
-                if (sizeImage > 1000000) {
-                    Swal.fire(
-                        "Error",
-                        "Las imagen(es) superan el tamaño permitido",
-                        "error"
-                    );
-                    return;
-                }
-            }
+            //     // comprobar si la imagen se se puede agregar
+            //     // por su size
+            //     const sizeImage = image.size;
+            //     if (sizeImage > 1000000) {
+            //         Swal.fire(
+            //             "Error",
+            //             "Las imagen(es) superan el tamaño permitido",
+            //             "error"
+            //         );
+            //         return;
+            //     }
+            // }
 
             const reader = new FileReader();
             reader.readAsDataURL(image);
@@ -59,6 +59,11 @@ export const useGalleryStore = defineStore("gallery", {
         // eliminar imagen del array de imagenes
         removeImage(index) {
             this.images.splice(index, 1);
+
+            if (!this.hasImages()) {
+                const input = document.getElementById("input-file");
+                input.value = "";
+            }
         },
 
         // limpiar array de imagenes
@@ -110,8 +115,8 @@ export const useGalleryStore = defineStore("gallery", {
             });
         },
     },
-    persist: {
-        paths: ["images"],
-        storage: sessionStorage,
-    },
+    // persist: {
+    //     paths: ["images"],
+    //     storage: sessionStorage,
+    // },
 });

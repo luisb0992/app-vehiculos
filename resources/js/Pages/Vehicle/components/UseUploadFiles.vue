@@ -38,25 +38,23 @@ const loadFiles = (e) => {
             return;
         }
 
-        console.log(file.type);
-
         // agregar el archivo al array de archivos
         galleryStore.addImage(file);
     }
 };
-console.log(globalThis.sessionStorage.length);
 </script>
 <template>
     <div class="bg-gray-100 px-2 rounded">
         <div class="py-5">
             <label class="block">
-                <span class="sr-only">Seleccionar archivos</span>
+                <span class="sr-only">Seleccionar archivos o tomar fotos</span>
                 <input
                     type="file"
                     accept="image/png, image/jpeg, image/jpg"
                     multiple
                     @change="loadFiles"
                     class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-200 file:text-blue-700 hover:file:bg-blue-300"
+                    id="input-file"
                 />
             </label>
 

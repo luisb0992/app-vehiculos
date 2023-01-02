@@ -160,27 +160,30 @@ onMounted(() => {
             </div>
 
             <div>
-                <InputLabel value="Tomar fotos" class="font-bold text-2xl" />
+                <InputLabel
+                    value="Tomar fotos o elegir imagenes del dispositivo"
+                    class="font-bold text-2xl"
+                />
                 <div class="py-3">
                     <div class="flex gap-3 mb-3">
-                        <button
+                        <!-- <button
                             type="button"
                             @click.stop="showCamera = true"
                             class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                         >
                             Activar cámara
                         </button>
-                        <span>-</span>
-                        <button
+                        <span>-</span> -->
+                        <!-- <button
                             type="button"
                             @click.stop="showCamera = false"
                             class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
                         >
-                            Subir archivos
-                        </button>
+                            Subir archivos o activar
+                        </button> -->
                     </div>
-                    <UseTakePhoto v-if="showCamera" />
-                    <UseUploadFiles v-else />
+                    <!-- <UseTakePhoto v-if="showCamera" /> -->
+                    <UseUploadFiles />
                 </div>
                 <InputError class="mt-2" :message="form.errors.gallery" />
             </div>
