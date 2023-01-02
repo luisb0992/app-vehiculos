@@ -22,6 +22,10 @@ import "primeicons/primeicons.css";
 // fontawesome core, componente y estilos
 import "@/Utils/config/font-awesome";
 
+//datepicker
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 // app name
 const searchTag = globalThis.document.getElementsByTagName("title");
 const appName = searchTag[0]?.innerText || "App vehículos";
@@ -43,6 +47,7 @@ createInertiaApp({
             .use(VueSweetalert2)
             .use(PrimeVue)
             .use(pinia)
+            .use(Datepicker)
             .use(ZiggyVue, Ziggy);
 
         // mount app

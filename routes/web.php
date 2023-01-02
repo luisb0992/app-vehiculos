@@ -4,6 +4,7 @@ use App\Http\Controllers\{ActivityLogController, RolController, WorkshopControll
 use App\Http\Controllers\Vehicle\{ColorsController, ModelsController, BrandController};
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use Inertia\Inertia;
 
 
@@ -47,6 +48,20 @@ Route::get('/optimizeclear', function () {
 Route::get('/migrateall', function () {
     Artisan::call('migrate');
     return 'Migrated';
+});
+
+
+// storage link
+Route::get('/storagelink', function () { //ejecutar este primero
+    Artisan::call('storage:link');
+});
+
+// storage link
+Route::get('/symlink', function () { //ejecutar de segundo
+    $targetFolder = storage_path('app/public');
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
+    symlink($targetFolder,$linkFolder);
+    return "Listo Fck!";
 });
 
 

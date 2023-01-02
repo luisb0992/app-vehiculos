@@ -89,4 +89,28 @@ class Vehicle extends Model
     {
         return $this->hasMany(RepairOrder::class, 'vehicle_id');
     }
+
+    //scopes querys (Model, Brand, Date Between)
+
+    public function scopeModel($query, $model)
+    {
+        if ($model) {
+            return $query->where('model_id', $model);
+        }
+    }
+
+    public function scopeBrand($query, $brand)
+    {
+        if ($brand) {
+            return $query->where('brand_id', $brand);
+        }
+    }
+
+    public function scopeDateBetween($query, $date)
+    {
+        if ($date) {
+            return $query->whereBetween('created_at', [$date['start'], $date['end']]);
+        }
+    }
+    //end scopes querys (Model, Brand, Date Between)
 }

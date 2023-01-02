@@ -142,6 +142,16 @@ const dropDownUtils = () => {
                             Listado
                         </span>
                     </SideLink>
+                    <SideLink
+                        :href="route('vehicle.reports')"
+                        :active="route().current('vehicle.reports')"
+                        :icon="'bi bi-arrow-right-square'"
+                        class="hover:bg-blue-600"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Reportes
+                        </span>
+                    </SideLink>
                 </div>
                 <div
                     class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
