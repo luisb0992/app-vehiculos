@@ -11,7 +11,7 @@
         dataKey="id"
     >
         <template #header>
-            <div class="flex justify-between">
+            <div class="flex gap-3 justify-content-center align-center align-items-center justify-center md:lg:justify-between flex-col md:lg:flex-row">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search" />
                     <InputText
@@ -19,6 +19,20 @@
                         placeholder="Búsqueda..."
                     />
                 </span>
+                <div class="flex gap-4">
+                    <div class="align-center">
+                        <a target="_blank" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150" :href="route('vehicle.reports.excel',form)">
+                            <i class="pi pi-file-excel"></i>
+                            <span class="px-3 py-1 uppercase"> Excel </span>
+                        </a>
+                    </div>
+                    <div class="align-center">
+                        <a target="_blank" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150" :href="route('vehicle.reports.pdf',form)">
+                            <i class="pi pi-file-pdf"></i>
+                            <span class="px-3 py-1 uppercase"> PDF </span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </template>
         <Column
@@ -65,31 +79,6 @@
                 <StatusVehicle :status="data.status" />
             </template>
         </Column>
-        <!-- <Column
-            field="repair_orders_count"
-            header="Reparación"
-            :sortable="true"
-        >
-            <template #body="{ data }">
-                <span
-                    v-if="data.repair_orders_count"
-                    class="font-medium text-sm text-zinc-900"
-                >
-                    <i
-                        class="fas fa-check text-green-500"
-                    ></i>
-                    Solicitada
-                </span>
-                <Link
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-2 rounded text-sm"
-                    :href="route('vehicle.repair', data.id)"
-                    v-else
-                >
-                    <i class="fas fa-info-circle"></i>
-                    Solicitar
-                </Link>
-            </template>
-        </Column> -->
     </DataTable>
 </template>
 
@@ -106,32 +95,12 @@ import StatusVehicle from "@/Pages/Vehicle/components/StatusVehicle.vue";
 
 const props = defineProps({
     vehicles: Array,
+    form : Object
 });
-console.log(props.vehicles)
 const showdropdownDowload = ref(true);
 
 const filter = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
-
-/* const filters1 = ref({
-    'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-});
-
-const initFilters1 = () => {
-    filters1.value = {
-        'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-    }
-}; */
-const dt = ref();
-const exportEXCEL = () => {
-            //dt.value.exportEXCEL();
-            alert('Excel')
-        };
-
-const exportPDF = () => {
-   alert('PDF')
-};
-
 
 </script>

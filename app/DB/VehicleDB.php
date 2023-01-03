@@ -60,7 +60,6 @@ class VehicleDB
     $vehicles = $this->vehicle
                 ->with(['repairOrders', 'color', 'brand', 'model', 'gallery'])
                 ->withCount('repairOrders')
-                //->where('user_id', auth()->user()->id)
                 ->brand($brand)
                 ->model($model)
                 ->dateBetween($dates);

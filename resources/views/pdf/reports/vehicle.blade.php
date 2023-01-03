@@ -2,59 +2,47 @@
 @section('content')
     <br>
     <div class="w-100">
-        <div class="bg-warning text-white p-2 rounded text-center text-uppercase">
-            Bítacora del sistema
+        <div class="bg-success text-white p-2 rounded text-center text-uppercase">
+            Vehiculos del {{ $dates['start'] }} - {{ $dates['end'] }}
         </div>
         <div class="w-100">
             <table class="table table-bordered">
                 <thead class="border-b">
                     <tr>
                         <th class="text-center font-bold py-3">
-                            Modulo
+                            Nº chasis
                         </th>
                         <th class="text-center font-bold py-3">
-                            Usuario
+                            Marca
                         </th>
                         <th class="text-center font-bold py-3">
-                            Sujeto
+                            Modelo
                         </th>
                         <th class="text-center font-bold py-3">
-                            Fecha
+                            Color
                         </th>
                         <th class="text-center font-bold py-3">
-                            Plataforma
-                        </th>
-                        <th class="text-center font-bold py-3">
-                            IP
-                        </th>
-                        <th class="text-center font-bold py-3">
-                            Proceso
+                            Status
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($logs as $log)
+                    @foreach ($vehicles as $v)
                         <tr>
                             <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $log['module'] }}
+                                {{ $v->chassis_number }}
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $log['user'] }}
+                                {{  $v->brand->name ?? '---' }}
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $log['subject'] }}
+                                {{  $v->model->name ?? '---' }}
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $log['date_report'] }}
+                                {{  $v->color->name ?? '---' }}
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $log['user_agent'] }}
-                            </td>
-                            <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $log['ip'] }}
-                            </td>
-                            <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $log['proceso'] }}
+                                {{  $v->statusVehicle() }}
                             </td>
                         </tr>
                     @endforeach

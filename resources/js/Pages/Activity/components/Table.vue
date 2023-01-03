@@ -10,9 +10,10 @@
                 </span>
                 <div class="flex gap-4">
                     <div class="align-center">
-                        <PrimaryButton icon="pi pi-file-excel" @click="exportEXCEL($event)">
+                        <a target="_blank" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150" :href="route('logs.excel')">
+                            <i class="pi pi-file-excel"></i>
                             <span class="px-3 py-1 uppercase"> Excel </span>
-                        </PrimaryButton>
+                        </a>
                     </div>
                     <div class="align-center">
                         <a target="_blank" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150" :href="route('logs.pdf')">
@@ -21,7 +22,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </template>
         <Column field="module" header="Modulo" :sortable="true" class="w-1/4" exportHeader="Modulo"></Column>
@@ -40,14 +40,11 @@ import Column from 'primevue/column';
 import {ref} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 
 const props = defineProps({
     logs: Array,
 });
-
-const showdropdownDowload = ref(true);
 
 
 const filters1 = ref({
@@ -59,15 +56,7 @@ const initFilters1 = () => {
         'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
     }
 };
-const dt = ref();
-const exportEXCEL = () => {
-            //dt.value.exportEXCEL();
-            alert('Excel')
-        };
 
-const exportPDF = () => {
-   alert('PDF')
-};
 
 
 </script>

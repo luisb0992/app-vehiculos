@@ -90,8 +90,18 @@ class Vehicle extends Model
         return $this->hasMany(RepairOrder::class, 'vehicle_id');
     }
 
-    //scopes querys (Model, Brand, Date Between)
+    //status attr
+    public function statusVehicle(){
+        if($this->status == 5){
+            return "Reparado";
+        }else if($this->status == 2){
+            return "Pendiente por reparar";
+        }else if($this->status == 6){
+            return "Agregado";
+        }
+    }
 
+    //scopes querys (Model, Brand, Date Between)
     public function scopeModel($query, $model)
     {
         if ($model) {

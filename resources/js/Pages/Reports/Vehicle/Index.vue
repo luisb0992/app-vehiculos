@@ -11,8 +11,6 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Datepicker from '@vuepic/vue-datepicker';
 import {useForm} from "@inertiajs/inertia-vue3";
 
-
-
     const props = defineProps({
         brands : Array,
         models: Array,
@@ -37,28 +35,14 @@ import {useForm} from "@inertiajs/inertia-vue3";
         const data = brands.filter((brand) => brand.brand_id === form.brand_id);
         filterBrands.value = data;
 
-        form.get(route('vehicle.reports',form.value,{replace : true , preserveState : true}), {
-            onSuccess: (res) => {
-                console.log('canserbero',res)
-            },
-            onFinish: () => console.log(form),
-        });
+        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
     };
 
     const getModels = (models) => {
-        form.get(route('vehicle.reports',form.value,{replace : true , preserveState : true}), {
-            onSuccess: (res) => {
-                console.log('canserbero',res)
-            },
-            onFinish: () => console.log(form),
-        });
+        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
         const data = models.filter((model) => model.id === form.model_id);
         filterModels.value = data;
     };
-
-
-
-
 
     // For demo purposes assign range from the current date
     onMounted(() => {
@@ -66,13 +50,6 @@ import {useForm} from "@inertiajs/inertia-vue3";
         const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
         date.value = [startDate, endDate];
     })
-
-
-
-    /* watch(form.dates, (count) => {
-        console.log("viendo")
-        form.get(route('vehicle.reports',form.value,{replace : true , preserveState : true}));
-    }) */
 
     const format = (date) => {
         let day_start = date[0].getDate();
@@ -104,12 +81,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
     }
 
     const changeDate = () => {
-        form.get(route('vehicle.reports',form.value,{replace : true , preserveState : true}), {
-            onSuccess: (res) => {
-                console.log('canserbero',res)
-            },
-            onFinish: () => console.log(form),
-        });
+        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
     }
 
 </script>
@@ -188,6 +160,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
                     <div>
                         <Table
                             :vehicles = "vehicles"
+                            :form = "form"
                         />
                     </div>
                 </div>
