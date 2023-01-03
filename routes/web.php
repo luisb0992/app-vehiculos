@@ -34,38 +34,6 @@ Route::name('logs.')->middleware('auth')->prefix('logs')->group(function () {
      Route::get('log-activity/excel', [ActivityLogController::class, 'downloadEXCEL'])->name('excel');
 });
 
-// storage link
-Route::get('/storagelink', function () {
-    Artisan::call('storage:link');
-});
-
-// clear all cache
-Route::get('/optimizeclear', function () {
-    Artisan::call('optimize:clear');
-    return 'Cache cleared';
-});
-
-// migrate
-Route::get('/migrateall', function () {
-    Artisan::call('migrate');
-    return 'Migrated';
-});
-
-
-// storage link
-Route::get('/storagelink', function () { //ejecutar este primero
-    Artisan::call('storage:link');
-});
-
-// storage link
-Route::get('/symlink', function () { //ejecutar de segundo
-    $targetFolder = storage_path('app/public');
-    $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
-    symlink($targetFolder,$linkFolder);
-    return "Listo Fck!";
-});
-
-
 require __DIR__ . '/modules/profile.php';
 
 require __DIR__ . '/modules/auth.php';
@@ -79,3 +47,5 @@ require __DIR__ . '/modules/models.php';
 require __DIR__ . '/modules/colors.php';
 
 require __DIR__ . '/modules/workshop_quotes.php';
+
+require __DIR__ . '/modules/utils.php';

@@ -14,7 +14,7 @@ use App\Traits\UtilsLogs;
 
 class Vehicle extends Model
 {
-    use SoftDeletes,LogsActivity,UtilsLogs;
+    use SoftDeletes, LogsActivity, UtilsLogs;
 
     /**
      * The table associated with the model.
@@ -28,8 +28,8 @@ class Vehicle extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->setDescriptionForEvent(fn(string $eventName) => "Vehiculo :  {$this->eventName($eventName)}")
-        ->useLogName('Vehiculo');
+            ->setDescriptionForEvent(fn (string $eventName) => "Vehiculo :  {$this->eventName($eventName)}")
+            ->useLogName('Vehiculo');
     }
 
     public function tapActivity(Activity $activity, string $eventName)

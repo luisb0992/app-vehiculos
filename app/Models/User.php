@@ -18,7 +18,7 @@ use App\Traits\UtilsLogs;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes,LogsActivity,UtilsLogs;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, LogsActivity, UtilsLogs;
 
     /**
      * The attributes that are mass assignable.
@@ -60,8 +60,8 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->setDescriptionForEvent(fn(string $eventName) => "Usuario :  {$this->eventName($eventName)}")
-        ->useLogName('Usuario');
+            ->setDescriptionForEvent(fn (string $eventName) => "Usuario :  {$this->eventName($eventName)}")
+            ->useLogName('Usuario');
     }
 
     public function tapActivity(Activity $activity, string $eventName)
@@ -70,8 +70,9 @@ class User extends Authenticatable
         $activity->user_agent = $this->nameDevicePlatorm();
     }
 
-    public function getFullNameAttribute(){
-        return $this->name.' '.$this->last_name;
+    public function getFullNameAttribute()
+    {
+        return $this->name . ' ' . $this->last_name;
     }
 
     protected function password(): Attribute
@@ -81,26 +82,30 @@ class User extends Authenticatable
         );
     }
 
-    public function rol(){
+    public function rol()
+    {
         return $this->belongsTo(Rol::class);
     }
 
-    public function workshop(){
+    public function workshop()
+    {
         return $this->belongsTo(Workshop::class);
     }
 
-    public function vehiculo(){
+    public function vehiculo()
+    {
         return $this->hasMany(Vehicle::class);
     }
 
     //usuario inactivo
-    public function inactive(){
+    public function inactive()
+    {
         return $this->status == 2;
     }
 
     //taller
-    public function workshopUser(){
-        return $this->rol_id == 4 ? ' | Taller: '.$this->workshop->name : false;
+    public function workshopUser()
+    {
+        return $this->rol_id == 4 ? ' | Taller: ' . $this->workshop->name : false;
     }
-
 }

@@ -12,6 +12,8 @@ defineProps({
                 status === $page.props.status.vehicle.pending,
             'text-blue-600 text-xs font-bold':
                 status === $page.props.status.vehicle.add,
+            'text-purple-600 text-xs font-bold':
+                status === $page.props.status.vehicle.request_send,
         }"
     >
         <span v-if="status === $page.props.status.vehicle.pending">
@@ -22,6 +24,9 @@ defineProps({
         </span>
         <span v-else-if="status === $page.props.status.vehicle.add">
             Agregado
+        </span>
+        <span v-else-if="status === $page.props.status.vehicle.request_send">
+            Solicitud enviada
         </span>
     </div>
 </template>
