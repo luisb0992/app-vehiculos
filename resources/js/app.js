@@ -1,6 +1,9 @@
 import "./bootstrap";
 import "../css/app.css";
 
+// assets glob
+import.meta.glob(["../img/**"]);
+
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
@@ -23,12 +26,24 @@ import "primeicons/primeicons.css";
 import "@/Utils/config/font-awesome";
 
 //datepicker
-import Datepicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 // app name
 const searchTag = globalThis.document.getElementsByTagName("title");
 const appName = searchTag[0]?.innerText || "App vehículos";
+globalThis.$appName = appName;
+
+// banner
+const banner = document.head.querySelector('meta[name="banner-app"]');
+const pathBanner = banner ? banner?.content : "/";
+globalThis.$pathBanner = pathBanner;
+
+
+// icon app
+const icon = document.head.querySelector('meta[name="icon-app"]');
+const pathIcon = icon ? icon?.content : "/";
+globalThis.$pathIcon = pathIcon;
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

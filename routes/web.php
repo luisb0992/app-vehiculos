@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\{ActivityLogController, RolController, WorkshopController};
 use App\Http\Controllers\Vehicle\{ColorsController, ModelsController, BrandController};
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -30,8 +29,8 @@ Route::name('logs.')->middleware('auth')->prefix('logs')->group(function () {
 
     //export to PDF
     Route::get('log-activity/pdf', [ActivityLogController::class, 'downloadPDF'])->name('pdf');
-     //export to excel
-     Route::get('log-activity/excel', [ActivityLogController::class, 'downloadEXCEL'])->name('excel');
+    //export to excel
+    Route::get('log-activity/excel', [ActivityLogController::class, 'downloadEXCEL'])->name('excel');
 });
 
 require __DIR__ . '/modules/profile.php';

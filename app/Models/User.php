@@ -106,6 +106,6 @@ class User extends Authenticatable
     //taller
     public function workshopUser()
     {
-        return $this->rol_id == 4 ? ' | Taller: ' . $this->workshop->name : false;
+        return $this->rol_id == 4 ? ' | Taller: ' . $this->workshop?->name : false;
     }
 }

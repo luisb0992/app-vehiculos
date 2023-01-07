@@ -33,6 +33,9 @@ const dropDownUtils = () => {
     const arrowUtils = document.querySelector("#arrowUtils");
     arrowUtils.classList.toggle("rotate-0");
 };
+
+const appName = globalThis.$appName;
+const pathIcon = globalThis.$pathIcon;
 </script>
 
 <template>
@@ -47,11 +50,9 @@ const dropDownUtils = () => {
     >
         <div class="text-gray-100 text-xl">
             <div class="p-2.5 mt-1 flex items-center rounded-md">
-                <i
-                    class="bi bi-app-indicator px-2 py-1 bg-blue-600 rounded-md"
-                ></i>
+                <img :src="pathIcon" alt="icono" />
                 <h1 class="text-[15px] ml-3 text-xl text-gray-200 font-bold">
-                    Vehículos
+                    {{ appName }}
                 </h1>
                 <i
                     class="bi bi-x ml-[8rem] cursor-pointer lg:hidden"
@@ -75,9 +76,9 @@ const dropDownUtils = () => {
                     :href="route('logs.index')"
                     :active="route().current('logs.*')"
                     :icon="'fa fa-list'"
-                    v-if="($page.props.auth.user.rol_id == 1)"
+                    v-if="$page.props.auth.user.rol_id == 1"
                 >
-                    <span class="text-[15px] ml-4 text-gray-200">Bítacora</span>
+                    <span class="text-[15px] ml-4 text-gray-200">Bitácora</span>
                 </SideLink>
                 <SideLink
                     :href="route('users.index')"
@@ -93,7 +94,7 @@ const dropDownUtils = () => {
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Talleres</span>
                 </SideLink>
-               <!--  <SideLink
+                <!--  <SideLink
                     :href="route('roles.index')"
                     :active="route().current('roles.*')"
                     :icon="'bi bi-award-fill'"
@@ -111,16 +112,21 @@ const dropDownUtils = () => {
                         <span class="text-[15px] ml-4 text-gray-200">
                             Vehiculos
                         </span>
-                        <span class="text-sm rotate-180 transition duration-700" id="arrowVehicle">
-                            <i class="bi bi-arrow-down-square" ></i>
+                        <span
+                            class="text-sm rotate-180 transition duration-700"
+                            id="arrowVehicle"
+                        >
+                            <i class="bi bi-arrow-down-square"></i>
                         </span>
                     </div>
                 </div>
                 <div
                     class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
                     id="submenu"
-                    :class="{'visible': route().current('vehicle.*'),
-                             'hidden': !route().current('vehicle.*')}"
+                    :class="{
+                        visible: route().current('vehicle.*'),
+                        hidden: !route().current('vehicle.*'),
+                    }"
                 >
                     <SideLink
                         :href="route('vehicle.create')"
@@ -164,7 +170,10 @@ const dropDownUtils = () => {
                         <span class="text-[15px] ml-4 text-gray-200">
                             Utilidades
                         </span>
-                        <span class="text-sm rotate-180  transition duration-700" id="arrowUtils">
+                        <span
+                            class="text-sm rotate-180 transition duration-700"
+                            id="arrowUtils"
+                        >
                             <i class="bi bi-arrow-down-square"></i>
                         </span>
                     </div>
@@ -172,8 +181,10 @@ const dropDownUtils = () => {
                 <div
                     class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
                     id="submenuUtils"
-                    :class="{'visible': route().current('utils.*'),
-                             'hidden': !route().current('utils.*')}"
+                    :class="{
+                        visible: route().current('utils.*'),
+                        hidden: !route().current('utils.*'),
+                    }"
                 >
                     <SideLink
                         :href="route('utils.colors.index')"
@@ -219,7 +230,10 @@ const dropDownUtils = () => {
                         <span class="text-[15px] ml-4 text-gray-200">
                             Cotizaciones
                         </span>
-                        <span class="text-sm rotate-180  transition duration-700" id="arrowWorkshop">
+                        <span
+                            class="text-sm rotate-180 transition duration-700"
+                            id="arrowWorkshop"
+                        >
                             <i class="bi bi-arrow-down-square"></i>
                         </span>
                     </div>
@@ -227,8 +241,10 @@ const dropDownUtils = () => {
                 <div
                     class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
                     id="submenuWorkshop"
-                    :class="{'visible': route().current('workshop_quotes.*'),
-                             'hidden': !route().current('workshop_quotes.*')}"
+                    :class="{
+                        visible: route().current('workshop_quotes.*'),
+                        hidden: !route().current('workshop_quotes.*'),
+                    }"
                 >
                     <!-- <SideLink
                         :href="route('workshop.create')"
