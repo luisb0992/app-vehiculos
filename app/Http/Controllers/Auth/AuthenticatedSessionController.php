@@ -38,6 +38,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
+        activity()->log('Inicio de sesión - '.date('Y-m-d H:i:s'));
 
         // superadmin
         if ($user->isSuperAdmin()) {
@@ -65,6 +66,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        activity()->log('Salió del sistema - '.date('Y-m-d H:i:s'));
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

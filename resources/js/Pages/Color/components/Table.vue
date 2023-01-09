@@ -56,7 +56,4 @@ const initFilters1 = () => {
 
 
 
-
-
-
 </script>
