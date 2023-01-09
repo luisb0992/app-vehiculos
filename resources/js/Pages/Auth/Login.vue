@@ -35,7 +35,7 @@ const submit = () => {
         </div>
 
         <div
-            class="max-w-7xl min-h-[600px] bg-white shadow-md overflow-hidden rounded-lg mx-auto"
+            class="max-w-7xl min-h-[600px] bg-white rounded-lg mx-auto border border-turquesa"
         >
             <div class="flex flex-wrap justify-between items-center">
                 <div class="w-full lg:w-1/2 h-[600px] lg:block hidden">
@@ -53,7 +53,7 @@ const submit = () => {
                     >
                         <form @submit.prevent="submit" class="w-full px-10">
                             <Banner
-                                class="block w-full h-40 text-gray-800 aspect-video rounded-lg lg:hidden mb-7"
+                                class="block w-80 h-40 text-gray-800 aspect-video rounded-lg lg:hidden mb-7 mx-auto"
                             />
                             <div>
                                 <InputLabel
@@ -113,20 +113,12 @@ const submit = () => {
                             </div>
 
                             <div class="flex items-center justify-end mt-4">
-                                <!-- <Link
-                        v-if="canResetPassword"
-                        :href="route('password.request')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                    ¿Olvidaste tu contraseña?
-                    </Link> -->
-
                                 <PrimaryButton
                                     class="ml-4"
                                     :class="{ 'opacity-25': form.processing }"
                                     :disabled="form.processing"
                                 >
-                                    Entrar
+                                    ingresar a la app
                                 </PrimaryButton>
                             </div>
                         </form>

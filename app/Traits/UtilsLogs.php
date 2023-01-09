@@ -1,24 +1,29 @@
 <?php
+
 namespace App\Traits;
 
-trait UtilsLogs {
+trait UtilsLogs
+{
 
+    public function userAgent()
+    {
+        return $_SERVER["HTTP_USER_AGENT"] ?? 'Desconocido';
+    }
 
-
-    public function nameDevicePlatorm(){
-
-        return $this->device() .' / '.$this->platform();
+    public function nameDevicePlatorm()
+    {
+        return $this->device() . ' / ' . $this->platform();
     }
 
     protected function device()
     {
-        if($this->mobile()){
-            if($this->tablet()){
+        if ($this->mobile()) {
+            if ($this->tablet()) {
                 $device = 'Tablet';
-            }else{
+            } else {
                 $device = 'Mobile';
             }
-        }else{
+        } else {
             $device = 'PC';
         }
 
@@ -27,43 +32,48 @@ trait UtilsLogs {
 
     protected function platform()
     {
+        $platform = 'Desconocido';
 
-        if($this->iphone()){
+        if ($this->iphone()) {
             $platform = 'iOS';
-        }elseif($this->android()){
+        } elseif ($this->android()) {
             $platform = 'ANDROID';
-        }elseif($this->windows()){
+        } elseif ($this->windows()) {
             $platform = 'WINDOWS';
         }
 
         return $platform;
-
     }
 
     //platforms
-    protected function windows(){
-        return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "windows"));
+    protected function windows()
+    {
+        return is_numeric(strpos(strtolower($this->userAgent()), "windows"));
     }
 
-    protected function android(){
-        return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "android"));
+    protected function android()
+    {
+        return is_numeric(strpos(strtolower($this->userAgent()), "android"));
     }
 
-    protected function iphone(){
-        return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "iphone"));
+    protected function iphone()
+    {
+        return is_numeric(strpos(strtolower($this->userAgent()), "iphone"));
     }
 
     //device
-    protected function mobile(){
-        return  is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "mobile"));
+    protected function mobile()
+    {
+        return  is_numeric(strpos(strtolower($this->userAgent()), "mobile"));
     }
 
     protected function tablet()
     {
-        return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "tablet"));
+        return is_numeric(strpos(strtolower($this->userAgent()), "tablet"));
     }
 
-    public function eventName($name){
+    public function eventName($name)
+    {
         $event = [
             'Creación' => 'created',
             'Actualización' => 'updated',
@@ -73,6 +83,3 @@ trait UtilsLogs {
         return array_search($name, $event);
     }
 }
-
-
-?>

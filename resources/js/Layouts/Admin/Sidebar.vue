@@ -159,64 +159,6 @@ const pathIcon = globalThis.$pathIcon;
                         </span>
                     </SideLink>
                 </div>
-                <div
-                    class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
-                >
-                    <i class="fas fa-wrench"></i>
-                    <div
-                        class="flex justify-between w-full items-center"
-                        @click="dropDownUtils()"
-                    >
-                        <span class="text-[15px] ml-4 text-gray-200">
-                            Utilidades
-                        </span>
-                        <span
-                            class="text-sm rotate-180 transition duration-700"
-                            id="arrowUtils"
-                        >
-                            <i class="bi bi-arrow-down-square"></i>
-                        </span>
-                    </div>
-                </div>
-                <div
-                    class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
-                    id="submenuUtils"
-                    :class="{
-                        visible: route().current('utils.*'),
-                        hidden: !route().current('utils.*'),
-                    }"
-                >
-                    <SideLink
-                        :href="route('utils.colors.index')"
-                        :active="route().current('utils.colors.*')"
-                        :icon="'bi bi-arrow-right-square'"
-                        class="hover:bg-blue-600"
-                    >
-                        <span class="text-[15px] ml-4 text-gray-200">
-                            Color
-                        </span>
-                    </SideLink>
-                    <SideLink
-                        :href="route('utils.models.index')"
-                        :active="route().current('utils.models.*')"
-                        :icon="'bi bi-arrow-right-square'"
-                        class="hover:bg-blue-600"
-                    >
-                        <span class="text-[15px] ml-4 text-gray-200">
-                            Modelo
-                        </span>
-                    </SideLink>
-                    <SideLink
-                        :href="route('utils.brands.index')"
-                        :active="route().current('utils.brands.*')"
-                        :icon="'bi bi-arrow-right-square'"
-                        class="hover:bg-blue-600"
-                    >
-                        <span class="text-[15px] ml-4 text-gray-200">
-                            Marca
-                        </span>
-                    </SideLink>
-                </div>
 
                 <!-- men y submenu cotizaciones -->
                 <div
@@ -264,6 +206,65 @@ const pathIcon = globalThis.$pathIcon;
                     >
                         <span class="text-[15px] ml-4 text-gray-200">
                             Listado
+                        </span>
+                    </SideLink>
+                </div>
+
+                <div
+                    class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
+                >
+                    <i class="fas fa-wrench"></i>
+                    <div
+                        class="flex justify-between w-full items-center"
+                        @click="dropDownUtils()"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Características
+                        </span>
+                        <span
+                            class="text-sm rotate-180 transition duration-700"
+                            id="arrowUtils"
+                        >
+                            <i class="bi bi-arrow-down-square"></i>
+                        </span>
+                    </div>
+                </div>
+                <div
+                    class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
+                    id="submenuUtils"
+                    :class="{
+                        visible: route().current('utils.*'),
+                        hidden: !route().current('utils.*'),
+                    }"
+                >
+                    <SideLink
+                        :href="route('utils.colors.index')"
+                        :active="route().current('utils.colors.*')"
+                        :icon="'bi bi-arrow-right-square'"
+                        class="hover:bg-blue-600"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Colores
+                        </span>
+                    </SideLink>
+                    <SideLink
+                        :href="route('utils.models.index')"
+                        :active="route().current('utils.models.*')"
+                        :icon="'bi bi-arrow-right-square'"
+                        class="hover:bg-blue-600"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Modelos
+                        </span>
+                    </SideLink>
+                    <SideLink
+                        :href="route('utils.brands.index')"
+                        :active="route().current('utils.brands.*')"
+                        :icon="'bi bi-arrow-right-square'"
+                        class="hover:bg-blue-600"
+                    >
+                        <span class="text-[15px] ml-4 text-gray-200">
+                            Marcas
                         </span>
                     </SideLink>
                 </div>

@@ -7,7 +7,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900">
             <NavBar />
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
@@ -16,7 +16,7 @@ const showingNavigationDropdown = ref(false);
                 </div>
             </header>
             <!-- mostrar mensaje -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
                 <AlertDismiss
                     :show-success="$page.props.flash.success ? true : false"
                     :show-danger="$page.props.flash.error ? true : false"

@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { hasCamera } from "@/Utils/Common/common";
 
 export const filterModels = ref([]);
+export const allColors = ref([]);
 export const showModalBrand = ref(false);
 export const showModalModel = ref(false);
 export const showModalColor = ref(false);
@@ -13,13 +14,13 @@ export const form = useForm({
     brand_id: "",
     model_id: "",
     color_id: "",
-    // status: 2, // no necesario
     gallery: [],
 });
 
 export const getModels = (models) => {
     const data = models.filter((model) => model.brand_id === form.brand_id);
     filterModels.value = data;
+    form.model_id = "";
 };
 
 // limpiar los datos del formulario
@@ -41,8 +42,44 @@ export const saveVehicle = () => {
     });
 };
 
-onMounted(() => {
-    if (hasCamera.value) {
-        showCamera.value = true;
-    }
-});
+/**
+ * Filtrar los modelos por el buscador
+ *
+ * @param {String} event        // evento del buscador
+ * @param {Array} models        // lista de modelos
+ */
+export const searchModels = (event, models) => {
+    setTimeout(() => {
+        if (!event.query.trim().length) {
+            getModels(models);
+            return;
+        }
+
+        // filtrar
+        const text = event.query.toLowerCase();
+        const fnFilter = (model) => model.name.toLowerCase().startsWith(text);
+        filterModels.value = models.filter(fnFilter);
+    }, 250);
+};
+
+/**
+ * Filtrar los colores por el buscador
+ *
+ * @param {String} event        // evento del buscador
+ * @param {Array} colors        // lista de colores
+ */
+export const searchColor = (event, colors) => {
+    const query = event.query;
+
+    setTimeout(() => {
+        if (!query.trim().length) {
+            allColors.value = colors;
+            return;
+        }
+
+        // filtrar
+        const text = query.toLowerCase();
+        const fnFilter = (color) => color.name.toLowerCase().startsWith(text);
+        allColors.value = colors.filter(fnFilter);
+    }, 250);
+};

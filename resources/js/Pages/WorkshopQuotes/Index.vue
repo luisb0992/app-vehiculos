@@ -28,7 +28,11 @@ const filter = ref({
                     <div class="w-full pb-5">
                         <div class="overflow-hidden shadow-sm sm:rounded-lg">
                             <h3 class="text-gray-900 text-2xl font-bold">
-                                Solicitudes de reparación
+                                Solicitudes de reparación - taller
+                                {{
+                                    $page.props.auth.user?.workshop?.name ??
+                                    "DESCONOCIDO"
+                                }}
                             </h3>
                         </div>
                     </div>

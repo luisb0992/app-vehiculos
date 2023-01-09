@@ -1,7 +1,7 @@
 <template>
     <SideBar />
 
-    <div class="main-content relative flex flex-col flex-grow md:pl-[300px] md:pr-[50px]">
+    <div class="main-content relative flex flex-col flex-grow md:pl-[300px]">
         <NavBar />
         <!-- <h1 class="font-bold text-2xl text-gray-700">Inicio</h1> -->
         <div class="flex flex-col flex-grow bg-white rounded mt-4">

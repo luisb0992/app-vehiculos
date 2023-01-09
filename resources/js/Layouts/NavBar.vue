@@ -4,26 +4,26 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import Banner from "@/Components/Banner.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 const showingNavigationDropdown = ref(false);
-
-const pathBanner = globalThis.$pathBanner;
 </script>
 
 <template lang="">
     <nav class="bg-white border-b border-gray-100">
         <!-- Primary Navigation Menu -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+            class="w-full px-4 mx-auto"
+            :class="$page.props.auth.user.rol_id === 1 ? 'w-full' : 'max-w-7xl'"
+        >
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Logo -->
                     <div class="shrink-0 flex items-center">
                         <Link :href="route('dashboard')">
-                            <img
-                                :src="pathBanner"
-                                alt="icono"
-                                class="block w-32 h-20 fill-current text-gray-800 aspect-video"
+                            <Banner
+                                class="block w-32 h-16 fill-current text-gray-800 aspect-video"
                             />
                         </Link>
                     </div>

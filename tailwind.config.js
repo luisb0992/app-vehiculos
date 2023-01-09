@@ -107,6 +107,9 @@ module.exports = {
                     },
                 },
             },
+            colors: {
+                "turquesa": "#2c8f89",
+            },
         },
     },
 

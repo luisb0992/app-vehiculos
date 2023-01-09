@@ -33,12 +33,28 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $user = auth()->user();
+
+        // superadmin
+        if ($user->isSuperAdmin()) {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
+        // registrador
+        if ($user->isRecorder()) {
+            return redirect()->intended(RouteServiceProvider::VEHICLE);
+        }
+
+        // si es usuario proveedor taller
+        if ($user->isSupplier()) {
+            return redirect()->intended(RouteServiceProvider::QUOTE);
+        }
+
+        // falta por definir el usuario para reportes ...
     }
 
     /**

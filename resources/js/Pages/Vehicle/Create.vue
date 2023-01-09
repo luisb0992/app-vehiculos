@@ -15,7 +15,7 @@ const props = defineProps({
     <Layout>
         <div class="py-12 mx-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white p-5">
+                <div class="bg-white p-5 border-2 border-turquesa rounded-lg">
                     <div class="w-full pb-5">
                         <div
                             class="overflow-hidden shadow-sm sm:rounded-lg flex justify-between"
@@ -30,7 +30,7 @@ const props = defineProps({
                                 <span class="uppercase font-medium text-xs hidden md:block">
                                     Listado de Vehiculos
                                 </span>
-                                <span class="block md:hidden"> Vehiculos </span>
+                                <span class="block md:hidden"> Listado </span>
                             </Link>
                         </div>
                     </div>

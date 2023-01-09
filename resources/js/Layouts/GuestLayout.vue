@@ -1,7 +1,7 @@
 <template>
 
     <div
-        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-gray-300 to-gray-600"
+        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-gray-600 to-gray-900"
     >
         <!-- mostrar mensaje -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

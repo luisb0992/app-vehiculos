@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enum\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -107,5 +109,45 @@ class User extends Authenticatable
     public function workshopUser()
     {
         return $this->rol_id == 4 ? ' | Taller: ' . $this->workshop?->name : false;
+    }
+
+    /**
+     * verificar usuario con rol de superadmin
+     *
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->rol_id === RoleEnum::SUPER_ADMIN;
+    }
+
+    /**
+     * verificar usuario con rol de supervisor
+     *
+     * @return bool
+     */
+    public function isSupervisor()
+    {
+        return $this->rol_id === RoleEnum::SUPERVISOR;
+    }
+
+    /**
+     * verificar usuario con rol de proveedor
+     *
+     * @return bool
+     */
+    public function isSupplier()
+    {
+        return $this->rol_id === RoleEnum::SUPPLIER;
+    }
+
+    /**
+     * verificar usuario con rol de registrador
+     *
+     * @return bool
+     */
+    public function isRecorder()
+    {
+        return $this->rol_id === RoleEnum::RECORDER;
     }
 }

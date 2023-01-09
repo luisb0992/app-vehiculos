@@ -10,7 +10,7 @@ class ColorFactory
   // ordenar por nombre
   public function getColors(): Collection
   {
-    return Color::orderBy('id', 'DESC')->get(['id', 'name']);
+    return Color::orderBy('name', 'ASC')->get(['id', 'name']);
   }
 
   public function findRolWithId(int $id): Color

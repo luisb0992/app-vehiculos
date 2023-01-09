@@ -23,10 +23,10 @@ onMounted(() => {
     <Layout>
         <div class="py-12 mx-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white p-5">
+                <div class="bg-white p-5 rounded-lg border border-turquesa">
                     <div class="w-full pb-5">
                         <div
-                            class="overflow-hidden shadow-sm sm:rounded-lg flex justify-between"
+                            class="overflow-hidden shadow-sm sm:rounded-lg flex justify-between pb-3"
                         >
                             <h3 class="text-gray-900 text-2xl font-bold">
                                 Datos del vehículo
