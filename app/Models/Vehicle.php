@@ -10,7 +10,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Contracts\Activity;
 use App\Traits\UtilsLogs;
-
+use Termwind\Components\Dd;
 
 class Vehicle extends Model
 {
@@ -101,7 +101,7 @@ class Vehicle extends Model
         }
     }
 
-    //scopes querys (Model, Brand, Date Between)
+    //scopes querys (Model, Brand, Date Between, Shassis)
     public function scopeModel($query, $model)
     {
         if ($model) {
@@ -118,9 +118,18 @@ class Vehicle extends Model
 
     public function scopeDateBetween($query, $date)
     {
-        if ($date) {
-            return $query->whereBetween('created_at', [$date['start'], $date['end']]);
+        if (!empty($date)) {
+            if(!is_null($date['start']) && !is_null($date['end'])){
+                return $query->whereBetween('created_at', [$date['start'], $date['end']]);
+            }
         }
     }
-    //end scopes querys (Model, Brand, Date Between)
+
+    public function scopeChassis($query, $nro_chasis)
+    {
+        if ($nro_chasis) {
+            return $query->where('chassis_number', 'LIKE',"{$nro_chasis}%");
+        }
+    }
+    //end scopes querys (Model, Brand, Date Between, Shassis)
 }

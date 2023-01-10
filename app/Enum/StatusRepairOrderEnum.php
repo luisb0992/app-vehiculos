@@ -22,6 +22,8 @@ class StatusRepairOrderEnum
   // orden finalizada, cuando todo salio bien o mal
   public const FINALIZED = 6;
 
+  public const APPROVED = 6;
+
   // getValues
   public static function getValues(): array
   {
@@ -32,6 +34,7 @@ class StatusRepairOrderEnum
       self::CANCELED,
       self::REPAIRED,
       self::FINALIZED,
+      self::APPROVED,
     ];
   }
 
@@ -45,6 +48,7 @@ class StatusRepairOrderEnum
       self::CANCELED => 'Cancelada',
       self::REPAIRED => 'Reparada',
       self::FINALIZED => 'Finalizada',
+      self::APPROVED => 'Aprobada',
     ];
   }
 
@@ -58,6 +62,7 @@ class StatusRepairOrderEnum
       'cancelLed' => self::CANCELED,
       'repaired' => self::REPAIRED,
       'finalized' => self::FINALIZED,
+      'approved' => self::APPROVED,
     ];
   }
 }

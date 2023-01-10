@@ -36,21 +36,6 @@
             </div>
         </template>
         <Column
-            field="gallery"
-            header="Imagen"
-            style="min-width: 10rem"
-        >
-            <template #body="{ data }" class="w-40">
-                <img
-                    :src="
-                        pp.resizeImgVehicle.value +
-                        data.gallery[0]?.path
-                    "
-                    class="w-full md:w-28 h-20 rounded"
-                />
-            </template>
-        </Column>
-        <Column
             field="chassis_number"
             header="Nº chasis"
             :sortable="true"
@@ -76,7 +61,11 @@
             :sortable="true"
         >
             <template #body="{ data }">
-                <StatusVehicle :status="data.status" />
+                <Badge v-if="data.status == 1" value="Disponible" class="mr-2" severity="success" ></Badge>
+                <Badge v-if="data.status == 2" value="Pendiente" aria-label="Tabable Primary Badge" tabindex="0" class="mr-2"></Badge>
+                <Badge v-if="data.status == 3" value="Mantenimiento" severity="info" class="mr-2"></Badge>
+                <Badge v-if="data.status == 4" value="Reparado" severity="warning" class="mr-2"></Badge>
+                <Badge v-if="data.status == 5" value="Eliminado" severity="danger"></Badge>
             </template>
         </Column>
     </DataTable>
@@ -88,9 +77,7 @@ import Column from 'primevue/column';
 import {ref} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { pp } from "@/Utils/Common/common";
-import StatusVehicle from "@/Pages/Vehicle/components/StatusVehicle.vue";
+import Badge from 'primevue/badge';
 
 
 const props = defineProps({

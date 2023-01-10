@@ -4,6 +4,7 @@ namespace App\DB;
 
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Collection;
+use Termwind\Components\Dd;
 
 class VehicleDB
 {
@@ -56,12 +57,14 @@ class VehicleDB
       ->get();
   }
 
-  public function getVehiclesReportsFilter($brand,$model,$dates){
+  public function getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis){
+    //dd($brand,$model,$dates,$nro_chasis);
     $vehicles = $this->vehicle
                 ->with(['repairOrders', 'color', 'brand', 'model', 'gallery'])
                 ->withCount('repairOrders')
                 ->brand($brand)
                 ->model($model)
+                ->chassis($nro_chasis)
                 ->dateBetween($dates);
 
     return $vehicles->get();
