@@ -7,7 +7,7 @@ class StatusRepairOrderEnum
   // orden abierta/pendiente por cotizar
   public const OPEN = 1;
 
-  // orden/vehiculo en reparación
+  // cotizada
   public const QUOTED = 2;
 
   // orden/vehiculo en reparación
@@ -22,7 +22,8 @@ class StatusRepairOrderEnum
   // orden finalizada, cuando todo salio bien o mal
   public const FINALIZED = 6;
 
-  public const APPROVED = 6;
+  // orden aprobada, cuando el usuario registrador aprueba la orden
+  public const APPROVED = 7;
 
   public const NOT_ORDER = 'Sin Solicitar';
 
