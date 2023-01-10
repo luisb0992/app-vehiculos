@@ -27,7 +27,6 @@
                 <Column header="Muelle" :sortable="true" style="background-color: #D4F5F1"/>
                 <Column header="Garantía" :sortable="true" style="background-color: #D4F5F1"/>
                 <Column header="Total" :sortable="true" style="background-color: #D4F5F1"/>
-                <!-- <Column header="This Year" :sortable="true" field="thisYearProfit"/> -->
             </Row>
         </ColumnGroup>
         <template #header>
@@ -54,11 +53,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="flex flex-row-reverse border-l-4 border-indigo-500">
-                <span class="font-bold text-xl uppercase">
-                    Monto Reparación
-                </span>
-            </div> -->
         </template>
         <Column
             field="chassis_number"
@@ -75,11 +69,6 @@
             header="Modelo"
             :sortable="true"
         ></Column>
-        <!-- <Column
-            field="color.name"
-            header="Color"
-            :sortable="true"
-        ></Column> -->
         <Column
             field="status"
             header="Status"
@@ -91,6 +80,9 @@
                 <Badge v-if="data.status == 3" value="Mantenimiento" severity="info" class="mr-2"></Badge>
                 <Badge v-if="data.status == 4" value="Reparado" severity="warning" class="mr-2"></Badge>
                 <Badge v-if="data.status == 5" value="Eliminado" severity="danger"></Badge>
+                <!-- <Badge v-if="data.repair_orders.length == 0"  severity="warning" >
+                    {{$page.props.status.repair_order.not_order}}
+                </Badge> -->
             </template>
         </Column>
     </DataTable>

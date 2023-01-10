@@ -18,6 +18,8 @@ import {useForm} from "@inertiajs/inertia-vue3";
         vehicles: Array,
         filters : Object,
     });
+
+    console.log(props.vehicles);
     const form = useForm({
         brand_id: props.filters.brand ?? "",
         model_id: props.filters.model ?? "",
