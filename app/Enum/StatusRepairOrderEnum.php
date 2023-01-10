@@ -4,34 +4,34 @@ namespace App\Enum;
 
 class StatusRepairOrderEnum
 {
-  // status abierta
+  // orden abierta/pendiente por cotizar
   public const OPEN = 1;
 
-  // status en proceso
-  public const IN_REPAIR = 2;
+  // orden/vehiculo en reparación
+  public const QUOTED = 2;
 
-  // status cerrada
-  public const CLOSED = 3;
+  // orden/vehiculo en reparación
+  public const IN_REPAIR = 3;
 
-  // status cancelada
+  // orden cancelada
   public const CANCELED = 4;
 
-  // status rechazada
+  // orden finalizada, cuando el vehiculo fue reparado
   public const REPAIRED = 5;
 
-  // enviada
-  public const SEND = 6;
+  // orden finalizada, cuando todo salio bien o mal
+  public const FINALIZED = 6;
 
   // getValues
   public static function getValues(): array
   {
     return [
       self::OPEN,
+      self::QUOTED,
       self::IN_REPAIR,
-      self::REPAIRED,
-      self::CLOSED,
       self::CANCELED,
-      self::SEND,
+      self::REPAIRED,
+      self::FINALIZED,
     ];
   }
 
@@ -40,11 +40,11 @@ class StatusRepairOrderEnum
   {
     return [
       self::OPEN => 'Abierta',
+      self::QUOTED => 'Cotizada',
       self::IN_REPAIR => 'En reparación',
-      self::CLOSED => 'Cerrada',
       self::CANCELED => 'Cancelada',
       self::REPAIRED => 'Reparada',
-      self::SEND => 'Enviada',
+      self::FINALIZED => 'Finalizada',
     ];
   }
 
@@ -53,11 +53,11 @@ class StatusRepairOrderEnum
   {
     return [
       'open' => self::OPEN,
+      'quoted' => self::QUOTED,
       'in_repair' => self::IN_REPAIR,
-      'closed' => self::CLOSED,
-      'canceled' => self::CANCELED,
+      'cancelLed' => self::CANCELED,
       'repaired' => self::REPAIRED,
-      'send' => self::SEND,
+      'finalized' => self::FINALIZED,
     ];
   }
 }

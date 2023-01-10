@@ -96,11 +96,6 @@ class VehicleFactory
       // user
       $user = auth()->user();
 
-      // cambia el estado del vehículo a request_send
-      $vehicle = Vehicle::find($data['vehicle_id']);
-      $vehicle->status = StatusVehicleEnum::REQUEST_SEND;
-      $vehicle->save();
-
       // iterar ordenes de reparación
       foreach ($data['orders'] as $order) {
 
@@ -127,6 +122,10 @@ class VehicleFactory
           ]);
         }
       }
+
+      // cambia el estado del vehículo a solicitud de reparación enviada
+      $vehicle = Vehicle::find($data['vehicle_id']);
+      $vehicle->update(['status' => StatusVehicleEnum::REQUESTED_REPAIR]);
 
       return true;
     });

@@ -102,36 +102,12 @@ const filter = ref({
                             ></Column>
                             <Column
                                 field="status"
-                                header="Status"
+                                header="Status Reparación"
                                 :sortable="true"
+                                style="min-width: 15rem"
                             >
                                 <template #body="{ data }">
-                                    <StatusVehicle :status="data.status" />
-                                </template>
-                            </Column>
-                            <Column
-                                field="repair_orders_count"
-                                header="Reparación"
-                                :sortable="true"
-                            >
-                                <template #body="{ data }">
-                                    <span
-                                        v-if="data.repair_orders_count"
-                                        class="font-medium text-sm text-zinc-900"
-                                    >
-                                        <i
-                                            class="fas fa-check text-green-500"
-                                        ></i>
-                                        Solicitada
-                                    </span>
-                                    <Link
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-2 rounded text-sm"
-                                        :href="route('vehicle.repair', data.id)"
-                                        v-else
-                                    >
-                                        <i class="fas fa-info-circle"></i>
-                                        Solicitar
-                                    </Link>
+                                    <StatusVehicle :status="data.status" :id="data.id" />
                                 </template>
                             </Column>
                         </DataTable>
