@@ -7,7 +7,7 @@ class StatusRepairOrderEnum
   // orden abierta/pendiente por cotizar
   public const OPEN = 1;
 
-  // orden/vehiculo en reparación
+  // cotizada
   public const QUOTED = 2;
 
   // orden/vehiculo en reparación
