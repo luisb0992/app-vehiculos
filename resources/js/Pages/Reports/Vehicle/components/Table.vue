@@ -10,6 +10,26 @@
         responsiveLayout="scroll"
         dataKey="id"
     >
+        <ColumnGroup type="header">
+            <!-- <Row>
+                <Column header="Nro Chasis" :rowspan="3" />
+            </Row> -->
+            <Row>
+                <Column header="" :colspan="5" />
+                <Column header="Monto Reparación" :colspan="3" class="font-extrabold" />
+                <!-- <Column header="Profits" :colspan="2" /> -->
+            </Row>
+            <Row>
+                <Column header="Nro Chasis" :sortable="true"/>
+                <Column header="Marca" :sortable="true"/>
+                <Column header="Modelo" :sortable="true"/>
+                <Column header="Estatus" :sortable="true"/>
+                <Column header="Muelle" :sortable="true" style="background-color: #D4F5F1"/>
+                <Column header="Garantía" :sortable="true" style="background-color: #D4F5F1"/>
+                <Column header="Total" :sortable="true" style="background-color: #D4F5F1"/>
+                <!-- <Column header="This Year" :sortable="true" field="thisYearProfit"/> -->
+            </Row>
+        </ColumnGroup>
         <template #header>
             <div class="flex gap-3 justify-content-center align-center align-items-center justify-center md:lg:justify-between flex-col md:lg:flex-row">
                 <span class="p-input-icon-left">
@@ -34,6 +54,11 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="flex flex-row-reverse border-l-4 border-indigo-500">
+                <span class="font-bold text-xl uppercase">
+                    Monto Reparación
+                </span>
+            </div> -->
         </template>
         <Column
             field="chassis_number"
@@ -50,11 +75,11 @@
             header="Modelo"
             :sortable="true"
         ></Column>
-        <Column
+        <!-- <Column
             field="color.name"
             header="Color"
             :sortable="true"
-        ></Column>
+        ></Column> -->
         <Column
             field="status"
             header="Status"
@@ -78,6 +103,8 @@ import {ref} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
 import Badge from 'primevue/badge';
+import ColumnGroup from 'primevue/columngroup';
+import Row from 'primevue/row';
 
 
 const props = defineProps({

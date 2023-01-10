@@ -23,9 +23,8 @@ class ReportsVehicleController extends Controller
 
     public function index()
     {
-
         return Inertia::render('Reports/Vehicle/Index',[
-            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(null,null,null,null),
+            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(),
             'models' => $this->modelVehicleF->getAllModelsOrderASC(),
             'brands' => $this->brandF->getBrands(),
             'filters' => [
