@@ -21,6 +21,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
     const form = useForm({
         brand_id: props.filters.brand ?? "",
         model_id: props.filters.model ?? "",
+        nro_chasis: props.filters.nro_chasis ?? "",
         dates : {
             start: "",
             end: "",
@@ -84,6 +85,14 @@ import {useForm} from "@inertiajs/inertia-vue3";
         form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
     }
 
+    const clearSelects = () => {
+        form.brand_id = "";
+        form.model_id = "";
+        form.dates.start = "";
+        form.dates.end = "";
+        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+    }
+
 </script>
 <template>
     <Head title="Reporte de Vehiculos" />
@@ -98,9 +107,10 @@ import {useForm} from "@inertiajs/inertia-vue3";
                     </div>
                 </div>
                 <div class="bg-gray-100 w-full p-6 mb-4 rounded-lg shadow-sm">
-                    <form >
-                        <div class="grid grid-cols-1 md:lg:grid-cols-3 gap-5">
-                            <div class="flex-grow">
+                    <form>
+                        <span class="font-bold text-xl mb-2">Filtros <i class="pi pi-arrow-right-arrow-left"></i></span>
+                        <div class="grid grid-cols-1 md:lg:grid-cols-3 gap-5 mb-4">
+                            <div>
                                 <InputLabel for="brand" value="Marca" />
                                 <select
                                     id="marca"
@@ -144,14 +154,29 @@ import {useForm} from "@inertiajs/inertia-vue3";
                                     class="mt-2"
                                 />
                             </div>
-                            <div class="flex-grow">
+                            <div>
                                 <InputLabel for="date" value="Fecha" class="mb-1" />
                                 <Datepicker @update:modelValue="changeDate()" :format="format" cancelText="Cancelar" selectText="Seleccionar" v-model="date" range locale="es" multi-calendars placeholder="Seleccionar Fecha" :enable-time-picker="false"/>
                                 <InputError
                                     class="mt-2"
                                 />
                             </div>
-
+                        </div>
+                        <span class="font-bold text-xl mb-2">Busqueda <i class="pi pi-search"></i></span>
+                        <div class="grid grid-cols-1 md:lg:grid-cols-3 gap-5 mt-2">
+                            <div>
+                                <InputLabel for="chasis" value="Nro Chasis" />
+                                <TextInput
+                                    id="chasis"
+                                    class="mt-1 block w-full border-gray-200 border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                                    v-model="form.nro_chasis"
+                                    required
+                                    @input="clearSelects()"
+                                />
+                                <InputError
+                                    class="mt-2"
+                                />
+                            </div>
                         </div>
                     </form>
                 </div>
