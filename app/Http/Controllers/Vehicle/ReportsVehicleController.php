@@ -23,7 +23,7 @@ class ReportsVehicleController extends Controller
 
     public function index()
     {
-
+        //dd("ljldj");
         return Inertia::render('Reports/Vehicle/Index',[
             'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(null,null,null),
             'models' => $this->modelVehicleF->getAllModelsOrderASC(),

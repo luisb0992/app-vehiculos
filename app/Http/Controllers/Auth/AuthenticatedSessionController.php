@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\ActivityCustom;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -38,7 +39,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
-        activity()->log('Inicio de sesión - '.date('Y-m-d H:i:s'));
+        activity()->log('Inicio de sesión - '.date('Y-m-d H:i:s'))->tap(function(ActivityCustom $activity) {
+            $activity->name = 'Usuario';
+         });
 
         // superadmin
         if ($user->isSuperAdmin()) {
