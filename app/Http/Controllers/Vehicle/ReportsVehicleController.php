@@ -25,7 +25,7 @@ class ReportsVehicleController extends Controller
     {
         return Inertia::render('Reports/Vehicle/Index',[
             'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(),
-            'models' => $this->modelVehicleF->getAllModelsOrderASC(),
+            'models' => [],
             'brands' => $this->brandF->getBrands(),
             'filters' => [
                 'brand' => null,
@@ -48,7 +48,7 @@ class ReportsVehicleController extends Controller
 
         return Inertia::render('Reports/Vehicle/Index',[
             'vehicles' => $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis),
-            'models' => $this->modelVehicleF->getAllModelsOrderASC(),
+            'models' => $this->modelVehicleF->getModelsByBrand($brand),
             'brands' => $this->brandF->getBrands(),
             'filters' => [
                 'brand' => $brand,
@@ -57,6 +57,16 @@ class ReportsVehicleController extends Controller
                 'nro_chasis' => $nro_chasis,
             ],
         ]);
+    }
+
+    public function modelsByBrands()
+    {
+        $brand_id = request()->brand_id;
+
+
+        $models = $this->modelVehicleF->getModelsByBrand($brand_id);
+
+        return $models;
     }
 
     //reporte PDF

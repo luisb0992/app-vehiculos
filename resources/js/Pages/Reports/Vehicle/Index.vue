@@ -10,7 +10,7 @@ import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Datepicker from '@vuepic/vue-datepicker';
 import {useForm} from "@inertiajs/inertia-vue3";
-
+import axios from "axios";
     const props = defineProps({
         brands : Array,
         models: Array,
@@ -18,6 +18,8 @@ import {useForm} from "@inertiajs/inertia-vue3";
         vehicles: Array,
         filters : Object,
     });
+
+    //console.log(props.filters)
 
     const form = useForm({
         brand_id: props.filters.brand ?? "",
@@ -38,10 +40,17 @@ import {useForm} from "@inertiajs/inertia-vue3";
         filterBrands.value = data;
 
         form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
+
+        axios.post(route('reports.brands.models'), {
+            brand_id: form.brand_id,
+        })
+        .then(res => {
+            props.models.push(...res.data);
+        })
     };
 
     const getModels = (models) => {
-        form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true, preserveScroll : true}));
         const data = models.filter((model) => model.id === form.model_id);
         filterModels.value = data;
     };

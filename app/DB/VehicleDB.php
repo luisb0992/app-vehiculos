@@ -62,8 +62,6 @@ class VehicleDB
     $vehicles = $this->vehicle
                 ->with(['repairOrders.subcategories' ,'brand', 'model', 'gallery'])
                 ->withCount('repairOrders')
-
-                //->whereStatusOrders()
                 ->brand($brand)
                 ->model($model)
                 ->chassis($nro_chasis)

@@ -18,6 +18,11 @@ class ModelVehicleFactory
     return ModelVehicle::with('brand')->orderBy('id', 'DESC')->get(['id', 'name', 'brand_id']);
   }
 
+  public function getModelsByBrand($brand): Collection
+  {
+    return ModelVehicle::where('brand_id',$brand)->get();
+  }
+
   public function findModelWithId(int $id): ModelVehicle
    {
      return ModelVehicle::findOrFail($id);

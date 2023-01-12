@@ -39,7 +39,7 @@ Route::name('reports.')->middleware('auth')->prefix('reports')->group(function (
     ->name('reports');
 
     // request reports
-    Route::post('reports', [ReportsVehicleController::class, 'queryReports'])
+    Route::post('index', [ReportsVehicleController::class, 'queryReports'])
     ->name('post');
 
     //pdf reports vehicle
@@ -47,6 +47,8 @@ Route::name('reports.')->middleware('auth')->prefix('reports')->group(function (
 
     //excel vehicle
     Route::get('reports/excel', [ReportsVehicleController::class, 'downloadEXCEL'])->name('excel');
+
+    Route::post('brands/models', [ReportsVehicleController::class, 'modelsByBrands'])->name('brands.models');
 });
 
 
