@@ -30,6 +30,9 @@
                             Modelo
                         </th>
                         <th class="text-center font-bold py-3">
+                            Usuario R.
+                        </th>
+                        <th class="text-center font-bold py-3">
                             Status
                         </th>
                         <th class="text-center font-bold py-3" style="background-color: #D4F5F1">
@@ -54,6 +57,9 @@
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
                                 {{  $v['model'] ?? '---' }}
+                            </td>
+                            <td class="text-center py-3 text-sm md:text-lg">
+                                {{  $v['user']  }}
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
                                 {{  $v['status_word'] }}

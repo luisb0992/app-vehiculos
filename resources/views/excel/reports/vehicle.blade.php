@@ -2,7 +2,7 @@
 <table>
     <thead class="border-b">
         <tr>
-            <th class="text-center font-bold py-3" colspan="4">
+            <th class="text-center font-bold py-3" colspan="5">
 
             </th>
             <th class="text-center font-bold py-3" colspan="3">
@@ -21,6 +21,9 @@
             </th>
             <th class="text-center font-bold py-3">
                 Modelo
+            </th>
+            <th class="text-center font-bold py-3">
+                Usuario R.
             </th>
             <th class="text-center font-bold py-3">
                 Status
@@ -47,6 +50,9 @@
                 </td>
                 <td class="text-center py-3 text-sm md:text-lg">
                     {{  $v['model'] ?? '---' }}
+                </td>
+                <td class="text-center py-3 text-sm md:text-lg">
+                    {{  $v['user'] }}
                 </td>
                 <td class="text-center py-3 text-sm md:text-lg">
                     {{  $v['status_word'] }}
