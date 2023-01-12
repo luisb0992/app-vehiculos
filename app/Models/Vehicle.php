@@ -90,6 +90,33 @@ class Vehicle extends Model
         return $this->hasMany(RepairOrder::class, 'vehicle_id');
     }
 
+    public function repairOrdersWithStatus(): HasMany
+    {
+        return $this->hasMany(RepairOrder::class, 'vehicle_id')->whereIn('status', [3,5,6,7]);
+    }
+
+    public function getDockAttribute(){
+        $dock = 0;
+        //dd($this->repairOrders);
+        foreach($this->repairOrders as $repairOrder){
+            foreach($repairOrder->subcategories as $s){
+                $dock += $s->pivot->dock == 1 ? $s->pivot->cost : 0;
+            }
+        }
+
+        return $dock;
+    }
+
+    public function getWarrantyAttribute(){
+        $warranty = 0;
+        foreach($this->repairOrders as $repairOrder){
+            foreach($repairOrder->subcategories as $s){
+                $warranty += $s->pivot->warranty == 1 ? $s->pivot->cost : 0;
+            }
+        }
+        return $warranty;
+    }
+
     //status attr
     public function statusVehicle(){
         if($this->status == 5){
@@ -102,6 +129,12 @@ class Vehicle extends Model
     }
 
     //scopes querys (Model, Brand, Date Between, Shassis)
+
+    public function scopeWhereStatusOrders($query){
+
+        $query->repairOrders->whereIn('status', [3,5,6,7]);
+
+    }
     public function scopeModel($query, $model)
     {
         if ($model) {

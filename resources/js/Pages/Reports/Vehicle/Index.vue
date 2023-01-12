@@ -19,7 +19,6 @@ import {useForm} from "@inertiajs/inertia-vue3";
         filters : Object,
     });
 
-    console.log(props.vehicles);
     const form = useForm({
         brand_id: props.filters.brand ?? "",
         model_id: props.filters.model ?? "",
@@ -38,11 +37,11 @@ import {useForm} from "@inertiajs/inertia-vue3";
         const data = brands.filter((brand) => brand.brand_id === form.brand_id);
         filterBrands.value = data;
 
-        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
     };
 
     const getModels = (models) => {
-        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
         const data = models.filter((model) => model.id === form.model_id);
         filterModels.value = data;
     };
@@ -84,7 +83,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
     }
 
     const changeDate = () => {
-        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
     }
 
     const clearSelects = () => {
@@ -92,7 +91,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
         form.model_id = "";
         form.dates.start = "";
         form.dates.end = "";
-        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
     }
 
 </script>

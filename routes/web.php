@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\{ActivityLogController, RolController, WorkshopController};
-use App\Http\Controllers\Vehicle\{ColorsController, ModelsController, BrandController};
+use App\Http\Controllers\Vehicle\{ColorsController, ModelsController, BrandController,ReportsVehicleController};
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,6 +32,25 @@ Route::name('logs.')->middleware('auth')->prefix('logs')->group(function () {
     //export to excel
     Route::get('log-activity/excel', [ActivityLogController::class, 'downloadEXCEL'])->name('excel');
 });
+
+Route::name('reports.')->middleware('auth')->prefix('reports')->group(function () {
+    // reports view
+    Route::get('index', [ReportsVehicleController::class, 'index'])
+    ->name('reports');
+
+    // request reports
+    Route::post('reports', [ReportsVehicleController::class, 'queryReports'])
+    ->name('post');
+
+    //pdf reports vehicle
+    Route::get('reports/pdf', [ReportsVehicleController::class, 'downloadPDF'])->name('pdf');
+
+    //excel vehicle
+    Route::get('reports/excel', [ReportsVehicleController::class, 'downloadEXCEL'])->name('excel');
+});
+
+
+
 
 require __DIR__ . '/modules/profile.php';
 

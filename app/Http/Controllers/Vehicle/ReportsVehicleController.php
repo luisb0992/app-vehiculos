@@ -37,7 +37,7 @@ class ReportsVehicleController extends Controller
     }
 
     //Query POST
-    public function queryVehicle(){
+    public function queryReports(){
 
         $brand = request()->brand_id;
         $model = request()->model_id;
