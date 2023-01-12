@@ -19,8 +19,6 @@ import axios from "axios";
         filters : Object,
     });
 
-    //console.log(props.filters)
-
     const form = useForm({
         brand_id: props.filters.brand ?? "",
         model_id: props.filters.model ?? "",
@@ -59,7 +57,7 @@ import axios from "axios";
     onMounted(() => {
         const startDate = new Date();
         const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
-        date.value = [startDate, endDate];
+        date.value =null;
     })
 
     const format = (date) => {

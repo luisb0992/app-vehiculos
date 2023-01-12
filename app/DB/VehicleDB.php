@@ -58,7 +58,6 @@ class VehicleDB
   }
 
   public function getVehiclesReportsFilter($brand = null,$model = null,$dates = null,$nro_chasis = null){
-    //dd($brand,$model,$dates,$nro_chasis);
     $vehicles = $this->vehicle
                 ->with(['repairOrders.subcategories' ,'brand', 'model', 'gallery'])
                 ->withCount('repairOrders')
@@ -76,6 +75,8 @@ class VehicleDB
             'dock'  => $vehicle->dock,
             'warranty' => $vehicle->warranty,
             'total' => $vehicle->dock + $vehicle->warranty,
+            'status_word' => $vehicle->status_word,
+
         ];
     });
 

@@ -35,7 +35,7 @@
                     {{  $v->color->name ?? '---' }}
                 </td>
                 <td class="text-center py-3 text-sm md:text-lg">
-                    {{  $v->statusVehicle() }}
+                    {{  $v['status_word'] }}
                 </td>
             </tr>
         @endforeach

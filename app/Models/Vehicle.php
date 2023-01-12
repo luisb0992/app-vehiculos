@@ -117,15 +117,19 @@ class Vehicle extends Model
         return $warranty;
     }
 
-    //status attr
-    public function statusVehicle(){
-        if($this->status == 5){
-            return "Reparado";
+    public function getStatusWordAttribute(){
+        if($this->status == 1){
+            return "Disponible";
         }else if($this->status == 2){
-            return "Pendiente por reparar";
-        }else if($this->status == 6){
-            return "Agregado";
+            return "Pendiente";
+        }else if($this->status == 3){
+            return "En Mantenimiento";
+        }else if($this->status == 4){
+            return "Reparado";
+        }else if($this->status == 5){
+            return "Eliminado";
         }
+
     }
 
     //scopes querys (Model, Brand, Date Between, Shassis)
