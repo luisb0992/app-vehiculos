@@ -16,7 +16,7 @@
                 <Column header="Nro Chasis" :rowspan="3" />
             </Row> -->
             <Row>
-                <Column header="" :colspan="5" />
+                <Column header="" :colspan="6" />
                 <Column header="Monto Reparación" :colspan="3" class="font-extrabold" />
                 <!-- <Column header="Profits" :colspan="2" /> -->
             </Row>
@@ -24,6 +24,7 @@
                 <Column header="Nro Chasis" :sortable="true"/>
                 <Column header="Marca" :sortable="true"/>
                 <Column header="Modelo" :sortable="true"/>
+                <Column header="Usuario R." :sortable="true"/>
                 <Column header="Estatus" :sortable="true"/>
                 <Column header="Muelle" :sortable="true" style="background-color: #D4F5F1" field="dock"/>
                 <Column header="Garantía" :sortable="true" style="background-color: #D4F5F1" field="warranty"/>
@@ -68,6 +69,11 @@
         <Column
             field="model"
             header="Modelo"
+            :sortable="true"
+        ></Column>
+        <Column
+            field="user"
+            header="Ususario R."
             :sortable="true"
         ></Column>
         <Column

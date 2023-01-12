@@ -17,12 +17,15 @@ import axios from "axios";
         colors : Array,
         vehicles: Array,
         filters : Object,
+        users : Array,
     });
+
 
     const form = useForm({
         brand_id: props.filters.brand ?? "",
         model_id: props.filters.model ?? "",
         nro_chasis: props.filters.nro_chasis ?? "",
+        user_id : props.filters.user_id ?? "",
         dates : {
             start: "",
             end: "",
@@ -50,6 +53,12 @@ import axios from "axios";
     const getModels = (models) => {
         form.post(route('reports.post',form.value,{replace : true , preserveState : true, preserveScroll : true}));
         const data = models.filter((model) => model.id === form.model_id);
+        filterModels.value = data;
+    };
+
+    const getUsers = (users) => {
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true, preserveScroll : true}));
+        const data = users.filter((user) => user.id === form.model_id);
         filterModels.value = data;
     };
 
@@ -117,7 +126,7 @@ import axios from "axios";
                 <div class="bg-gray-100 w-full p-6 mb-4 rounded-lg shadow-sm">
                     <form>
                         <span class="font-bold text-xl mb-2">Filtros <i class="pi pi-arrow-right-arrow-left"></i></span>
-                        <div class="grid grid-cols-1 md:lg:grid-cols-3 gap-5 mb-4">
+                        <div class="grid grid-cols-1 md:lg:grid-cols-2 gap-5 mb-4">
                             <div>
                                 <InputLabel for="brand" value="Marca" />
                                 <select
@@ -165,6 +174,28 @@ import axios from "axios";
                             <div>
                                 <InputLabel for="date" value="Fecha" class="mb-1" />
                                 <Datepicker @update:modelValue="changeDate()" :format="format" cancelText="Cancelar" selectText="Seleccionar" v-model="date" range locale="es" multi-calendars placeholder="Seleccionar Fecha" :enable-time-picker="false"/>
+                                <InputError
+                                    class="mt-2"
+                                />
+                            </div>
+                            <div class="flex-1">
+                                <InputLabel for="user" value="Usuario Registrador" />
+                                <select
+                                    id="user"
+                                    class="mt-1 block w-full border-gray-200 border"
+                                    v-model="form.user_id"
+                                    required
+                                    @change="getUsers(users)"
+                                >
+                                    <option value="">Seleccione un usuario registrador</option>
+                                    <option
+                                        v-for="user in users"
+                                        :key="user.id"
+                                        :value="user.id"
+                                    >
+                                        {{ user.name }} {{ user.last_name }}
+                                    </option>
+                                </select>
                                 <InputError
                                     class="mt-2"
                                 />

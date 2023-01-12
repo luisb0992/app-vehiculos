@@ -132,13 +132,21 @@ class Vehicle extends Model
 
     }
 
-    //scopes querys (Model, Brand, Date Between, Shassis)
+    //scopes querys (Model, Brand, Date Between, Shassis, Status ORder, User)
 
     public function scopeWhereStatusOrders($query){
 
         $query->repairOrders->whereIn('status', [3,5,6,7]);
 
     }
+
+    public function scopeUser($query, $user)
+    {
+        if ($user) {
+            return $query->where('user_id', $user);
+        }
+    }
+
     public function scopeModel($query, $model)
     {
         if ($model) {
@@ -168,5 +176,5 @@ class Vehicle extends Model
             return $query->where('chassis_number', 'LIKE',"{$nro_chasis}%");
         }
     }
-    //end scopes querys (Model, Brand, Date Between, Shassis)
+    //end scopes querys (Model, Brand, Date Between, Shassis,Status ORder, User)
 }

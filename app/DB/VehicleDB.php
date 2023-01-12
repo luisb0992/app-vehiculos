@@ -57,12 +57,13 @@ class VehicleDB
       ->get();
   }
 
-  public function getVehiclesReportsFilter($brand = null,$model = null,$dates = null,$nro_chasis = null){
+  public function getVehiclesReportsFilter($brand = null,$model = null,$dates = null,$nro_chasis = null,$user_id = null){
     $vehicles = $this->vehicle
-                ->with(['repairOrders.subcategories' ,'brand', 'model', 'gallery'])
+                ->with(['repairOrders.subcategories' ,'brand', 'model', 'gallery','user'])
                 ->withCount('repairOrders')
                 ->brand($brand)
                 ->model($model)
+                ->user($user_id)
                 ->chassis($nro_chasis)
                 ->dateBetween($dates);
 
@@ -76,6 +77,7 @@ class VehicleDB
             'warranty' => $vehicle->warranty,
             'total' => $vehicle->dock + $vehicle->warranty,
             'status_word' => $vehicle->status_word,
+            'user' => $vehicle->user->name.' '.$vehicle->user->last_name,
 
         ];
     });
