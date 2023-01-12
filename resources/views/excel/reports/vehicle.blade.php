@@ -1,6 +1,17 @@
 <h2>Vehiculos</h2>
 <table>
-    <thead>
+    <thead class="border-b">
+        <tr>
+            <th class="text-center font-bold py-3" colspan="4">
+
+            </th>
+            <th class="text-center font-bold py-3" colspan="3">
+                Monto Reparación
+            </th>
+
+        </tr>
+    </thead>
+    <thead class="border-b">
         <tr>
             <th class="text-center font-bold py-3">
                 Nº chasis
@@ -12,10 +23,16 @@
                 Modelo
             </th>
             <th class="text-center font-bold py-3">
-                Color
+                Status
             </th>
             <th class="text-center font-bold py-3">
-                Status
+                Muelle
+            </th>
+            <th class="text-center font-bold py-3">
+                Garantía
+            </th>
+            <th class="text-center font-bold py-3">
+                Total
             </th>
         </tr>
     </thead>
@@ -23,19 +40,25 @@
         @foreach ($vehicles as $v)
             <tr>
                 <td class="text-center py-3 text-sm md:text-lg">
-                    {{ $v->chassis_number }}
+                    {{ $v['chassis_number'] }}
                 </td>
                 <td class="text-center py-3 text-sm md:text-lg">
-                    {{  $v->brand->name ?? '---' }}
+                    {{  $v['brand'] ?? '---' }}
                 </td>
                 <td class="text-center py-3 text-sm md:text-lg">
-                    {{  $v->model->name ?? '---' }}
-                </td>
-                <td class="text-center py-3 text-sm md:text-lg">
-                    {{  $v->color->name ?? '---' }}
+                    {{  $v['model'] ?? '---' }}
                 </td>
                 <td class="text-center py-3 text-sm md:text-lg">
                     {{  $v['status_word'] }}
+                </td>
+                <td class="text-center py-3 text-sm md:text-lg">
+                    ${{  number_format($v['dock'],2,',','.') }}
+                </td>
+                <td class="text-center py-3 text-sm md:text-lg">
+                    ${{  number_format($v['warranty'],2,',','.') }}
+                </td>
+                <td class="text-center py-3 text-sm md:text-lg">
+                    ${{  number_format($v['total'],2,',','.') }}
                 </td>
             </tr>
         @endforeach
