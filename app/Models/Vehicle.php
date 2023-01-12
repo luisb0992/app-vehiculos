@@ -97,8 +97,7 @@ class Vehicle extends Model
 
     public function getDockAttribute(){
         $dock = 0;
-        //dd($this->repairOrders);
-        foreach($this->repairOrders as $repairOrder){
+        foreach($this->repairOrdersWithStatus as $repairOrder){
             foreach($repairOrder->subcategories as $s){
                 $dock += $s->pivot->dock == 1 ? $s->pivot->cost : 0;
             }
@@ -109,7 +108,7 @@ class Vehicle extends Model
 
     public function getWarrantyAttribute(){
         $warranty = 0;
-        foreach($this->repairOrders as $repairOrder){
+        foreach($this->repairOrdersWithStatus as $repairOrder){
             foreach($repairOrder->subcategories as $s){
                 $warranty += $s->pivot->warranty == 1 ? $s->pivot->cost : 0;
             }
