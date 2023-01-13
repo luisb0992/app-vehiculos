@@ -209,7 +209,7 @@ const finalizedCase = () => {
                         </div>
                     </div>
                 </div>
-                <div class="w-full pt-2 flex justify-end" v-if="!allRepaired">
+                <div class="w-full pt-2 flex justify-end" v-if="allRepaired">
                     <PrimaryButton
                         @click="finalizedCase"
                         type="button"
