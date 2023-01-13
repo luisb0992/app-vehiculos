@@ -23,7 +23,6 @@ const showQuotesModal = ref(false);
 const vehicle = ref({});
 
 const openModalQuotes = (data) => {
-    console.log(data);
     vehicle.value = data;
     showQuotesModal.value = true;
 };

@@ -107,7 +107,7 @@
         <Column style="min-width:8rem">
             <template #body="{data}">
                 <div class="flex justify-between">
-                    <button type="button" @click="openMaximizable" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                    <button type="button" @click="openModalVehicle(data)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                         <i class="pi pi-eye" />
                     </button>
                     <a target="_blank" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
@@ -117,15 +117,59 @@
             </template>
         </Column>
     </DataTable>
-    <Dialog header="Header" v-model:visible="displayMaximizable" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :maximizable="true" :modal="true">
-            <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <template #footer>
-                <Button label="No" icon="pi pi-times" @click="closeMaximizable" class="p-button-text"/>
-                <Button label="Yes" icon="pi pi-check" @click="closeMaximizable" autofocus />
-            </template>
-        </Dialog>
+    <Dialog :header="'Vehiculo - '+dataModal.chassis_number " v-model:visible="displayMaximizable" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :maximizable="true" :modal="true">
+        <div class="flex justify-between mt-4 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Nro Chasis</span>
+            <span class="font-medium text-md">{{ dataModal.chassis_number }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Marca</span>
+            <span class="font-medium text-md">{{ dataModal.brand }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Modelo</span>
+            <span class="font-medium text-md">{{ dataModal.model }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Color</span>
+            <span class="font-medium text-md">{{ dataModal.color }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Año</span>
+            <span class="font-medium text-md">{{ dataModal.year }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Kilometraje</span>
+            <span class="font-medium text-md">{{ dataModal.mileage }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Precio</span>
+            <span class="font-medium text-md">{{ dataModal.price }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Descripción</span>
+            <span class="font-medium text-md">{{ dataModal.description }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Obeservación</span>
+            <span class="font-medium text-md">{{ dataModal.observation }}</span>
+        </div>
+        <h2 class="py-4 text-3xl font-bold text-center text-black">
+            Fotos
+          </h2>
+          <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/3" v-for="photo in dataModal.photos" :key="photo.id">
+              <img :src="
+                pp.resizeImgVehicle.value +
+                photo.path
+            " alt="image" />
+            </div>
+          </div>
+        <template #footer>
+            <Button label="Cerrar" icon="pi pi-times" @click="closeMaximizable" class="p-button-text"/>
+            <!-- <Button label="Yes" icon="pi pi-check" @click="closeMaximizable" autofocus /> -->
+        </template>
+    </Dialog>
     <!-- <ModalVehicle :displayMaximizable="displayMaximizable" /> -->
 </template>
 
@@ -142,30 +186,36 @@ import { Link } from '@inertiajs/inertia-vue3'
 import ModalVehicle from './ModalVehicle.vue';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import { pp } from "@/Utils/Common/common";
 
 
-const props = defineProps({
-    vehicles: Array,
-    form : Object
-});
-const showdropdownDowload = ref(true);
-const loading1 = ref(true);
-const displayMaximizable = ref(false);
-const openMaximizable = () => {
+    const props = defineProps({
+        vehicles: Array,
+        form : Object
+    });
+    const showdropdownDowload = ref(true);
+    const loading1 = ref(true);
+    const displayMaximizable = ref(false);
+    const dataModal = ref({});
+    const openModalVehicle = (data) => {
+        dataModal.value = {...data}
+        displayMaximizable.value = true;
+    };
 
-            displayMaximizable.value = true;
-        };
+    const closeMaximizable = () => {
+        displayMaximizable.value = false;
+    };
 
-onMounted(() => {
-    loading1.value = false;
-})
+    onMounted(() => {
+        loading1.value = false;
+    })
 
-const formatCurrency = (value) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-};
+    const formatCurrency = (value) => {
+        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    };
 
-const filter = ref({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-});
+    const filter = ref({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    });
 
 </script>

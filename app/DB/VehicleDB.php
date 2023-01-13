@@ -72,12 +72,19 @@ class VehicleDB
             'chassis_number' => $vehicle->chassis_number,
             'brand' => $vehicle->brand->name,
             'model' => $vehicle->model->name,
+            'color' => $vehicle->color->name,
             'status' => $vehicle->status,
             'dock'  => $vehicle->dock,
             'warranty' => $vehicle->warranty,
             'total' => $vehicle->dock + $vehicle->warranty,
             'status_word' => $vehicle->status_word,
             'user' => $vehicle->user->name.' '.$vehicle->user->last_name,
+            'photos' => $vehicle->gallery,
+            'year'  => $vehicle->year ?? '---',
+            'mileage' => $vehicle->mileage ?? '---',
+            'price' => $vehicle->price ?? '---',
+            'description' => $vehicle->description ?? '---',
+            'observation' => $vehicle->observation ?? '---',
 
         ];
     });
