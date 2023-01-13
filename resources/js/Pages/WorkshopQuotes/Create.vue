@@ -1,12 +1,11 @@
 <script setup>
 import Layout from "@/Layouts/Layout.vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import CardVehicle from "../Vehicle/components/CardVehicle.vue";
 import InputNumber from "primevue/inputNumber";
 import { computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { numberToDecimal } from "@/Utils/Common/common";
-import Gallery from "../Vehicle/components/Gallery.vue";
 import {
     saveQuote,
     form,
@@ -21,9 +20,9 @@ const props = defineProps({
     order: Object,
 });
 
-const images = computed(() =>
-    props.order.vehicle.gallery.filter((_, i) => i !== 0)
-);
+// const images = computed(() =>
+//     props.order.vehicle.gallery.filter((_, i) => i !== 0)
+// );
 
 // order_id
 form.repair_order_id = props.order.id;
@@ -33,9 +32,62 @@ props.order.subcategories.forEach((sub) => {
     form.subs.push({
         id: sub.id,
         name: sub.name,
-        cost: 0,
+        cost: "",
     });
 });
+
+const startFromBeginning = (e) => {
+    // form.subs.forEach((sub) => {
+    //     sub.cost = 0;
+    // });
+
+    // ubicar el puntero al principio del input
+    e.target.selectionStart = 0;
+    e.target.value = "";
+
+    console.log(e);
+    console.log(e.target.value);
+
+    // eliminar el valor del input
+    // e.target.value = "";
+};
+
+const hasValue = (e) => {
+    console.log(e);
+    // verifica si hay valor y agrega los decimales
+    if (e.target.value === "") {
+        return 0;
+    }
+
+    return 2;
+};
+
+/**
+ * Funcion que valida el formato del input
+ * max 2 decimales y que no se pueda ingresar letras
+ * ejemplo: 1.200,99
+ *
+ * @param {Input} e     Input del usuario
+ */
+const validateFormat = (e) => {
+    const val = e.target.value;
+
+    // permitir max 2 decimales por regex
+    const regex = /^(\d{1,9}(\.\d{1,2})?|\.\d{1,2})$/;
+    if (!regex.test(val)) {
+        e.target.value = val.slice(0, -1);
+    }
+
+    // verifica si hay valor y agrega los decimales
+    if (val === "") {
+        return 0;
+    }
+
+    // verifica si el valor es un numero
+    if (isNaN(val)) {
+        val = val.slice(0, -1);
+    }
+};
 </script>
 <template>
     <Head title="Cotización de vehículo" />
@@ -45,10 +97,16 @@ props.order.subcategories.forEach((sub) => {
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-white p-5 border-2 border-turquesa rounded-lg">
                     <div class="w-full pb-5">
-                        <div class="overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="flex justify-between items-center">
                             <h3 class="text-gray-900 text-2xl font-bold">
                                 Cotización
                             </h3>
+                            <Link
+                                :href="route('workshop_quotes.index')"
+                                class="hover:no-underline bg-gray-700 px-3 py-2 hover:bg-gray-900 text-gray-50 rounded text-xs font-bold"
+                            >
+                                Listado cotizaciones
+                            </Link>
                         </div>
                     </div>
                     <div class="w-full">
@@ -92,12 +150,22 @@ props.order.subcategories.forEach((sub) => {
                                         <td
                                             class="text-center py-3 text-sm md:text-lg"
                                         >
-                                            <InputNumber
-                                                :inputId="sub.name"
+                                            <!-- <InputNumber
                                                 mode="decimal"
                                                 v-model.lazy="sub.cost"
                                                 :minFractionDigits="2"
                                                 :maxFractionDigits="2"
+                                                allowEmpty
+                                            /> -->
+
+                                            <input
+                                                type="number"
+                                                step="1,99"
+                                                min="1"
+                                                max="999999999"
+                                                v-model="sub.cost"
+                                                class="w-full border border-turquesa rounded-md shadow-sm focus:border-indigo-800 focus:ring focus:ring-indigo-800 focus:ring-opacity-50"
+                                                @input="validateFormat"
                                             />
                                         </td>
                                     </tr>
@@ -143,7 +211,7 @@ props.order.subcategories.forEach((sub) => {
                                     >
                                         Total
                                         <span class="bg-gray-100 p-3 rounded">
-                                            {{ numberToDecimal(total) }}
+                                            {{ total }}
                                         </span>
 
                                         <InputError

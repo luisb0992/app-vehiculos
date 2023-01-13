@@ -10,20 +10,22 @@ import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Datepicker from '@vuepic/vue-datepicker';
 import {useForm} from "@inertiajs/inertia-vue3";
-
+import axios from "axios";
     const props = defineProps({
         brands : Array,
         models: Array,
         colors : Array,
         vehicles: Array,
         filters : Object,
+        users : Array,
     });
 
-    console.log(props.vehicles);
+
     const form = useForm({
         brand_id: props.filters.brand ?? "",
         model_id: props.filters.model ?? "",
         nro_chasis: props.filters.nro_chasis ?? "",
+        user_id : props.filters.user_id ?? "",
         dates : {
             start: "",
             end: "",
@@ -38,12 +40,25 @@ import {useForm} from "@inertiajs/inertia-vue3";
         const data = brands.filter((brand) => brand.brand_id === form.brand_id);
         filterBrands.value = data;
 
-        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
+
+        axios.post(route('reports.brands.models'), {
+            brand_id: form.brand_id,
+        })
+        .then(res => {
+            props.models.push(...res.data);
+        })
     };
 
     const getModels = (models) => {
-        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true, preserveScroll : true}));
         const data = models.filter((model) => model.id === form.model_id);
+        filterModels.value = data;
+    };
+
+    const getUsers = (users) => {
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true, preserveScroll : true}));
+        const data = users.filter((user) => user.id === form.model_id);
         filterModels.value = data;
     };
 
@@ -51,7 +66,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
     onMounted(() => {
         const startDate = new Date();
         const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
-        date.value = [startDate, endDate];
+        date.value =null;
     })
 
     const format = (date) => {
@@ -84,7 +99,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
     }
 
     const changeDate = () => {
-        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
     }
 
     const clearSelects = () => {
@@ -92,7 +107,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
         form.model_id = "";
         form.dates.start = "";
         form.dates.end = "";
-        form.post(route('vehicle.reports.post',form.value,{replace : true , preserveState : true}));
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
     }
 
 </script>
@@ -111,7 +126,7 @@ import {useForm} from "@inertiajs/inertia-vue3";
                 <div class="bg-gray-100 w-full p-6 mb-4 rounded-lg shadow-sm">
                     <form>
                         <span class="font-bold text-xl mb-2">Filtros <i class="pi pi-arrow-right-arrow-left"></i></span>
-                        <div class="grid grid-cols-1 md:lg:grid-cols-3 gap-5 mb-4">
+                        <div class="grid grid-cols-1 md:lg:grid-cols-2 gap-5 mb-4">
                             <div>
                                 <InputLabel for="brand" value="Marca" />
                                 <select
@@ -159,6 +174,28 @@ import {useForm} from "@inertiajs/inertia-vue3";
                             <div>
                                 <InputLabel for="date" value="Fecha" class="mb-1" />
                                 <Datepicker @update:modelValue="changeDate()" :format="format" cancelText="Cancelar" selectText="Seleccionar" v-model="date" range locale="es" multi-calendars placeholder="Seleccionar Fecha" :enable-time-picker="false"/>
+                                <InputError
+                                    class="mt-2"
+                                />
+                            </div>
+                            <div class="flex-1">
+                                <InputLabel for="user" value="Usuario Registrador" />
+                                <select
+                                    id="user"
+                                    class="mt-1 block w-full border-gray-200 border"
+                                    v-model="form.user_id"
+                                    required
+                                    @change="getUsers(users)"
+                                >
+                                    <option value="">Seleccione un usuario registrador</option>
+                                    <option
+                                        v-for="user in users"
+                                        :key="user.id"
+                                        :value="user.id"
+                                    >
+                                        {{ user.name }} {{ user.last_name }}
+                                    </option>
+                                </select>
                                 <InputError
                                     class="mt-2"
                                 />

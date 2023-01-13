@@ -101,6 +101,13 @@ const pathIcon = globalThis.$pathIcon;
                 >
                     <span class="text-[15px] ml-4 text-gray-200">Roles</span>
                 </SideLink> -->
+                <SideLink
+                    :href="route('reports.reports')"
+                    :active="route().current('reports.reports')"
+                    :icon="'pi pi-copy'"
+                >
+                    <span class="text-[15px] ml-4 text-gray-200">Reportes (Construccion)</span>
+                </SideLink>
                 <div
                     class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
                 >
@@ -148,7 +155,7 @@ const pathIcon = globalThis.$pathIcon;
                             Listado
                         </span>
                     </SideLink>
-                    <SideLink
+                    <!-- <SideLink
                         :href="route('vehicle.reports')"
                         :active="route().current('vehicle.reports')"
                         :icon="'bi bi-arrow-right-square'"
@@ -157,7 +164,7 @@ const pathIcon = globalThis.$pathIcon;
                         <span class="text-[15px] ml-4 text-gray-200">
                             Reportes
                         </span>
-                    </SideLink>
+                    </SideLink> -->
                 </div>
 
                 <!-- men y submenu cotizaciones -->

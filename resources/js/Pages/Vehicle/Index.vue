@@ -9,6 +9,7 @@ import { pp } from "@/Utils/Common/common";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { FilterMatchMode } from "primevue/api";
 import { ref } from "vue";
+import QuotesModal from "./components/QuotesModal.vue";
 
 const props = defineProps({
     vehicles: Array,
@@ -17,6 +18,15 @@ const props = defineProps({
 const filter = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
+
+const showQuotesModal = ref(false);
+const vehicle = ref({});
+
+const openModalQuotes = (data) => {
+    console.log(data);
+    vehicle.value = data;
+    showQuotesModal.value = true;
+};
 </script>
 <template>
     <Head title="Listado de vehículos" />
@@ -107,7 +117,7 @@ const filter = ref({
                                 style="min-width: 15rem"
                             >
                                 <template #body="{ data }">
-                                    <StatusVehicle :status="data.status" :id="data.id" />
+                                    <StatusVehicle :vehicle="data" @openQuotes="openModalQuotes" />
                                 </template>
                             </Column>
                         </DataTable>
@@ -115,5 +125,11 @@ const filter = ref({
                 </div>
             </div>
         </div>
+
+        <QuotesModal
+            :show="showQuotesModal"
+            :vehicle="vehicle"
+            @close="showQuotesModal = false"
+        />
     </Layout>
 </template>

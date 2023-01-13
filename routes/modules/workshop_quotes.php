@@ -21,4 +21,20 @@ Route::middleware('auth')->prefix('workshop_quotes')->group(function () {
   // descargar la orden de cotización
   Route::get('download-quote/{id}', [WorkshopQuoteController::class, 'downloadQuote'])
     ->name('workshop_quotes.downloadPDFQuote');
+
+  // aprobar una cotización
+  Route::post('approve-quote', [WorkshopQuoteController::class, 'approveQuotation'])
+    ->name('workshop_quotes.approveQuotation');
+
+  // iniciar una orden de reparación
+  Route::post('start-repair', [WorkshopQuoteController::class, 'startRepair'])
+    ->name('workshop_quotes.startRepair');
+
+  // iniciar una orden de reparación
+  Route::post('finish-repair', [WorkshopQuoteController::class, 'finishRepair'])
+    ->name('workshop_quotes.finishRepair');
+
+  // Finalizar caso
+  Route::post('finish-case', [WorkshopQuoteController::class, 'finalizedCase'])
+    ->name('workshop_quotes.finalizedCase');
 });

@@ -1,10 +1,13 @@
 <script setup>
 import { Link } from "@inertiajs/inertia-vue3";
+import { computed, ref } from "vue";
 
-defineProps({
-    status: Number,
-    id: Number,
+const props = defineProps({
+    vehicle: Object,
 });
+
+const id = computed(() => props.vehicle.id);
+const status = computed(() => props.vehicle.status);
 </script>
 <template>
     <div
@@ -46,13 +49,14 @@ defineProps({
         >
             <p class="mb-3">Solicitud de reparación enviada</p>
 
-            <Link
+            <button
+                type="button"
                 class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-2 rounded md:text-sm text-xs"
-                :href="route('vehicle.repair', id)"
+                @click="$emit('openQuotes', vehicle)"
             >
                 <i class="fas fa-arrow-right"></i>
                 Ver cotizaciones
-            </Link>
+            </button>
         </span>
 
         <!-- cotizado -->

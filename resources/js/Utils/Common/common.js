@@ -4,6 +4,7 @@
 
 import { usePage } from "@inertiajs/inertia-vue3";
 import { computed } from "vue";
+import Swal from "sweetalert2";
 
 // año en curso
 export const currentYear = new Date().getFullYear();
@@ -40,4 +41,18 @@ export const pp = {
 // formato europeo
 export const numberToDecimal = (value) => {
     return new Intl.NumberFormat("de-DE").format(value);
+};
+
+/**
+ * Muestra mensajes de error o de aviso de la app
+ *
+ * @param {Object} params   Objeto con los parámetros de la alerta
+ * @returns            Objeto con la alerta de sweetalert2
+ */
+export const manageError = ({
+    icon = "error",
+    title = "Aviso!",
+    text = "Ha ocurrido un error inesperado, intente mas tarde",
+}) => {
+    return Swal.fire({ icon, title, text });
 };
