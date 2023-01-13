@@ -43,7 +43,7 @@ props.order.subcategories.forEach((sub) => {
     <Layout>
         <div class="py-12 mx-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white p-5">
+                <div class="bg-white p-5 border-2 border-turquesa rounded-lg">
                     <div class="w-full pb-5">
                         <div class="overflow-hidden shadow-sm sm:rounded-lg">
                             <h3 class="text-gray-900 text-2xl font-bold">
@@ -62,7 +62,6 @@ props.order.subcategories.forEach((sub) => {
                         </div>
                         <div class="py-5">
                             <CardVehicle :vehicle="order.vehicle" />
-                            <Gallery :images="images" />
                         </div>
                     </div>
                     <div class="w-full">

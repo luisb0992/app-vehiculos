@@ -23,15 +23,15 @@ class ReportsVehicleController extends Controller
 
     public function index()
     {
-        //dd("ljldj");
         return Inertia::render('Reports/Vehicle/Index',[
-            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(null,null,null),
+            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(),
             'models' => $this->modelVehicleF->getAllModelsOrderASC(),
             'brands' => $this->brandF->getBrands(),
             'filters' => [
                 'brand' => null,
                 'model' => null,
                 'dates' => null,
+                'nro_chasis' => null,
             ],
         ]);
     }
@@ -42,15 +42,19 @@ class ReportsVehicleController extends Controller
         $brand = request()->brand_id;
         $model = request()->model_id;
         $dates = request()->dates;
+        $nro_chasis = request()->nro_chasis;
+
+        //dd($brand,$model,$dates,$nro_chasis);
 
         return Inertia::render('Reports/Vehicle/Index',[
-            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates),
+            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis),
             'models' => $this->modelVehicleF->getAllModelsOrderASC(),
             'brands' => $this->brandF->getBrands(),
             'filters' => [
                 'brand' => $brand,
                 'model' => $model,
                 'dates' => $dates,
+                'nro_chasis' => $nro_chasis,
             ],
         ]);
     }
@@ -61,20 +65,23 @@ class ReportsVehicleController extends Controller
         $brand = request()->brand_id;
         $model = request()->model_id;
         $dates = request()->dates;
+        $nro_chasis = request()->nro_chasis;
 
-        $data = $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates);
+        $data = $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis);
         $pdf = Pdf::loadView('pdf.reports.vehicle', ['vehicles' => $data,'dates' => $dates])->setPaper('a4', 'landscape');
         $name = 'reports-vehiculos-' . date('YmdHis') . '.pdf';
         return $pdf->stream($name);
     }
 
+    //reporte EXCEL
     public function downloadEXCEL()
     {
         $brand = request()->brand_id;
         $model = request()->model_id;
         $dates = request()->dates;
+        $nro_chasis = request()->nro_chasis;
 
-        $data = $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates);
+        $data = $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis);
         return Excel::download(new VehicleReportExport($data), 'reports-vehiculos.xlsx');
     }
 }

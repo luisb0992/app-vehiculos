@@ -24,7 +24,7 @@ const filter = ref({
     <Layout>
         <div class="py-12 mx-auto">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white p-5">
+                <div class="bg-white p-5 border-2 border-turquesa rounded-lg">
                     <div class="w-full pb-5">
                         <div class="overflow-hidden shadow-sm sm:rounded-lg">
                             <h3 class="text-gray-900 text-2xl font-bold">
@@ -96,14 +96,15 @@ const filter = ref({
                             ></Column>
                             <Column
                                 field="status"
-                                header="Status"
+                                header="Status Reparación"
                                 :sortable="true"
+                                style="min-width: 15rem"
                             >
                                 <template #body="{ data }">
-                                    <StatusOrder :status="data.status" />
+                                    <StatusOrder :status="data.status" :id="data.id" />
                                 </template>
                             </Column>
-                            <Column
+                            <!-- <Column
                                 field="-"
                                 header="Cotización"
                                 :sortable="true"
@@ -111,7 +112,7 @@ const filter = ref({
                                 <template #body="{ data }">
                                     <ActionButtons :order="data" />
                                 </template>
-                            </Column>
+                            </Column> -->
                         </DataTable>
                     </div>
                 </div>

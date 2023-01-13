@@ -43,9 +43,8 @@ class WorkshopQuoteFactory
         $sub->pivot->save();
       }
 
-      // cambiar status de la orden
-      $order->status = StatusRepairOrderEnum::SEND;
-      $order->save();
+      // cambiar status de la orden a cotizada
+      $order->update(['status' => StatusRepairOrderEnum::QUOTED]);
 
       return $quotation;
     });

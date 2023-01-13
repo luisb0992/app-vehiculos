@@ -63,14 +63,14 @@ onMounted(() => {
                                 <div class="flex flex-row justify-between py-1">
                                     <div>
                                         <label
-                                            class="form-check-label inline-block text-zinc-900 text-xs"
+                                            class="form-check-label inline-block text-zinc-900 text-xs font-medium cursor-pointer"
                                         >
                                             {{ sub.name }}
                                         </label>
                                     </div>
                                     <div>
                                         <input
-                                            class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            class="form-check-input appearance-none h-5 w-5 border border-gray-600 rounded-lg bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                             type="checkbox"
                                             @change="
                                                 addOrRemoveToArray(
@@ -84,7 +84,7 @@ onMounted(() => {
                                             :id="'dock' + sub.id"
                                         />
                                         <input
-                                            class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            class="form-check-input appearance-none h-5 w-5 border border-gray-600 rounded-lg bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                             type="checkbox"
                                             @change="
                                                 addOrRemoveToArray(
@@ -110,6 +110,15 @@ onMounted(() => {
                 class="pb-5 animate-fade-in-down flex flex-col gap-3"
                 v-show="continueRepair"
             >
+                <!-- info message -->
+                <div class="p-4 mb-4 bg-blue-100 rounded-lg">
+                    <i class="fas fa-info-circle"></i>
+                    <strong class="ml-3 text-sm font-medium text-blue-700">
+                        Selecciona las garantías y/o muelles que se van a asignar
+                        a la orden(es) de reparación
+                    </strong>
+                </div>
+
                 <!-- check garantías -->
                 <div
                     class="border border-green-800 p-2 rounded"
@@ -128,7 +137,7 @@ onMounted(() => {
                             <div class="flex flex-row justify-between py-1">
                                 <div>
                                     <label
-                                        class="inline-block text-zinc-900 text-xs cursor-pointer"
+                                        class="inline-block text-zinc-900 text-xs cursor-pointer font-bold"
                                         :for="
                                             'selectedWarranty' + warranty.sub_id
                                         "
@@ -138,7 +147,7 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <input
-                                        class="appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white focus:bg-green-800 hover:bg-green-800 checked:bg-green-800 checked:border-green-800 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        class="appearance-none h-5 w-5 border border-gray-600 rounded-sm bg-white focus:bg-green-800 hover:bg-green-800 checked:bg-green-800 checked:border-green-800 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                         type="checkbox"
                                         :id="
                                             'selectedWarranty' + warranty.sub_id
@@ -180,7 +189,7 @@ onMounted(() => {
                             <div class="flex flex-row justify-between py-1">
                                 <div>
                                     <label
-                                        class="inline-block text-zinc-900 text-xs cursor-pointer"
+                                        class="inline-block text-zinc-900 text-xs cursor-pointer font-bold"
                                         :for="'selectedDock' + dock.sub_id"
                                     >
                                         {{ dock.sub_name }}
@@ -188,7 +197,7 @@ onMounted(() => {
                                 </div>
                                 <div>
                                     <input
-                                        class="appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-blue-800 checked:border-blue-800 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        class="appearance-none h-5 w-5 border border-gray-600 rounded-sm bg-white checked:bg-blue-800 checked:border-blue-800 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                         type="checkbox"
                                         :id="'selectedDock' + dock.sub_id"
                                         @change="
@@ -267,11 +276,13 @@ onMounted(() => {
 
                 <!-- ordenes -->
                 <div v-if="form.orders.length">
-                    <div class="flex flex-col gap-2">
+                    <div
+                        class="flex flex-col gap-2 border-t pt-3 border-gray-800"
+                    >
                         <div
                             v-for="(order, index) in form.orders"
                             :key="order.id"
-                            class="border border-gray-300 p-2 rounded"
+                            class="border border-gray-600 p-2 rounded"
                         >
                             <div class="flex flex-col justify-between">
                                 <div>
@@ -288,20 +299,26 @@ onMounted(() => {
                                     </span>
                                 </div>
                                 <div>
-                                    <span class="font-bold text-gray-800">
+                                    <span class="font-bold text-gray-900">
+                                        Fecha:
+                                    </span>
+                                    <span class="font-semibold text-gray-800">
                                         {{ order.send_date }}
                                     </span>
                                 </div>
-                                <div class="border border-gray-200 p-1">
+                                <div>
+                                    <span class="font-bold text-gray-900">
+                                        Items:
+                                    </span>
                                     <p
-                                        class="font-bold text-gray-800"
+                                        class="font-semibold text-gray-800"
                                         v-for="sub in order.subs"
                                         :key="sub.sub_id"
                                     >
                                         {{ sub.sub_name }}
                                     </p>
                                 </div>
-                                <div>
+                                <div class="mt-2">
                                     <button
                                         @click.stop="deleteOrder(index)"
                                         type="button"

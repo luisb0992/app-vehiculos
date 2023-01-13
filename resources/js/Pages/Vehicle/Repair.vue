@@ -43,7 +43,7 @@ onMounted(() => {
                         </div>
                     </div>
                     <div class="w-full">
-                        <CardVehicle :vehicle="vehicle" />
+                        <CardVehicle :vehicle="vehicle"/>
                     </div>
                     <div class="w-full py-5">
                         <UseRepairForm

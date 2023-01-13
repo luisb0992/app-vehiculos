@@ -1,10 +1,20 @@
 <script setup>
 import { pp } from "@/Utils/Common/common";
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import FullImageModal from "./FullImageModal.vue";
 
 const props = defineProps({
     vehicle: Object,
+    fullImages: {
+        type: Boolean,
+        default: true,
+        description: "Mostrar todas las imagenes",
+    },
 });
+
+// ref
+const image = ref({});
+const showModal = ref(false);
 
 // path de la imagen del vehículo
 // solo la primera imagen del vehículo
@@ -38,13 +48,30 @@ const color = computed(() => {
     }
     return props.vehicle?.color?.name;
 });
+
+// devuelve el path de la imagen
+// si no existe devuelve una imagen por defecto
+const imgPath = (path) => {
+    if (path) {
+        return pp.resizeImgVehicle.value + path;
+    }
+    return "/";
+};
+
+// abrir la imagen pantalla completa
+const openImage = (img = null) => {
+    const firstImage = props.vehicle?.gallery[0];
+    image.value = !img ? firstImage : img;
+    showModal.value = true;
+};
 </script>
 <template>
     <div class="flex flex-wrap items-start">
         <div class="w-full md:w-[30%] mb-3">
             <img
                 :src="imgFullPath"
-                class="w-full h-full object-cover object-center rounded aspect-video"
+                class="w-full h-full object-cover object-center rounded aspect-video hover:cursor-pointer"
+                @click.stop="openImage(null)"
             />
         </div>
         <div class="w-full md:w-[70%]">
@@ -75,5 +102,22 @@ const color = computed(() => {
                 </div>
             </div>
         </div>
+        <div class="w-full" v-if="fullImages">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <img
+                    :src="imgPath(img.path)"
+                    class="w-full h-full object-cover object-center rounded aspect-video hover:cursor-pointer"
+                    v-for="img in vehicle.gallery"
+                    @click.stop="openImage(img)"
+                />
+            </div>
+        </div>
     </div>
+
+    <FullImageModal
+        max-width="5x1"
+        :img="image"
+        :show="showModal"
+        @close="showModal = false"
+    />
 </template>
