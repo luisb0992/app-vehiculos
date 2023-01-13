@@ -90,18 +90,62 @@ class Vehicle extends Model
         return $this->hasMany(RepairOrder::class, 'vehicle_id');
     }
 
-    //status attr
-    public function statusVehicle(){
-        if($this->status == 5){
-            return "Reparado";
+    public function repairOrdersWithStatus(): HasMany
+    {
+        return $this->hasMany(RepairOrder::class, 'vehicle_id')->whereIn('status', [3,5,6,7]);
+    }
+
+    public function getDockAttribute(){
+        $dock = 0;
+        foreach($this->repairOrdersWithStatus as $repairOrder){
+            foreach($repairOrder->subcategories as $s){
+                $dock += $s->pivot->dock == 1 ? $s->pivot->cost : 0;
+            }
+        }
+
+        return $dock;
+    }
+
+    public function getWarrantyAttribute(){
+        $warranty = 0;
+        foreach($this->repairOrdersWithStatus as $repairOrder){
+            foreach($repairOrder->subcategories as $s){
+                $warranty += $s->pivot->warranty == 1 ? $s->pivot->cost : 0;
+            }
+        }
+        return $warranty;
+    }
+
+    public function getStatusWordAttribute(){
+        if($this->status == 1){
+            return "Disponible";
         }else if($this->status == 2){
-            return "Pendiente por reparar";
-        }else if($this->status == 6){
-            return "Agregado";
+            return "Pendiente";
+        }else if($this->status == 3){
+            return "En Mantenimiento";
+        }else if($this->status == 4){
+            return "Reparado";
+        }else if($this->status == 5){
+            return "Eliminado";
+        }
+
+    }
+
+    //scopes querys (Model, Brand, Date Between, Shassis, Status ORder, User)
+
+    public function scopeWhereStatusOrders($query){
+
+        $query->repairOrders->whereIn('status', [3,5,6,7]);
+
+    }
+
+    public function scopeUser($query, $user)
+    {
+        if ($user) {
+            return $query->where('user_id', $user);
         }
     }
 
-    //scopes querys (Model, Brand, Date Between, Shassis)
     public function scopeModel($query, $model)
     {
         if ($model) {
@@ -131,5 +175,5 @@ class Vehicle extends Model
             return $query->where('chassis_number', 'LIKE',"{$nro_chasis}%");
         }
     }
-    //end scopes querys (Model, Brand, Date Between, Shassis)
+    //end scopes querys (Model, Brand, Date Between, Shassis,Status ORder, User)
 }

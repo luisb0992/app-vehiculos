@@ -40,6 +40,10 @@ class UserFactory
     return User::with('rol','workshop')->where('id','!=',auth()->user()->id)->orderBy('id', 'DESC')->get();
   }
 
+  public function getUsers(){
+    return User::where('id','!=',auth()->user()->id)->orderBy('id', 'DESC')->get();
+  }
+
   public function findUserWithId($id)
   {
     return User::find($id);

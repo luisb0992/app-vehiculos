@@ -25,6 +25,8 @@ class StatusRepairOrderEnum
   // orden aprobada, cuando el usuario registrador aprueba la orden
   public const APPROVED = 7;
 
+  public const NOT_ORDER = 'Sin Solicitar';
+
   // getValues
   public static function getValues(): array
   {
@@ -36,6 +38,7 @@ class StatusRepairOrderEnum
       self::REPAIRED,
       self::FINALIZED,
       self::APPROVED,
+      self::NOT_ORDER,
     ];
   }
 
@@ -50,6 +53,7 @@ class StatusRepairOrderEnum
       self::REPAIRED => 'Reparada',
       self::FINALIZED => 'Finalizada',
       self::APPROVED => 'Aprobada',
+      self::NOT_ORDER => 'Sin solicitar',
     ];
   }
 
@@ -64,6 +68,7 @@ class StatusRepairOrderEnum
       'repaired' => self::REPAIRED,
       'finalized' => self::FINALIZED,
       'approved' => self::APPROVED,
+      'not_order' => self::NOT_ORDER,
     ];
   }
 }

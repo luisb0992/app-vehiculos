@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Vehicle\ReportsVehicleController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,19 +24,5 @@ Route::middleware('auth')->prefix('vehicles')->group(function () {
   // guardar datos de reparación
   Route::post('store-repair', [VehicleController::class, 'storeRepair'])
     ->name('vehicle.store.repair');
-
-  // reports view
-  Route::get('reports/vehicle', [ReportsVehicleController::class, 'index'])
-    ->name('vehicle.reports');
-
-// request reports
-  Route::post('reports/vehicle', [ReportsVehicleController::class, 'queryVehicle'])
-  ->name('vehicle.reports.post');
-
-  //pdf reports vehicle
-  Route::get('reports/pdf', [ReportsVehicleController::class, 'downloadPDF'])->name('vehicle.reports.pdf');
-
-  //excel reports vehicle
-  Route::get('reports/excel', [ReportsVehicleController::class, 'downloadEXCEL'])->name('vehicle.reports.excel');
 
 });

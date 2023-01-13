@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Exports\VehicleReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Response as HttpResponse;
-use App\Factories\{ModelVehicleFactory,BrandFactory,ColorFactory};
+use App\Factories\{ModelVehicleFactory,BrandFactory,ColorFactory,UserFactory};
 
 class ReportsVehicleController extends Controller
 {
@@ -18,46 +18,61 @@ class ReportsVehicleController extends Controller
         private BrandFactory $brandF,
         private ColorFactory $colorF,
         private VehicleDB $dbVehicle,
+        private UserFactory $userF
     ) {
     }
 
     public function index()
     {
-
         return Inertia::render('Reports/Vehicle/Index',[
-            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(null,null,null,null),
-            'models' => $this->modelVehicleF->getAllModelsOrderASC(),
+            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(),
+            'models' => [],
+            'users' => $this->userF->getUsers(),
             'brands' => $this->brandF->getBrands(),
             'filters' => [
                 'brand' => null,
                 'model' => null,
                 'dates' => null,
                 'nro_chasis' => null,
+                'user_id' => null
             ],
         ]);
     }
 
     //Query POST
-    public function queryVehicle(){
+    public function queryReports(){
 
         $brand = request()->brand_id;
         $model = request()->model_id;
         $dates = request()->dates;
         $nro_chasis = request()->nro_chasis;
+        $user_id = request()->user_id;
 
         //dd($brand,$model,$dates,$nro_chasis);
 
         return Inertia::render('Reports/Vehicle/Index',[
-            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis),
-            'models' => $this->modelVehicleF->getAllModelsOrderASC(),
+            'vehicles' => $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis,$user_id),
+            'models' => $this->modelVehicleF->getModelsByBrand($brand),
             'brands' => $this->brandF->getBrands(),
+            'users' => $this->userF->getUsers(),
             'filters' => [
                 'brand' => $brand,
                 'model' => $model,
                 'dates' => $dates,
                 'nro_chasis' => $nro_chasis,
+                'user_id' => $user_id
             ],
         ]);
+    }
+
+    public function modelsByBrands()
+    {
+        $brand_id = request()->brand_id;
+
+
+        $models = $this->modelVehicleF->getModelsByBrand($brand_id);
+
+        return $models;
     }
 
     //reporte PDF

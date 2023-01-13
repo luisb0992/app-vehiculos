@@ -83,7 +83,26 @@ class RepairOrder extends Model
      */
     public function subcategories(): BelongsToMany
     {
-        return $this->belongsToMany(RepairSubCategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_sub_category_id')->withPivot(['cost']);
+        return $this->belongsToMany(RepairSubCategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_sub_category_id')->withPivot(['cost','dock','warranty']);
+    }
+
+    /**
+     * Devolver las subcategorias de la orden de reparación
+     */
+    public function subcategoriesWithStatus(): BelongsToMany
+    {
+        return $this->test()->belongsToMany(RepairSubCategory::class, 'repair_vehicle_categories', 'repair_order_id', 'repair_sub_category_id')
+
+        ->withPivot(['cost']);
+    }
+
+    public function test(){
+        return $this->whereIn('status', [3,5,6,7]);
+    }
+
+    public function repair_vehicle_categories(): BelongsToMany
+    {
+        return $this->belongsToMany(RepairVehicleCategory::class,'repair_vehicle_categories','repair_order_id');
     }
 
     /**
