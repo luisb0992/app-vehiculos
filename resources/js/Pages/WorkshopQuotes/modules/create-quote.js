@@ -1,7 +1,11 @@
 import { useForm } from "@inertiajs/inertia-vue3";
 import { computed, ref } from "vue";
 import Swal from "sweetalert2";
+import { manageError } from "@/Utils/Common/common";
 
+/**
+ * Formulario
+ */
 export const form = useForm({
     subs: [],
     subtotal: 0,
@@ -10,25 +14,42 @@ export const form = useForm({
     repair_order_id: 0,
 });
 
+/**
+ * Iva default 7%
+ */
 export const tax = ref(7);
 export const taxString = computed(() => `${tax.value}%`);
-export const subtotal = computed(() =>
-    form.subs.reduce((acc, sub) => acc + sub.cost, 0)
-);
-export const total = computed(
-    () => subtotal.value + (subtotal.value * tax.value) / 100
-);
 
-// verificar si alguno de los cost esta en 0
+/**
+ * subtotal
+ */
+export const subtotal = computed(() => {
+    return form.subs.reduce((total, sub) => {
+        const cost = parseFloat(sub.cost);
+        const acc = parseFloat(total);
+        const sum = acc + cost;
+        return isNaN(sum) ? 0 : sum;
+    }, 0);
+});
+
+/**
+ * Total
+ */
+export const total = computed(() => {
+    const taxValue = (subtotal.value * tax.value) / 100;
+    return parseFloat(subtotal.value + taxValue).toFixed(2);
+});
+
+/**
+ * verificar si alguno de los cost esta en 0
+ */
 export const hasZero = computed(() => form.subs.some((sub) => sub.cost == 0));
 
 export const saveQuote = () => {
     // validar que no haya un item con costo 0
     if (hasZero.value) {
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "No se puede guardar una cotización si no ha llenado todos los items",
+        manageError({
+            test: "No se puede guardar una cotización si no ha llenado todos los items",
         });
         return;
     }
@@ -43,14 +64,12 @@ export const saveQuote = () => {
         return;
     }
 
-    form.subtotal = subtotal.value;
+    form.subtotal = parseFloat(subtotal.value);
     form.tax = tax.value;
-    form.total = total.value;
+    form.total = parseFloat(total.value);
 
     form.post(route("workshop_quotes.storeQuote"), {
-        onStart: () => console.log("start"),
-        onFinish: () => console.log("finish"),
-        onError: (error) => console.log(error),
+        onError: (error) => manageError(),
         onSuccess: (resp) => clearForm(),
     });
 };

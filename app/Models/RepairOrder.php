@@ -93,4 +93,12 @@ class RepairOrder extends Model
     {
         return $this->hasOne(Quotation::class, 'repair_order_id');
     }
+
+    /**
+     * get purchase order
+     */
+    public function purchaseOrder(): HasOne
+    {
+        return $this->hasOne(PurchaseOrder::class, 'repair_order_id');
+    }
 }

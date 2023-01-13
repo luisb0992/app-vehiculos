@@ -32,16 +32,16 @@
     </div>
 </div>  --}}
 
-<div class="row" style="width: 100%; position: relative;">
-    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="width: 30%; position: absolute; left: 0;">
-        <img src="{{ $imgFullPath }}" class="img-thumbnail" />
+<div class="row">
+    <div class="col-xs-4">
+        <img src="{{ $path . $gallery[0]['path'] }}" class="img-rounded" width="260px" height="180px" />
     </div>
-    <div class="" style="width: 70%; position: absolute; right: -5%;">
+    <div class="col-xs-8">
         <div>
             <table class="w-auto">
                 <tr>
                     <td>
-                        <span class="font-weight-bold"> Nº chasis </span>
+                        <span class="font-weight-bold text-uppercase"> <b>Nº chasis</b> </span>
                         <p class="text-sm bg-light p-2 rounded">
                             {{ $vehicle->chassis_number }}
                         </p>
@@ -53,19 +53,19 @@
             <table class="w-auto">
                 <tr>
                     <td>
-                        <span class="font-weight-bold"> Marca </span>
+                        <span class="font-weight-bold text-uppercase"> <b>Marca</b> </span>
                         <p class="text-sm bg-light p-2 rounded">
                             {{ $vehicle->brand->name }}
                         </p>
                     </td>
                     <td>
-                        <span class="font-weight-bold"> Modelo </span>
+                        <span class="font-weight-bold text-uppercase"> <b>Modelo</b> </span>
                         <p class="text-sm bg-light p-2 rounded">
                             {{ $vehicle->model->name }}
                         </p>
                     </td>
                     <td>
-                        <span class="font-weight-bold"> Color </span>
+                        <span class="font-weight-bold text-uppercase"> <b>Color</b> </span>
                         <p class="text-sm bg-light p-2 rounded">
                             {{ $vehicle->color->name }}
                         </p>
@@ -74,4 +74,15 @@
             </table>
         </div>
     </div>
+</div>
+<br>
+<div class="row">
+    @foreach ($quota->repairOrder->vehicle->gallery as $key => $image)
+        @if ($key == 0)
+            @continue
+        @endif
+        <div class="col-xs-3 text-left pull-left">
+            <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="160px" height="120px" />
+        </div>
+    @endforeach
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DB\WorkshopQuoteDB;
 use App\Factories\WorkshopQuoteFactory;
+use App\Http\Requests\ApproveQuotationRequest;
 use App\Http\Requests\CreateWorkshopQuoteRequest;
 use App\Models\WorkshopQuote;
 use Illuminate\Http\Request;
@@ -81,5 +82,73 @@ class WorkshopQuoteController extends Controller
         $pdf = Pdf::loadView('pdf.quotation', ['quota' => $data]);
         $name = 'cotización-' . $id . '.pdf';
         return $pdf->stream($name);
+    }
+
+    /**
+     * Aprobar una cotización
+     *
+     * @param  ApproveQuotationRequest  $request
+     * @return RedirectResponse
+     */
+    public function approveQuotation(ApproveQuotationRequest $request): RedirectResponse
+    {
+        $quota = $this->factory->approveQuotation($request->validated());
+
+        if (!$quota) {
+            return redirect()
+                ->route('vehicle.index')
+                ->with('error', 'No se pudo aprobar la cotización.');
+        }
+
+        return redirect()
+            ->route('vehicle.index')
+            ->with('success', 'Cotización aprobada con éxito.');
+    }
+
+    /**
+     * Iniciar una orden de reparación
+     *
+     * @param  Request  $request
+     * @return RedirectResponse
+     */
+    public function startRepair(Request $request): RedirectResponse
+    {
+        $this->factory->startRepair($request->all());
+
+        return redirect()->route('workshop_quotes.index');
+    }
+
+    /**
+     * finalizar una orden de reparación
+     *
+     * @param  Request  $request
+     * @return RedirectResponse
+     */
+    public function finishRepair(Request $request): RedirectResponse
+    {
+        $this->factory->finishRepair($request->all());
+
+        return redirect()->route('workshop_quotes.index');
+    }
+
+    /**
+     * finalizar el caso de ordenes de reparación
+     *
+     * @param  Request  $request
+     * @return RedirectResponse
+     */
+    public function finalizedCase(Request $request): RedirectResponse
+    {
+        $finalized = $this->factory->finalizedCase($request->all());
+
+        if (!$finalized) {
+            return redirect()
+                ->route('vehicle.index')
+                ->with('error', 'No se pudo finalizar el caso. verifique las ordenes de reparación.');
+        }
+
+        return redirect()
+            ->route('vehicle.index')
+            ->with('success', 'Caso finalizado con éxito.');
     }
 }

@@ -50,7 +50,7 @@ class VehicleDB
   public function getVehiclesByUser(): Collection
   {
     return $this->vehicle
-      ->with(['repairOrders', 'color', 'brand', 'model', 'gallery'])
+      ->with(['repairOrders.quotation', 'color', 'brand', 'model', 'gallery', 'repairOrders.purchaseOrder'])
       ->withCount('repairOrders')
       ->where('user_id', auth()->user()->id)
       ->orderByDesc('created_at')
