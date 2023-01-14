@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\ActivityCustom;
+use Spatie\Activitylog\Models\Activity;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -39,7 +40,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
-        activity()->log('Inicio de sesión - '.date('Y-m-d H:i:s'))->tap(function(ActivityCustom $activity) {
+        activity()->log('Inicio de sesión - '.date('Y-m-d H:i:s'))->tap(function(Activity $activity) {
             $activity->name = 'Usuario';
          });
 

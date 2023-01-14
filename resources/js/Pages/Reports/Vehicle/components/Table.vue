@@ -107,20 +107,24 @@
         <Column style="min-width:8rem">
             <template #body="{data}">
                 <div class="flex justify-between">
-                    <button type="button" @click="openModalVehicle(data)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                    <button type="button"  @click="openModalVehicle(data)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                         <i class="pi pi-eye" />
                     </button>
-                    <a target="_blank" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                    <a @click="construccion()" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                         <i class="pi pi-file-pdf" />
                     </a>
                 </div>
             </template>
         </Column>
     </DataTable>
-    <Dialog :header="'Vehiculo - '+dataModal.chassis_number " v-model:visible="displayMaximizable" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :maximizable="true" :modal="true">
+    <!-- <Dialog :header="'Vehiculo - '+dataModal.chassis_number " v-model:visible="displayMaximizable" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :maximizable="true" :modal="true">
         <div class="flex justify-between mt-4 bg-blue-100 border-b-2 border-blue-300 p-2">
             <span class="font-bold text-md uppercase">Nro Chasis</span>
             <span class="font-medium text-md">{{ dataModal.chassis_number }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Estatus</span>
+            <span class="font-medium text-md">{{ dataModal.status_word }}</span>
         </div>
         <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
             <span class="font-bold text-md uppercase">Marca</span>
@@ -157,7 +161,7 @@
         <h2 class="py-4 text-3xl font-bold text-center text-black">
             Fotos
           </h2>
-          <div class="flex flex-wrap">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
             <div class="w-full lg:w-1/3" v-for="photo in dataModal.photos" :key="photo.id">
               <img :src="
                 pp.resizeImgVehicle.value +
@@ -167,10 +171,9 @@
           </div>
         <template #footer>
             <Button label="Cerrar" icon="pi pi-times" @click="closeMaximizable" class="p-button-text"/>
-            <!-- <Button label="Yes" icon="pi pi-check" @click="closeMaximizable" autofocus /> -->
         </template>
-    </Dialog>
-    <!-- <ModalVehicle :displayMaximizable="displayMaximizable" /> -->
+    </Dialog> -->
+    <ModalVehicle :show="displayMaximizable" :vehicle="dataModal" @close="closeMaximizable" />
 </template>
 
 <script setup>
@@ -184,19 +187,25 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
 import { Link } from '@inertiajs/inertia-vue3'
 import ModalVehicle from './ModalVehicle.vue';
-import Dialog from 'primevue/dialog';
+/* import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
-import { pp } from "@/Utils/Common/common";
+import { pp } from "@/Utils/Common/common"; */
 
 
     const props = defineProps({
         vehicles: Array,
         form : Object
     });
-    const showdropdownDowload = ref(true);
+
+    const construccion = () => {
+        alert("construccion")
+    }
+
     const loading1 = ref(true);
     const displayMaximizable = ref(false);
     const dataModal = ref({});
+
+
     const openModalVehicle = (data) => {
         dataModal.value = {...data}
         displayMaximizable.value = true;

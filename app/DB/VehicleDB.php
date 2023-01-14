@@ -59,13 +59,15 @@ class VehicleDB
 
   public function getVehiclesReportsFilter($brand = null,$model = null,$dates = null,$nro_chasis = null,$user_id = null){
     $vehicles = $this->vehicle
-                ->with(['repairOrders.subcategories' ,'brand', 'model', 'gallery','user'])
+                ->with(['repairOrdersWithStatus.subcategories' ,'brand', 'model', 'gallery','user','repairOrdersWithListed.subcategories'])
                 ->withCount('repairOrders')
                 ->brand($brand)
                 ->model($model)
                 ->user($user_id)
                 ->chassis($nro_chasis)
                 ->dateBetween($dates);
+
+                //dd($vehicles->get());
 
     $result = $vehicles->get()->map(function($vehicle){
         return [
@@ -85,7 +87,17 @@ class VehicleDB
             'price' => $vehicle->price ?? '---',
             'description' => $vehicle->description ?? '---',
             'observation' => $vehicle->observation ?? '---',
-
+            'repair_orders' => $vehicle->repairOrdersWithListed->map(function($order){
+                return [
+                    'id' => $order->id,
+                    'workshop' => $order->workshop->name,
+                    'date' => $order->send_date,
+                    'status' => $order->status,
+                    'total' => $order->quotation->total ?? '---',
+                    'subtotal' => $order->quotation->subtotal ?? '---',
+                    'iva' => $order->quotation->iva ?? '---',
+                ];
+            }),
         ];
     });
 

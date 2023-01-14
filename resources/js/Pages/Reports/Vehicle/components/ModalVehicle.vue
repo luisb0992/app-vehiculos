@@ -1,29 +1,127 @@
 <template lang="">
-    <Dialog header="Header" v-model:visible="open" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :maximizable="true" :modal="true">
-            <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <template #footer>
-                <Button label="No" icon="pi pi-times" @click="closeMaximizable" class="p-button-text"/>
-                <Button label="Yes" icon="pi pi-check" @click="closeMaximizable" autofocus />
-            </template>
+    <Dialog :header="'Vehiculo - '+vehicle.chassis_number " :closable="false" :visible="show" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :maximizable="true" :modal="true">
+        <div class="flex justify-between mt-4 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Nro Chasis</span>
+            <span class="font-medium text-md">{{ vehicle.chassis_number }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Estatus</span>
+            <span class="font-medium text-md">{{ vehicle.status_word }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Marca</span>
+            <span class="font-medium text-md">{{ vehicle.brand }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Modelo</span>
+            <span class="font-medium text-md">{{ vehicle.model }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Color</span>
+            <span class="font-medium text-md">{{ vehicle.color }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Año</span>
+            <span class="font-medium text-md">{{ vehicle.year }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Kilometraje</span>
+            <span class="font-medium text-md">{{ vehicle.mileage }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Precio</span>
+            <span class="font-medium text-md">{{ vehicle.price }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Descripción</span>
+            <span class="font-medium text-md">{{ vehicle.description }}</span>
+        </div>
+        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
+            <span class="font-bold text-md uppercase">Obeservación</span>
+            <span class="font-medium text-md">{{ vehicle.observation }}</span>
+        </div>
+        <h2 class="py-4 text-3xl font-bold text-center text-black">
+            Ordenes Cotizadas
+        </h2>
+        <div class="flex justify-center items-center" v-if="vehicle.repair_orders.length <= 0">
+            <span>No hay solicitud de reparaciones creadas </span>
+        </div>
+        <div class="relative overflow-x-auto" v-if="vehicle.repair_orders.length > 0">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-lg text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Taller
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Fecha
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Sub Total
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            IVA
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Total
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="order in vehicle.repair_orders" :key="order.id" class="bg-white border-b ">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            {{order.workshop}}
+                        </th>
+                        <td class="px-6 py-4 font-medium text-gray-900">
+                            {{order.date}}
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900">
+                            ${{order.subtotal}}
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900">
+                            ${{order.iva}}
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900">
+                            ${{order.total}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2 class="py-4 text-3xl font-bold text-center text-black">
+            Fotos
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 p-1">
+        <div class="w-full lg:w-1/3" v-for="photo in vehicle.photos" :key="photo.id">
+            <img :src="
+            pp.resizeImgVehicle.value +
+            photo.path
+        " alt="image" />
+        </div>
+        </div>
+        <template #footer>
+            <Button label="Cerrar" icon="pi pi-times" @click="$emit('close')" class="p-button-text"/>
+        </template>
         </Dialog>
 </template>
 <script setup>
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
-import {ref} from 'vue'
+import {ref,defineEmits,computed} from 'vue'
+import { pp } from "@/Utils/Common/common";
+
 
 const props = defineProps({
-    displayMaximizable : Boolean
+    show: {
+        type: Boolean,
+        default: false,
+    },
+    vehicle: {
+        type: Object,
+        default: {},
+    },
 });
 
-//alert(props.displayMaximizable);
-
-const open = ref(props.displayMaximizable);
-
-const closeMaximizable = () => {
-            open.value = false;
-        };
+const emits = defineEmits(['close']);
 
 </script>
