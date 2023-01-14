@@ -10,5 +10,5 @@ Route::middleware('auth')->group(function () {
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
   //Users
-  Route::resource('/users', UserController::class);
+  Route::resource('/users', UserController::class)->middleware('is_superadmin');
 });

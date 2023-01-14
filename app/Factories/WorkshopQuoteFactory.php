@@ -3,12 +3,12 @@
 namespace App\Factories;
 
 use App\Enum\StatusRepairOrderEnum;
-use App\Enum\StatusVehicleEnum;
-use App\Models\Quotation;
-use App\Models\RepairOrder;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Enum\StatusVehicleEnum;
+use App\Models\RepairOrder;
+use App\Models\Quotation;
+use App\Models\Vehicle;
+use App\Models\User;
 
 class WorkshopQuoteFactory
 {

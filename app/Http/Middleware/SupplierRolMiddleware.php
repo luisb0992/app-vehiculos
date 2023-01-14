@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class SuperAdminRolMiddleware
+class SupplierRolMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,8 +19,8 @@ class SuperAdminRolMiddleware
         // obtener el usuario
         $user = $request->user();
 
-        // verificar si el usuario tiene el rol de superadmin
-        if ($user->isSuperAdmin()) {
+        // verificar si el usuario tiene el rol de supervisor
+        if ($user->isSupplier()) {
             return $next($request);
         }
 

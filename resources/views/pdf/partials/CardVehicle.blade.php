@@ -42,13 +42,20 @@
     </div>
 </div>
 
+@php
+    $data = $quota->repairOrder->vehicle->gallery;
+    $gallery1 = $data->slice(0, 4);
+    $gallery2 = $data->slice(4, 4);
+    $gallery3 = $data->slice(8, 4);
+    $gallery4 = $data->slice(12, 4);
+    $gallery5 = $data->slice(16, 4);
+@endphp
+
+
 {{--  galeria - todas las fotos (hasta 20 fotos)  --}}
 <div style="padding-top: 2px;">
     <div class="row" style="margin-right: 65px;">
-        @foreach ($quota->repairOrder->vehicle->gallery->slice(0, 4) as $key => $image)
-            {{--  @if ($key == 0)
-            @continue
-        @endif  --}}
+        @foreach ($gallery1 as $key => $image)
             <div class="col-xs-3" style="padding-right: 0px !important;">
                 <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
                     height="120px" />
@@ -56,7 +63,7 @@
         @endforeach
     </div>
     <div class="row" style="margin-right: 65px;">
-        @foreach ($quota->repairOrder->vehicle->gallery->slice(4, 8) as $key => $image)
+        @foreach ($gallery2 as $key => $image)
             <div class="col-xs-3" style="padding-right: 0px !important;">
                 <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
                     height="120px" />
@@ -64,7 +71,7 @@
         @endforeach
     </div>
     <div class="row" style="margin-right: 65px;">
-        @foreach ($quota->repairOrder->vehicle->gallery->slice(8, 12) as $key => $image)
+        @foreach ($gallery3 as $key => $image)
             <div class="col-xs-3" style="padding-right: 0px !important;">
                 <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
                     height="120px" />
@@ -72,7 +79,7 @@
         @endforeach
     </div>
     <div class="row" style="margin-right: 65px;">
-        @foreach ($quota->repairOrder->vehicle->gallery->slice(12, 16) as $key => $image)
+        @foreach ($gallery4 as $key => $image)
             <div class="col-xs-3" style="padding-right: 0px !important;">
                 <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
                     height="120px" />
@@ -80,7 +87,7 @@
         @endforeach
     </div>
     <div class="row" style="margin-right: 65px;">
-        @foreach ($quota->repairOrder->vehicle->gallery->slice(16, 20) as $key => $image)
+        @foreach ($gallery5 as $key => $image)
             <div class="col-xs-3" style="padding-right: 0px !important;">
                 <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
                     height="120px" />

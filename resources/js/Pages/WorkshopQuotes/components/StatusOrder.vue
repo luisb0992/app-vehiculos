@@ -77,9 +77,9 @@ const finishRepair = () => {
                 status === $page.props.status.repair_order.in_repair,
             'text-red-600 text-xs font-semibold':
                 status === $page.props.status.repair_order.cancelLed,
-            'text-green-600 text-xs font-semibold':
+            'text-orange-600 text-xs font-semibold':
                 status === $page.props.status.repair_order.repaired,
-            'text-orange-800 text-xs font-semibold':
+            'text-green-600 text-xs font-semibold':
                 status === $page.props.status.repair_order.finalized,
         }"
         class="text-center"

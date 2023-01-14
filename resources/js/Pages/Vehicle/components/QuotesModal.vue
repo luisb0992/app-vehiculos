@@ -118,9 +118,14 @@ const finalizedCase = () => {
     <Modal :show="show" :max-width="maxWidth">
         <div class="p-4">
             <div class="w-full">
-                <h1 class="uppercase text-zinc-900 font-bold pb-2">
-                    cotizaciones ({{ vehicle.repair_orders_count }})
-                </h1>
+                <div class="flex flex-col md:flex-row  md:justify-between items-center">
+                    <h1 class="uppercase text-zinc-900 font-bold pb-2">
+                        cotizaciones ({{ vehicle.repair_orders_count }})
+                    </h1>
+                    <h3 class="uppercase text-zinc-900 font-bold pb-2">
+                        Nº Chasis {{ vehicle.chassis_number }}
+                    </h3>
+                </div>
                 <hr />
                 <div class="w-full pt-2">
                     <div v-for="order in orders" class="mb-2">

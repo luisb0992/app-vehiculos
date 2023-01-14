@@ -67,5 +67,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'is_recorder' => \App\Http\Middleware\RecorderRolMiddleware::class,
         'is_superadmin' => \App\Http\Middleware\SuperAdminRolMiddleware::class,
+        'is_supplier' => \App\Http\Middleware\SupplierRolMiddleware::class,
+        'is_superadmin_or_recorder' => \App\Http\Middleware\SuperAdminOrRecorderRolMiddleware::class,
+        'is_superadmin_or_supplier' => \App\Http\Middleware\SuperAdminOrSupplierRolMiddleware::class,
     ];
 }

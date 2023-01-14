@@ -8,33 +8,41 @@ Route::middleware('auth')->prefix('workshop_quotes')->group(function () {
 
   // listado de cotizaciones
   Route::get('index', [WorkshopQuoteController::class, 'index'])
-    ->name('workshop_quotes.index');
+    ->name('workshop_quotes.index')
+    ->middleware('is_superadmin_or_supplier');
 
   // crear una cotización a partir de un vehículo
   Route::get('create-quote/{id}', [WorkshopQuoteController::class, 'createQuote'])
-    ->name('workshop_quotes.createQuote');
+    ->name('workshop_quotes.createQuote')
+    ->middleware('is_superadmin_or_supplier');
 
   // guardar una cotización
   Route::post('store-quote', [WorkshopQuoteController::class, 'store'])
-    ->name('workshop_quotes.storeQuote');
+    ->name('workshop_quotes.storeQuote')
+    ->middleware('is_superadmin_or_supplier');
 
-  // descargar la orden de cotización
+  // descargar la orden de cotización - pdf cotización
   Route::get('download-quote/{id}', [WorkshopQuoteController::class, 'downloadQuote'])
-    ->name('workshop_quotes.downloadPDFQuote');
+    ->name('workshop_quotes.downloadPDFQuote')
+    ->middleware('is_superadmin_or_recorder');
 
   // aprobar una cotización
   Route::post('approve-quote', [WorkshopQuoteController::class, 'approveQuotation'])
-    ->name('workshop_quotes.approveQuotation');
+    ->name('workshop_quotes.approveQuotation')
+    ->middleware('is_superadmin_or_recorder');
 
   // iniciar una orden de reparación
   Route::post('start-repair', [WorkshopQuoteController::class, 'startRepair'])
-    ->name('workshop_quotes.startRepair');
+    ->name('workshop_quotes.startRepair')
+    ->middleware('is_superadmin_or_supplier');
 
-  // iniciar una orden de reparación
+  // finalizar una orden de reparación
   Route::post('finish-repair', [WorkshopQuoteController::class, 'finishRepair'])
-    ->name('workshop_quotes.finishRepair');
+    ->name('workshop_quotes.finishRepair')
+    ->middleware('is_superadmin_or_supplier');
 
   // Finalizar caso
   Route::post('finish-case', [WorkshopQuoteController::class, 'finalizedCase'])
-    ->name('workshop_quotes.finalizedCase');
+    ->name('workshop_quotes.finalizedCase')
+    ->middleware('is_superadmin_or_recorder');
 });

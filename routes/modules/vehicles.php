@@ -4,14 +4,15 @@ use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 // rutas con middleware auth y prefix vehicles
-Route::middleware(['auth', 'is_recorder', 'is_superadmin'])
+Route::middleware(['auth', 'is_superadmin_or_recorder'])
   ->prefix('vehicles')
   ->group(function () {
 
-    // crear vehículo
+    // listar vehiculos
     Route::get('index', [VehicleController::class, 'index'])
       ->name('vehicle.index');
 
+    // crear vehículo
     Route::get('create', [VehicleController::class, 'create'])
       ->name('vehicle.create');
 
