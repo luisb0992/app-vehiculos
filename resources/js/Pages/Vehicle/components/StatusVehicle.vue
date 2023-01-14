@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from "@inertiajs/inertia-vue3";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
     vehicle: Object,
@@ -47,7 +47,7 @@ const status = computed(() => props.vehicle.status);
         <span
             v-else-if="status === $page.props.status.vehicle.requested_repair"
         >
-            <p class="mb-3">Solicitud de reparación enviada</p>
+            <p class="mb-3">Solicitud enviada</p>
 
             <button
                 type="button"

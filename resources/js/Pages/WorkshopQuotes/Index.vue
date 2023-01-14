@@ -3,12 +3,11 @@ import Layout from "@/Layouts/Layout.vue";
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
 import InputText from "primevue/inputtext";
+import StatusOrder from "./components/StatusOrder.vue";
 import { pp } from "@/Utils/Common/common";
 import { Head } from "@inertiajs/inertia-vue3";
 import { FilterMatchMode } from "primevue/api";
 import { ref } from "vue";
-import StatusOrder from "./components/StatusOrder.vue";
-import ActionButtons from "./components/ActionButtons.vue";
 
 const props = defineProps({
     orders: Array,
@@ -55,6 +54,7 @@ const filter = ref({
                                         <InputText
                                             v-model="filter['global'].value"
                                             placeholder="Búsqueda..."
+                                            class="w-52"
                                         />
                                     </span>
                                 </div>

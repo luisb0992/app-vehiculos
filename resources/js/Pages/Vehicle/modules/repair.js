@@ -44,6 +44,11 @@ export const saveRepair = () => {
     });
 };
 
+// activar o desactivar el botón de finalizar
+export const canFinish = computed(() => {
+    return form.processing || hasSubToAssign.value || !form.orders.length;
+});
+
 // obtener el nombre del taller
 export const getWorkshopName = (workshops, id) => {
     return (

@@ -1,10 +1,10 @@
 <script setup>
 import Layout from "@/Layouts/Layout.vue";
-import { Head, Link } from "@inertiajs/inertia-vue3";
 import CardVehicle from "../Vehicle/components/CardVehicle.vue";
-import InputNumber from "primevue/inputNumber";
-import { computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import InputError from "@/Components/InputError.vue";
+import ProgressBar from "@/Components/ProgressBar.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { numberToDecimal } from "@/Utils/Common/common";
 import {
     saveQuote,
@@ -14,15 +14,10 @@ import {
     total,
     hasZero,
 } from "./modules/create-quote";
-import InputError from "@/Components/InputError.vue";
 
 const props = defineProps({
     order: Object,
 });
-
-// const images = computed(() =>
-//     props.order.vehicle.gallery.filter((_, i) => i !== 0)
-// );
 
 // order_id
 form.repair_order_id = props.order.id;
@@ -36,31 +31,28 @@ props.order.subcategories.forEach((sub) => {
     });
 });
 
-const startFromBeginning = (e) => {
-    // form.subs.forEach((sub) => {
-    //     sub.cost = 0;
-    // });
+// const startFromBeginning = (e) => {
+//     // form.subs.forEach((sub) => {
+//     //     sub.cost = 0;
+//     // });
 
-    // ubicar el puntero al principio del input
-    e.target.selectionStart = 0;
-    e.target.value = "";
+//     // ubicar el puntero al principio del input
+//     e.target.selectionStart = 0;
+//     e.target.value = "";
 
-    console.log(e);
-    console.log(e.target.value);
+//     // eliminar el valor del input
+//     // e.target.value = "";
+// };
 
-    // eliminar el valor del input
-    // e.target.value = "";
-};
+// const hasValue = (e) => {
+//     console.log(e);
+//     // verifica si hay valor y agrega los decimales
+//     if (e.target.value === "") {
+//         return 0;
+//     }
 
-const hasValue = (e) => {
-    console.log(e);
-    // verifica si hay valor y agrega los decimales
-    if (e.target.value === "") {
-        return 0;
-    }
-
-    return 2;
-};
+//     return 2;
+// };
 
 /**
  * Funcion que valida el formato del input
@@ -150,14 +142,6 @@ const validateFormat = (e) => {
                                         <td
                                             class="text-center py-3 text-sm md:text-lg"
                                         >
-                                            <!-- <InputNumber
-                                                mode="decimal"
-                                                v-model.lazy="sub.cost"
-                                                :minFractionDigits="2"
-                                                :maxFractionDigits="2"
-                                                allowEmpty
-                                            /> -->
-
                                             <input
                                                 type="number"
                                                 step="1,99"
@@ -222,26 +206,18 @@ const validateFormat = (e) => {
                                 </div>
                             </div>
 
-                            <div class="w-full">
-                                <progress
-                                    v-if="form.progress"
-                                    :value="form.progress.percentage"
-                                    max="100"
-                                    class="w-full"
-                                >
-                                    {{ form.progress.percentage }}%
-                                </progress>
-                            </div>
+                            <ProgressBar
+                                :form="form"
+                                class="animate-fade-in-down mb-2"
+                            />
 
                             <div class="flex justify-end">
                                 <PrimaryButton
                                     type="button"
                                     class="px-7 py-4 text-lg uppercase"
-                                    :class="{
-                                        'opacity-50': hasZero,
-                                    }"
-                                    @click.stop="saveQuote"
+                                    :class="{ 'opacity-50': hasZero }"
                                     :disabled="hasZero"
+                                    @click.stop="saveQuote"
                                 >
                                     Cotizar
                                 </PrimaryButton>

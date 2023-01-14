@@ -5,25 +5,18 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import UseUploadFiles from "./UseUploadFiles.vue";
 import AutoComplete from "primevue/autocomplete";
-// import UseCreateBrandModal from "./UseCreateBrandModal.vue";
-// import UseCreateModelModal from "./UseCreateModelModal.vue";
-// import UseCreateColorModal from "./UseCreateColorModal.vue";
-// import UseTakePhoto from "./UseTakePhoto.vue";
+import ProgressBar from "@/Components/ProgressBar.vue";
+import { onMounted } from "vue";
 import { useGalleryStore } from "@/Store/gallery";
 import {
     form,
     getModels,
     saveVehicle,
     filterModels,
-    // showModalBrand,
-    // showModalModel,
-    // showModalColor,
-    // showCamera,
     searchModels,
     searchColor,
     allColors,
 } from "../modules/create";
-import { onMounted } from "vue";
 
 const props = defineProps({
     brands: Array,
@@ -187,16 +180,7 @@ onMounted(() => {
                 <InputError class="mt-2" :message="form.errors.gallery" />
             </div>
 
-            <div>
-                <progress
-                    v-if="form.progress"
-                    :value="form.progress.percentage"
-                    max="100"
-                    class="w-full"
-                >
-                    {{ form.progress.percentage }}%
-                </progress>
-            </div>
+            <ProgressBar :form="form" />
 
             <div>
                 <PrimaryButton

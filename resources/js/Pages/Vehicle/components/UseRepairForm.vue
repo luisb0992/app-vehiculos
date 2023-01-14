@@ -19,8 +19,10 @@ import {
     hasSubToAssign,
     deleteOrder,
     clearForm,
+    canFinish,
 } from "../modules/repair";
 import { onMounted } from "vue";
+import ProgressBar from "@/Components/ProgressBar.vue";
 
 const props = defineProps({
     vehicle: Object,
@@ -114,8 +116,8 @@ onMounted(() => {
                 <div class="p-4 mb-4 bg-blue-100 rounded-lg">
                     <i class="fas fa-info-circle"></i>
                     <strong class="ml-3 text-sm font-medium text-blue-700">
-                        Selecciona las garantías y/o muelles que se van a asignar
-                        a la orden(es) de reparación
+                        Selecciona las garantías y/o muelles que se van a
+                        asignar a la orden(es) de reparación
                     </strong>
                 </div>
 
@@ -335,14 +337,15 @@ onMounted(() => {
 
             <!-- botonera -->
             <div class="py-5">
+                <ProgressBar :form="form" class="animate-fade-in-down mb-2" />
                 <PrimaryButton
                     class="w-full md:w-1/2 flex justify-center"
                     @click.stop="continueRepair = true"
-                    v-if="!continueRepair"
                     :class="{
                         'opacity-25': !form.categories.length,
                     }"
                     :disabled="form.processing || !form.categories.length"
+                    v-if="!continueRepair"
                 >
                     <span class="px-6 py-3 uppercase"> Continuar </span>
                 </PrimaryButton>
@@ -356,15 +359,8 @@ onMounted(() => {
                 </PrimaryButton> -->
                 <PrimaryButton
                     class="w-full md:w-1/2 flex justify-center"
-                    :class="{
-                        'opacity-25':
-                            form.processing ||
-                            hasSubToAssign ||
-                            !form.orders.length,
-                    }"
-                    :disabled="
-                        form.processing || hasSubToAssign || !form.orders.length
-                    "
+                    :class="{ 'opacity-25': canFinish }"
+                    :disabled="canFinish"
                     :type="form.processing ? 'button' : 'submit'"
                     v-if="continueRepair"
                 >

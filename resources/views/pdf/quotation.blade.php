@@ -19,7 +19,7 @@
     </div>
     <br>
     <div class="w-100">
-        <div class="bg-warning text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;">
+        <div class="bg-info text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;">
             <b>Cotización</b>
         </div>
         <div class="w-100">

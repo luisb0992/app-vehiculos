@@ -5,28 +5,20 @@ import DataTable from "primevue/datatable";
 import InputText from "primevue/inputtext";
 import Toolbar from "primevue/toolbar";
 import StatusVehicle from "./components/StatusVehicle.vue";
+import QuotesModal from "./components/QuotesModal.vue";
 import { pp } from "@/Utils/Common/common";
 import { Head, Link } from "@inertiajs/inertia-vue3";
-import { FilterMatchMode } from "primevue/api";
-import { ref } from "vue";
-import QuotesModal from "./components/QuotesModal.vue";
+import {
+    filter,
+    showQuotesModal,
+    vehicle,
+    openModalQuotes,
+} from "./modules/index";
 
+// props
 const props = defineProps({
     vehicles: Array,
 });
-
-const filter = ref({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-});
-
-const showQuotesModal = ref(false);
-const vehicle = ref({});
-
-const openModalQuotes = (data) => {
-    console.log(data);
-    vehicle.value = data;
-    showQuotesModal.value = true;
-};
 </script>
 <template>
     <Head title="Listado de vehículos" />
@@ -71,6 +63,7 @@ const openModalQuotes = (data) => {
                                         <InputText
                                             v-model="filter['global'].value"
                                             placeholder="Búsqueda..."
+                                            class="w-52"
                                         />
                                     </span>
                                 </div>
@@ -117,7 +110,10 @@ const openModalQuotes = (data) => {
                                 style="min-width: 15rem"
                             >
                                 <template #body="{ data }">
-                                    <StatusVehicle :vehicle="data" @openQuotes="openModalQuotes" />
+                                    <StatusVehicle
+                                        :vehicle="data"
+                                        @openQuotes="openModalQuotes"
+                                    />
                                 </template>
                             </Column>
                         </DataTable>

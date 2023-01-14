@@ -74,7 +74,7 @@ const openImage = (img = null) => {
                 @click.stop="openImage(null)"
             />
         </div>
-        <div class="w-full md:w-[70%]">
+        <div class="w-full md:w-[70%] mb-3">
             <div class="flex flex-wrap justify-start md:px-4">
                 <div class="w-full pb-2">
                     <label class="text-zinc-800 font-bold"> Nº chasis</label>

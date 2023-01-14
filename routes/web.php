@@ -51,9 +51,6 @@ Route::name('reports.')->middleware('auth')->prefix('reports')->group(function (
     Route::post('brands/models', [ReportsVehicleController::class, 'modelsByBrands'])->name('brands.models');
 });
 
-
-
-
 require __DIR__ . '/modules/profile.php';
 
 require __DIR__ . '/modules/auth.php';

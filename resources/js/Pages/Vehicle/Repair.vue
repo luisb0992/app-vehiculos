@@ -29,7 +29,7 @@ onMounted(() => {
                             class="overflow-hidden shadow-sm sm:rounded-lg flex justify-between pb-3"
                         >
                             <h3 class="text-gray-900 text-2xl font-bold">
-                                Datos del vehículo
+                                Datos vehículo
                             </h3>
                             <Link
                                 :href="route('vehicle.index')"
