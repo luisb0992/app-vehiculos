@@ -59,7 +59,7 @@ class VehicleDB
 
   public function getVehiclesReportsFilter($brand = null,$model = null,$dates = null,$nro_chasis = null,$user_id = null){
     $vehicles = $this->vehicle
-                ->with(['repairOrders.subcategories' ,'brand', 'model', 'gallery','user'])
+                ->with(['repairOrdersWithStatus.subcategories' ,'brand', 'model', 'gallery','user','repairOrdersWithListed.subcategories'])
                 ->withCount('repairOrders')
                 ->brand($brand)
                 ->model($model)
@@ -67,18 +67,37 @@ class VehicleDB
                 ->chassis($nro_chasis)
                 ->dateBetween($dates);
 
+                //dd($vehicles->get());
+
     $result = $vehicles->get()->map(function($vehicle){
         return [
             'chassis_number' => $vehicle->chassis_number,
             'brand' => $vehicle->brand->name,
             'model' => $vehicle->model->name,
+            'color' => $vehicle->color->name,
             'status' => $vehicle->status,
             'dock'  => $vehicle->dock,
             'warranty' => $vehicle->warranty,
             'total' => $vehicle->dock + $vehicle->warranty,
             'status_word' => $vehicle->status_word,
             'user' => $vehicle->user->name.' '.$vehicle->user->last_name,
-
+            'photos' => $vehicle->gallery,
+            'year'  => $vehicle->year ?? '---',
+            'mileage' => $vehicle->mileage ?? '---',
+            'price' => $vehicle->price ?? '---',
+            'description' => $vehicle->description ?? '---',
+            'observation' => $vehicle->observation ?? '---',
+            'repair_orders' => $vehicle->repairOrdersWithListed->map(function($order){
+                return [
+                    'id' => $order->id,
+                    'workshop' => $order->workshop->name,
+                    'date' => $order->send_date,
+                    'status' => $order->status,
+                    'total' => $order->quotation->total ?? '---',
+                    'subtotal' => $order->quotation->subtotal ?? '---',
+                    'iva' => $order->quotation->iva ?? '---',
+                ];
+            }),
         ];
     });
 

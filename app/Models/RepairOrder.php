@@ -96,9 +96,6 @@ class RepairOrder extends Model
         ->withPivot(['cost']);
     }
 
-    public function test(){
-        return $this->whereIn('status', [3,5,6,7]);
-    }
 
     public function repair_vehicle_categories(): BelongsToMany
     {

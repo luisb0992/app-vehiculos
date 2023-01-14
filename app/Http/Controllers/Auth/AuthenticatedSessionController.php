@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\ActivityCustom;
+use Spatie\Activitylog\Models\Activity;
+
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -38,7 +42,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
-        activity()->log('Inicio de sesión - '.date('Y-m-d H:i:s'));
+        activity()->tap(function(Activity $activity) {
+            $activity->log_name = 'Usuario';
+         })->log('Inicio de sesión - '.date('Y-m-d H:i:s'));
 
         // superadmin
         if ($user->isSuperAdmin()) {
@@ -66,7 +72,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        activity()->log('Salió del sistema - '.date('Y-m-d H:i:s'));
+        activity()->tap(function(Activity $activity) {
+            $activity->log_name = 'Usuario';
+         })->log('Salió del sistema - '.date('Y-m-d H:i:s'));
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

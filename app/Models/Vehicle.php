@@ -95,6 +95,11 @@ class Vehicle extends Model
         return $this->hasMany(RepairOrder::class, 'vehicle_id')->whereIn('status', [3,5,6,7]);
     }
 
+    public function repairOrdersWithListed(): HasMany
+    {
+        return $this->hasMany(RepairOrder::class, 'vehicle_id')->where('status',2);
+    }
+
     public function getDockAttribute(){
         $dock = 0;
         foreach($this->repairOrdersWithStatus as $repairOrder){
