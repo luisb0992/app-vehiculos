@@ -63,7 +63,8 @@ class User extends Authenticatable
     {
         return LogOptions::defaults()
             ->setDescriptionForEvent(fn (string $eventName) => "Usuario :  {$this->eventName($eventName)}")
-            ->useLogName('Usuario');
+            ->useLogName('Usuario')
+            ->dontLogIfAttributesChangedOnly(['remember_token']);
     }
 
     public function tapActivity(Activity $activity, string $eventName)
