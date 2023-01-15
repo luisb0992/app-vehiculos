@@ -72,19 +72,28 @@
                 <img :src="
                 pp.resizeImgVehicle.value +
                 photo.path
-            " alt="image" />
+            " alt="image"
+            @click.stop="openImage(photo)" />
             </div>
         </div>
         <template #footer>
             <Button label="Cerrar" icon="pi pi-times" @click="$emit('close')" class="p-button-text"/>
         </template>
-        </Dialog>
+    </Dialog>
+    <FullImageModal
+        max-width="5x1"
+        :img="image"
+        :show="showModal"
+        @close="showModal = false"
+        class="z-20"
+    />
 </template>
 <script setup>
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
-import {ref,defineEmits,computed} from 'vue'
+import {ref,defineEmits} from 'vue'
 import { pp } from "@/Utils/Common/common";
+import FullImageModal from "@/Pages/Vehicle/components/FullImageModal.vue";
 
 
 const props = defineProps({
@@ -97,6 +106,15 @@ const props = defineProps({
         default: {},
     },
 });
+
+const showModal = ref(false);
+const image = ref({});
+
+const openImage = (img = null) => {
+    const firstImage = props.vehicle?.photos[0];
+    image.value = !img ? firstImage : img;
+    showModal.value = true;
+};
 
 const emits = defineEmits(['close']);
 
