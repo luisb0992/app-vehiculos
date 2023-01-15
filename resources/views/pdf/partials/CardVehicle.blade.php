@@ -43,7 +43,7 @@
 </div>
 
 @php
-    $data = $quota->repairOrder->vehicle->gallery;
+    $data = $gallery;
     $gallery1 = $data->slice(0, 4);
     $gallery2 = $data->slice(4, 4);
     $gallery3 = $data->slice(8, 4);
@@ -53,45 +53,47 @@
 
 
 {{--  galeria - todas las fotos (hasta 20 fotos)  --}}
-<div style="padding-top: 2px;">
-    <div class="row" style="margin-right: 65px;">
-        @foreach ($gallery1 as $key => $image)
-            <div class="col-xs-3" style="padding-right: 0px !important;">
-                <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
-                    height="120px" />
-            </div>
-        @endforeach
+@if (count($gallery) > 1)
+    <div style="padding-top: 2px;">
+        <div class="row" style="margin-right: 65px;">
+            @foreach ($gallery1 as $key => $image)
+                <div class="col-xs-3" style="padding-right: 0px !important;">
+                    <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded"
+                        width="175px" height="120px" />
+                </div>
+            @endforeach
+        </div>
+        <div class="row" style="margin-right: 65px;">
+            @foreach ($gallery2 as $key => $image)
+                <div class="col-xs-3" style="padding-right: 0px !important;">
+                    <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded"
+                        width="175px" height="120px" />
+                </div>
+            @endforeach
+        </div>
+        <div class="row" style="margin-right: 65px;">
+            @foreach ($gallery3 as $key => $image)
+                <div class="col-xs-3" style="padding-right: 0px !important;">
+                    <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded"
+                        width="175px" height="120px" />
+                </div>
+            @endforeach
+        </div>
+        <div class="row" style="margin-right: 65px;">
+            @foreach ($gallery4 as $key => $image)
+                <div class="col-xs-3" style="padding-right: 0px !important;">
+                    <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded"
+                        width="175px" height="120px" />
+                </div>
+            @endforeach
+        </div>
+        <div class="row" style="margin-right: 65px;">
+            @foreach ($gallery5 as $key => $image)
+                <div class="col-xs-3" style="padding-right: 0px !important;">
+                    <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded"
+                        width="175px" height="120px" />
+                </div>
+            @endforeach
+        </div>
     </div>
-    <div class="row" style="margin-right: 65px;">
-        @foreach ($gallery2 as $key => $image)
-            <div class="col-xs-3" style="padding-right: 0px !important;">
-                <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
-                    height="120px" />
-            </div>
-        @endforeach
-    </div>
-    <div class="row" style="margin-right: 65px;">
-        @foreach ($gallery3 as $key => $image)
-            <div class="col-xs-3" style="padding-right: 0px !important;">
-                <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
-                    height="120px" />
-            </div>
-        @endforeach
-    </div>
-    <div class="row" style="margin-right: 65px;">
-        @foreach ($gallery4 as $key => $image)
-            <div class="col-xs-3" style="padding-right: 0px !important;">
-                <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
-                    height="120px" />
-            </div>
-        @endforeach
-    </div>
-    <div class="row" style="margin-right: 65px;">
-        @foreach ($gallery5 as $key => $image)
-            <div class="col-xs-3" style="padding-right: 0px !important;">
-                <img src="{{ config('storage.vehicle.resize_pp') . $image->path }}" class="img-rounded" width="175px"
-                    height="120px" />
-            </div>
-        @endforeach
-    </div>
-</div>
+@endif

@@ -102,7 +102,7 @@ const openImage = (img = null) => {
                 </div>
             </div>
         </div>
-        <div class="w-full" v-if="fullImages">
+        <div class="w-full" v-if="fullImages && vehicle.gallery.length > 1">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
                 <img
                     :src="imgPath(img.path)"

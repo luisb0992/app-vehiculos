@@ -25,19 +25,13 @@ class WorkshopQuoteFactory
       $order = RepairOrder::with('quotation')->find($data['repair_order_id']);
       $subs = $order->subcategories()->get();
       $user = auth()->user();
+      $subtotal = array_sum(array_column($data['subs'], 'cost'));
+      $total = $data['tax'] ? $subtotal + ($subtotal * $data['tax']) / 100 : $subtotal;
+      $total = number_format($total, 2, '.', '');
 
       if ($order->quotation) {
         return false;
       }
-
-      $quotation = Quotation::create([
-        'repair_order_id' => $data['repair_order_id'],
-        // 'workshop_id' => $data['workshop_id'],
-        'user_id' => $user->id,
-        'subtotal' => $data['subtotal'],
-        'iva' => $data['tax'],
-        'total' => $data['total'],
-      ]);
 
       // agregar los costos de las sub categorias
       foreach ($data['subs'] as $subcategory) {
@@ -45,6 +39,16 @@ class WorkshopQuoteFactory
         $sub->pivot->cost = $subcategory['cost'];
         $sub->pivot->save();
       }
+
+      // crear cotización
+      $quotation = Quotation::create([
+        'repair_order_id' => $data['repair_order_id'],
+        // 'workshop_id' => $data['workshop_id'],
+        'user_id' => $user->id,
+        'subtotal' => $subtotal,
+        'iva' => $data['tax'],
+        'total' => $total,
+      ]);
 
       // cambiar status de la orden a cotizada
       $order->update(['status' => StatusRepairOrderEnum::QUOTED]);
