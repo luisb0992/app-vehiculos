@@ -5,10 +5,6 @@
             <span class="font-medium text-md">{{ vehicle.chassis_number }}</span>
         </div>
         <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Estatus</span>
-            <span class="font-medium text-md">{{ vehicle.status_word }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
             <span class="font-bold text-md uppercase">Marca</span>
             <span class="font-medium text-md">{{ vehicle.brand }}</span>
         </div>
@@ -20,28 +16,8 @@
             <span class="font-bold text-md uppercase">Color</span>
             <span class="font-medium text-md">{{ vehicle.color }}</span>
         </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Año</span>
-            <span class="font-medium text-md">{{ vehicle.year }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Kilometraje</span>
-            <span class="font-medium text-md">{{ vehicle.mileage }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Precio</span>
-            <span class="font-medium text-md">{{ vehicle.price }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Descripción</span>
-            <span class="font-medium text-md">{{ vehicle.description }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Obeservación</span>
-            <span class="font-medium text-md">{{ vehicle.observation }}</span>
-        </div>
         <h2 class="py-4 text-3xl font-bold text-center text-black">
-            Ordenes Cotizadas
+            Ordenes
         </h2>
         <div class="flex justify-center items-center" v-if="vehicle.repair_orders.length <= 0">
             <span>No hay solicitud de reparaciones creadas </span>
@@ -92,12 +68,12 @@
             Fotos
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2 p-1">
-        <div class="w-full lg:w-1/3" v-for="photo in vehicle.photos" :key="photo.id">
-            <img :src="
-            pp.resizeImgVehicle.value +
-            photo.path
-        " alt="image" />
-        </div>
+            <div class="w-full" v-for="photo in vehicle.photos" :key="photo.id">
+                <img :src="
+                pp.resizeImgVehicle.value +
+                photo.path
+            " alt="image" />
+            </div>
         </div>
         <template #footer>
             <Button label="Cerrar" icon="pi pi-times" @click="$emit('close')" class="p-button-text"/>

@@ -7,7 +7,7 @@
             <div class="flex justify-between">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search" />
-                    <InputText v-model="filters1['global'].value" placeholder="Busqueda..." />
+                    <InputText v-model="filters1['global'].value" placeholder="Busqueda..." class="w-52" />
                 </span>
             </div>
         </template>

@@ -4,7 +4,7 @@ namespace App\DB;
 
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Collection;
-use Termwind\Components\Dd;
+use App\Enum\StatusRepairOrderEnum;
 
 class VehicleDB
 {
@@ -88,6 +88,7 @@ class VehicleDB
         'warranty' => $vehicle->warranty,
         'total' => $vehicle->dock + $vehicle->warranty,
         'status_word' => $vehicle->status_word,
+        'status_last_order' =>  StatusRepairOrderEnum::getValueFromKey($vehicle->status_last_order),
         'user' => $vehicle->user->name . ' ' . $vehicle->user->last_name,
         'photos' => $vehicle->gallery,
         'year'  => $vehicle->year ?? '---',

@@ -6,9 +6,9 @@
         <template #header>
             <div class="flex justify-content-center align-center align-items-center justify-center md:lg:justify-between flex-col md:lg:flex-row">
                 <span class="p-input-icon-left mb-5">
-                    <InputText v-model="filters1['global'].value" placeholder="Busqueda..." />
+                    <InputText v-model="filters1['global'].value" placeholder="Busqueda..." class="w-52" />
                 </span>
-                <div class="flex gap-4">
+                <div class="flex gap-2 flex-col md:lg:flex-row items-center">
                     <div class="align-center">
                         <a target="_blank" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150" :href="route('logs.excel')">
                             <i class="pi pi-file-excel"></i>

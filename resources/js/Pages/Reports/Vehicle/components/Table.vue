@@ -12,13 +12,9 @@
         :loading="loading1"
     >
         <ColumnGroup type="header">
-            <!-- <Row>
-                <Column header="Nro Chasis" :rowspan="3" />
-            </Row> -->
             <Row>
                 <Column header="" :colspan="6" />
                 <Column header="Monto Reparación" :colspan="3" class="font-extrabold" />
-                <!-- <Column header="Profits" :colspan="2" /> -->
             </Row>
             <Row>
                 <Column header="Nro Chasis" :sortable="true"/>
@@ -38,9 +34,10 @@
                     <InputText
                         v-model="filter['global'].value"
                         placeholder="Búsqueda..."
+                        class="w-52"
                     />
                 </span>
-                <div class="flex gap-4">
+                <div class="flex gap-2 flex-col md:lg:flex-row items-center">
                     <div class="align-center">
                         <a target="_blank" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150" :href="route('reports.excel',form)">
                             <i class="pi pi-file-excel"></i>
@@ -82,11 +79,12 @@
             :sortable="true"
         >
             <template #body="{ data }">
-                <Badge v-if="data.status == 1" value="Disponible" class="mr-2" severity="success" ></Badge>
+                <!-- <Badge v-if="data.status == 1" value="Disponible" class="mr-2" severity="success" ></Badge>
                 <Badge v-if="data.status == 2" value="Pendiente" aria-label="Tabable Primary Badge" tabindex="0" class="mr-2"></Badge>
                 <Badge v-if="data.status == 3" value="Mantenimiento" severity="info" class="mr-2"></Badge>
                 <Badge v-if="data.status == 4" value="Reparado" severity="warning" class="mr-2"></Badge>
-                <Badge v-if="data.status == 5" value="Eliminado" severity="danger"></Badge>
+                <Badge v-if="data.status == 5" value="Eliminado" severity="danger"></Badge> -->
+                {{data.status_last_order}}
             </template>
         </Column>
         <Column field="dock">
@@ -185,11 +183,8 @@ import InputText from 'primevue/inputtext';
 import Badge from 'primevue/badge';
 import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
-import { Link } from '@inertiajs/inertia-vue3'
 import ModalVehicle from './ModalVehicle.vue';
-/* import Dialog from 'primevue/dialog';
-import Button from 'primevue/button';
-import { pp } from "@/Utils/Common/common"; */
+
 
 
     const props = defineProps({

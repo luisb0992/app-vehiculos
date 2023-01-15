@@ -25,7 +25,22 @@ class StatusRepairOrderEnum
   // orden aprobada, cuando el usuario registrador aprueba la orden
   public const APPROVED = 7;
 
-  public const NOT_ORDER = 'Sin Solicitar';
+  public const NOT_ORDER = 0;
+
+  public static function getValueFromKey($key){
+    $array =  [
+        self::OPEN => 'Abierta',
+        self::QUOTED => 'Cotizada',
+        self::IN_REPAIR => 'En reparación',
+        self::CANCELED => 'Cancelada',
+        self::REPAIRED => 'Reparada',
+        self::FINALIZED => 'Finalizada',
+        self::APPROVED => 'Aprobada',
+        self::NOT_ORDER => 'Sin solicitar',
+      ];
+
+      return $array[$key];
+  }
 
   // getValues
   public static function getValues(): array

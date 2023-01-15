@@ -2,13 +2,12 @@
     <DataTable :value="users" :paginator="true" :rows="10"
             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             :rowsPerPageOptions="[10,20,50]" responsiveLayout="scroll"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters1" filterDisplay="menu" >
+            currentPageReportTemplate="VEr {first} a {last} de {totalRecords}" v-model:filters="filters1" filterDisplay="menu" >
         <template #header>
             <div class="flex justify-between">
-               <!--  <Button type="button" icon="pi pi-filter-slash" label="Clear" class="p-button-outlined" @click="clearFilter1()"/> -->
                 <span class="p-input-icon-left">
                     <i class="pi pi-search" />
-                    <InputText v-model="filters1['global'].value" placeholder="Busqueda..." />
+                    <InputText v-model="filters1['global'].value" placeholder="Busqueda..." class="w-52" />
                 </span>
             </div>
         </template>
