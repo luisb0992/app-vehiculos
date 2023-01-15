@@ -85,7 +85,6 @@
         :img="image"
         :show="showModal"
         @close="showModal = false"
-        class="z-20"
     />
 </template>
 <script setup>

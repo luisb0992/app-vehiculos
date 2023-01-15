@@ -44,6 +44,10 @@ class UserFactory
     return User::where('id','!=',auth()->user()->id)->orderBy('id', 'DESC')->get();
   }
 
+  public function getUsersWithRol($rol_id){
+    return User::where('rol_id',$rol_id)->orderBy('id', 'DESC')->get();
+  }
+
   public function findUserWithId($id)
   {
     return User::find($id);

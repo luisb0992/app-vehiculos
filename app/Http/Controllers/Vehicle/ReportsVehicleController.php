@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\DB\VehicleDB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Enum\RoleEnum;
 use App\Exports\VehicleReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Response as HttpResponse;
@@ -27,7 +28,7 @@ class ReportsVehicleController extends Controller
         return Inertia::render('Reports/Vehicle/Index',[
             'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(),
             'models' => [],
-            'users' => $this->userF->getUsers(),
+            'users' => $this->userF->getUsersWithRol(RoleEnum::getArrayKeyValue()['recorder']),
             'brands' => $this->brandF->getBrands(),
             'filters' => [
                 'brand' => null,
@@ -54,7 +55,7 @@ class ReportsVehicleController extends Controller
             'vehicles' => $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis,$user_id),
             'models' => $this->modelVehicleF->getModelsByBrand($brand),
             'brands' => $this->brandF->getBrands(),
-            'users' => $this->userF->getUsers(),
+            'users' => $this->userF->getUsersWithRol(RoleEnum::getArrayKeyValue()['recorder']),
             'filters' => [
                 'brand' => $brand,
                 'model' => $model,
