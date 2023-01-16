@@ -21,7 +21,7 @@
                 <Column header="Marca" :sortable="true"/>
                 <Column header="Modelo" :sortable="true"/>
                 <Column header="Usuario R." :sortable="true"/>
-                <Column header="Estatus" :sortable="true"/>
+                <Column header="Estatus de Reparación" :sortable="true"/>
                 <Column header="Muelle" :sortable="true" style="background-color: #D4F5F1" field="dock"/>
                 <Column header="Garantía" :sortable="true" style="background-color: #D4F5F1" field="warranty"/>
                 <Column header="Total" :sortable="true" style="background-color: #D4F5F1" field="total"/>

@@ -67,7 +67,7 @@ class VehicleDB
   public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null)
   {
     $vehicles = $this->vehicle
-      ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user', 'repairOrdersWithoutListed.subcategories'])
+      ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user'])
       ->withCount('repairOrders')
       ->brand($brand)
       ->model($model)
