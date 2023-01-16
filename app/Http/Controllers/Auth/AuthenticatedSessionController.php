@@ -54,7 +54,7 @@ class AuthenticatedSessionController extends Controller
 
         // registrador
         if ($user->isRecorder()) {
-            return redirect()->intended(RouteServiceProvider::RECORDED);
+            return redirect()->intended(RouteServiceProvider::VEHICLE);
         }
 
         // si es usuario proveedor taller
