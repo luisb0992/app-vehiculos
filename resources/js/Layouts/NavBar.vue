@@ -29,14 +29,14 @@ const showingNavigationDropdown = ref(false);
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="($page.props.auth.user.rol_id == 3)">
                         <NavLink
                             :href="route('reports.reports')"
                             :active="route().current('reports.reports')"
                         >
                             Reportes
                         </NavLink>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6">

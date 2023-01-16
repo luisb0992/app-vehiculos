@@ -64,6 +64,9 @@ class AuthenticatedSessionController extends Controller
 
 
         // falta por definir el usuario para reportes ...
+        if ($user->isSupervisor()) {
+            return redirect()->intended(RouteServiceProvider::SUPERVISOR);
+        }
     }
 
     /**
