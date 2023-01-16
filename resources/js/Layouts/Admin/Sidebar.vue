@@ -106,7 +106,7 @@ const pathIcon = globalThis.$pathIcon;
                     :active="route().current('reports.reports')"
                     :icon="'pi pi-copy'"
                 >
-                    <span class="text-[15px] ml-4 text-gray-200">Reportes (Construccion)</span>
+                    <span class="text-[15px] ml-4 text-gray-200">Reportes</span>
                 </SideLink>
                 <div
                     class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
