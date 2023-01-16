@@ -26,7 +26,7 @@
                 Usuario R.
             </th>
             <th class="text-center font-bold py-3">
-                Status
+                Status de Reparación
             </th>
             <th class="text-center font-bold py-3">
                 Muelle
@@ -55,7 +55,7 @@
                     {{  $v['user'] }}
                 </td>
                 <td class="text-center py-3 text-sm md:text-lg">
-                    {{  $v['status_word'] }}
+                    {{  $v['status_last_order'] }}
                 </td>
                 <td class="text-center py-3 text-sm md:text-lg">
                     ${{  number_format($v['dock'],2,',','.') }}

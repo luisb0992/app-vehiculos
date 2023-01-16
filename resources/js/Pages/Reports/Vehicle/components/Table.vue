@@ -17,11 +17,11 @@
                 <Column header="Monto Reparación" :colspan="3" class="font-extrabold" />
             </Row>
             <Row>
-                <Column header="Nro Chasis" :sortable="true"/>
-                <Column header="Marca" :sortable="true"/>
-                <Column header="Modelo" :sortable="true"/>
-                <Column header="Usuario R." :sortable="true"/>
-                <Column header="Estatus de Reparación" :sortable="true"/>
+                <Column header="Nro Chasis" :sortable="true" field="chassis_number"/>
+                <Column header="Marca" :sortable="true" field="brand"/>
+                <Column header="Modelo" :sortable="true" field="model"/>
+                <Column header="Usuario R." :sortable="true" field="user"/>
+                <Column header="Estatus de Reparación" :sortable="true" field="status"/>
                 <Column header="Muelle" :sortable="true" style="background-color: #D4F5F1" field="dock"/>
                 <Column header="Garantía" :sortable="true" style="background-color: #D4F5F1" field="warranty"/>
                 <Column header="Total" :sortable="true" style="background-color: #D4F5F1" field="total"/>
