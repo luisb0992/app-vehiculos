@@ -78,8 +78,12 @@
                 <img :src="
                 pp.resizeImgVehicle.value +
                 photo.path
+<<<<<<< HEAD
             " alt="image"
             @click.stop="openImage(photo.path)" />
+=======
+            " alt="image" class="w-full h-full" />
+>>>>>>> 8df1498490d16b4141299ffc9f6238ced7acec66
             </div>
         </div>
         <template #footer>

@@ -2,8 +2,8 @@
 @section('content')
     <br>
     <div class="w-100">
-        <div class="bg-success text-white p-2 rounded text-center text-uppercase">
-            Vehiculos
+        <div class="bg-info text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;">
+            <b>Reporte Vehiculos</b>
         </div>
         <div class="w-100">
             <table class="table table-bordered">
