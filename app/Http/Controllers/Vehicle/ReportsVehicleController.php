@@ -36,7 +36,8 @@ class ReportsVehicleController extends Controller
                 'model' => null,
                 'dates' => null,
                 'nro_chasis' => null,
-                'user_id' => null
+                'user_id' => null,
+                'status' => null
             ],
         ]);
     }
@@ -63,7 +64,8 @@ class ReportsVehicleController extends Controller
                 'model' => $model,
                 'dates' => $dates,
                 'nro_chasis' => $nro_chasis,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'status' => $status
             ],
         ]);
     }
@@ -85,9 +87,11 @@ class ReportsVehicleController extends Controller
         $model = request()->model_id;
         $dates = request()->dates;
         $nro_chasis = request()->nro_chasis;
+        $user_id = request()->user_id;
         $status = request()->status;
+        //dd($brand,$model,$dates,$nro_chasis,$status);
 
-        $data = $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis,$status);
+        $data = $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis,$user_id,$status);
         $pdf = Pdf::loadView('pdf.reports.vehicle', ['vehicles' => $data,'dates' => $dates])->setPaper('a4', 'landscape');
         $name = 'reports-vehiculos-' . date('YmdHis') . '.pdf';
         return $pdf->stream($name);
@@ -100,9 +104,12 @@ class ReportsVehicleController extends Controller
         $model = request()->model_id;
         $dates = request()->dates;
         $nro_chasis = request()->nro_chasis;
+        $user_id = request()->user_id;
         $status = request()->status;
 
-        $data = $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis,$status);
+        $data = $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$user_id,$nro_chasis,$status);
         return Excel::download(new VehicleReportExport($data), 'reports-vehiculos.xlsx');
     }
+
+
 }

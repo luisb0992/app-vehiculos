@@ -86,10 +86,10 @@
                 <Button label="Cerrar" icon="pi pi-times" @click="$emit('close')" class="p-button-text"/>
             </template>
     </Dialog>
-    <Dialog header="Header"  :modal="true" v-model:visible="displayBasic" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :position="'bottom'">
+    <Dialog header="Header"  :modal="true" v-model:visible="displayBasic" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" >
             <img
                 :src="imgPath(image)"
-                class="w-full h-full object-cover object-center rounded"
+                class="w-full h-full object-cover object-center rounded cursor-pointer"
             />
     </Dialog>
 </template>

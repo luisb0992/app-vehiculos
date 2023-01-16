@@ -10,8 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use App\Factories\VehicleFactory;
 use App\Factories\ColorFactory;
 use App\Factories\BrandFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\DB\RepairCategoryDB;
-// use Illuminate\Http\Request;
 use App\DB\WorkshopDB;
 use App\DB\VehicleDB;
 use Inertia\Response;
@@ -119,5 +119,12 @@ class VehicleController extends Controller
 
         return Redirect::route('vehicle.index')
             ->with('success', 'Orden(es) generadas correctamente.');
+    }
+
+    public function printPDF($id)
+    {
+        $vehicle = $this->db->getVehiclesReportsFilterById($id);
+        $pdf = Pdf::loadView('pdf.vehicle', compact('vehicle'));
+        return $pdf->download('vehiculo.pdf');
     }
 }

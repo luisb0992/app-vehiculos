@@ -66,6 +66,7 @@ class VehicleDB
 
   public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null,$status = null)
   {
+    //dd('ss',$brand,$model,$dates,$nro_chasis,$user_id,$status);
     $vehicles = $this->vehicle
       ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user'])
       ->withCount('repairOrders')
@@ -75,6 +76,50 @@ class VehicleDB
       ->user($user_id)
       ->chassis($nro_chasis)
       ->dateBetween($dates);
+
+    $result = $vehicles->get()->map(function ($vehicle) {
+      return [
+        'chassis_number' => $vehicle->chassis_number,
+        'brand' => $vehicle->brand->name,
+        'model' => $vehicle->model->name,
+        'color' => $vehicle->color->name,
+        'status' => $vehicle->status,
+        'dock'  => $vehicle->dock,
+        'warranty' => $vehicle->warranty,
+        'total' => $vehicle->dock + $vehicle->warranty,
+        'status_word' => $vehicle->status_word,
+        'status_last_order' =>  StatusRepairOrderEnum::getValueFromKey($vehicle->status_last_order),
+        'user' => $vehicle->user->name . ' ' . $vehicle->user->last_name,
+        'photos' => $vehicle->gallery,
+        'year'  => $vehicle->year ?? '---',
+        'mileage' => $vehicle->mileage ?? '---',
+        'price' => $vehicle->price ?? '---',
+        'description' => $vehicle->description ?? '---',
+        'observation' => $vehicle->observation ?? '---',
+        'repair_orders' => $vehicle->repairOrders->map(function ($order) {
+          return [
+            'id' => $order->id,
+            'workshop' => $order->workshop->name,
+            'date' => $order->send_date,
+            'status' => StatusRepairOrderEnum::getValueFromKey($order->status),
+            'total' => $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->total ?? 0,
+            'subtotal' => $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->subtotal ?? 0,
+            'iva' => $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->iva ?? 0,
+          ];
+        }),
+      ];
+    });
+
+
+    return $result;
+  }
+
+  public function getVehiclesReportsFilterById($id)
+  {
+    $vehicles = $this->vehicle
+      ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user'])
+      ->withCount('repairOrders')
+      ->findOrfail($id);
 
     $result = $vehicles->get()->map(function ($vehicle) {
       return [

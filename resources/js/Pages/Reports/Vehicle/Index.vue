@@ -65,8 +65,8 @@ import axios from "axios";
 
     const getUsers = (users) => {
         form.post(route('reports.post',form.value,{replace : true , preserveState : true, preserveScroll : true}));
-        const data = users.filter((user) => user.id === form.model_id);
-        filterModels.value = data;
+        /* const data = users.filter((user) => user.id === form.model_id);
+        filterModels.value = data; */
     };
 
     // For demo purposes assign range from the current date
