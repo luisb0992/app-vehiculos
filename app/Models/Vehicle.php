@@ -95,9 +95,9 @@ class Vehicle extends Model
         return $this->hasMany(RepairOrder::class, 'vehicle_id')->whereIn('status', [3,5,6,7]);
     }
 
-    public function repairOrdersWithListed(): HasMany
+    public function repairOrdersWithoutListed(): HasMany
     {
-        return $this->hasMany(RepairOrder::class, 'vehicle_id')->whereIn('status', [2,3,5,6,7]);
+        return $this->hasMany(RepairOrder::class, 'vehicle_id')->where('status', '!=',2);
     }
 
     public function getDockAttribute(){
@@ -121,6 +121,7 @@ class Vehicle extends Model
         return $warranty;
     }
 
+
     public function getStatusWordAttribute(){
         if($this->status == 1){
             return "Disponible";
@@ -137,7 +138,7 @@ class Vehicle extends Model
     }
 
     public function getStatusLastOrderAttribute(){
-       return $this->repairOrdersWithListed()->latest()->first()->status ?? 0;
+       return $this->repairOrdersWithoutListed()->latest()->first()->status ?? 0;
     }
 
     //scopes querys (Model, Brand, Date Between, Shassis, Status ORder, User)

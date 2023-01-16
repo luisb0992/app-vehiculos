@@ -30,6 +30,9 @@
                             Taller
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            Status
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             Fecha
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -47,6 +50,9 @@
                     <tr v-for="order in vehicle.repair_orders" :key="order.id" class="bg-white border-b ">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {{order.workshop}}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            {{order.status}}
                         </th>
                         <td class="px-6 py-4 font-medium text-gray-900">
                             {{order.date}}

@@ -42,7 +42,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
-
         activity()->tap(function(Activity $activity) {
             $activity->log_name = 'Usuario';
          })->log('Inicio de sesión - '.date('Y-m-d H:i:s'));
@@ -62,11 +61,11 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(RouteServiceProvider::QUOTE);
         }
 
-
-        // falta por definir el usuario para reportes ...
+        // reportes ...
         if ($user->isSupervisor()) {
             return redirect()->intended(RouteServiceProvider::SUPERVISOR);
         }
+
     }
 
     /**

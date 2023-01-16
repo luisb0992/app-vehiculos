@@ -67,7 +67,7 @@ class VehicleDB
   public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null)
   {
     $vehicles = $this->vehicle
-      ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user', 'repairOrdersWithListed.subcategories'])
+      ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user', 'repairOrdersWithoutListed.subcategories'])
       ->withCount('repairOrders')
       ->brand($brand)
       ->model($model)
@@ -96,15 +96,15 @@ class VehicleDB
         'price' => $vehicle->price ?? '---',
         'description' => $vehicle->description ?? '---',
         'observation' => $vehicle->observation ?? '---',
-        'repair_orders' => $vehicle->repairOrdersWithStatus->map(function ($order) {
+        'repair_orders' => $vehicle->repairOrdersWithoutListed->map(function ($order) {
           return [
             'id' => $order->id,
             'workshop' => $order->workshop->name,
             'date' => $order->send_date,
-            'status' => $order->status,
-            'total' => $order->quotation->total ?? '---',
-            'subtotal' => $order->quotation->subtotal ?? '---',
-            'iva' => $order->quotation->iva ?? '---',
+            'status' => StatusRepairOrderEnum::getValueFromKey($order->status),
+            'total' => $order->quotation->total ?? 0,
+            'subtotal' => $order->quotation->subtotal ?? 0,
+            'iva' => $order->quotation->iva ?? 0,
           ];
         }),
       ];
