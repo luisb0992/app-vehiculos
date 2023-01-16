@@ -96,7 +96,7 @@ class VehicleDB
         'price' => $vehicle->price ?? '---',
         'description' => $vehicle->description ?? '---',
         'observation' => $vehicle->observation ?? '---',
-        'repair_orders' => $vehicle->repairOrdersWithoutListed->map(function ($order) {
+        'repair_orders' => $vehicle->repairOrders->map(function ($order) {
           return [
             'id' => $order->id,
             'workshop' => $order->workshop->name,
