@@ -79,26 +79,25 @@
                 pp.resizeImgVehicle.value +
                 photo.path
             " alt="image"
-            @click.stop="openImage(photo)" />
+            @click.stop="openImage(photo.path)" />
             </div>
         </div>
         <template #footer>
             <Button label="Cerrar" icon="pi pi-times" @click="$emit('close')" class="p-button-text"/>
         </template>
     </Dialog>
-    <FullImageModal
-        max-width="5x1"
-        :img="image"
-        :show="showModal"
-        @close="showModal = false"
-    />
+    <Dialog header="Header"  :modal="true" v-model:visible="displayBasic" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :position="'bottom'">
+            <img
+                :src="imgPath(image)"
+                class="w-full h-full object-cover object-center rounded"
+            />
+    </Dialog>
 </template>
 <script setup>
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import {ref,defineEmits} from 'vue'
 import { pp } from "@/Utils/Common/common";
-import FullImageModal from "@/Pages/Vehicle/components/FullImageModal.vue";
 
 
 const props = defineProps({
@@ -112,6 +111,7 @@ const props = defineProps({
     },
 });
 
+const displayBasic = ref(false);
 const showModal = ref(false);
 const image = ref({});
 
@@ -119,6 +119,14 @@ const openImage = (img = null) => {
     const firstImage = props.vehicle?.photos[0];
     image.value = !img ? firstImage : img;
     showModal.value = true;
+    displayBasic.value = true;
+};
+
+const imgPath = (path) => {
+    if (path) {
+        return pp.resizeImgVehicle.value + path;
+    }
+    return "/";
 };
 
 const emits = defineEmits(['close']);

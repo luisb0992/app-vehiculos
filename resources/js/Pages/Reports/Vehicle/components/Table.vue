@@ -79,11 +79,6 @@
             :sortable="true"
         >
             <template #body="{ data }">
-                <!-- <Badge v-if="data.status == 1" value="Disponible" class="mr-2" severity="success" ></Badge>
-                <Badge v-if="data.status == 2" value="Pendiente" aria-label="Tabable Primary Badge" tabindex="0" class="mr-2"></Badge>
-                <Badge v-if="data.status == 3" value="Mantenimiento" severity="info" class="mr-2"></Badge>
-                <Badge v-if="data.status == 4" value="Reparado" severity="warning" class="mr-2"></Badge>
-                <Badge v-if="data.status == 5" value="Eliminado" severity="danger"></Badge> -->
                 {{data.status_last_order}}
             </template>
         </Column>
@@ -106,72 +101,17 @@
             <template #body="{data}">
                 <div class="flex justify-between">
                     <button type="button"  @click="openModalVehicle(data)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                        <i class="pi pi-eye" />
+                        Ver Detalles
                     </button>
                     <a @click="construccion()" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
-                        <i class="pi pi-file-pdf" />
+                        Descargar PDF
                     </a>
                 </div>
             </template>
         </Column>
     </DataTable>
-    <!-- <Dialog :header="'Vehiculo - '+dataModal.chassis_number " v-model:visible="displayMaximizable" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :maximizable="true" :modal="true">
-        <div class="flex justify-between mt-4 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Nro Chasis</span>
-            <span class="font-medium text-md">{{ dataModal.chassis_number }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Estatus</span>
-            <span class="font-medium text-md">{{ dataModal.status_word }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Marca</span>
-            <span class="font-medium text-md">{{ dataModal.brand }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Modelo</span>
-            <span class="font-medium text-md">{{ dataModal.model }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Color</span>
-            <span class="font-medium text-md">{{ dataModal.color }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Año</span>
-            <span class="font-medium text-md">{{ dataModal.year }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Kilometraje</span>
-            <span class="font-medium text-md">{{ dataModal.mileage }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Precio</span>
-            <span class="font-medium text-md">{{ dataModal.price }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Descripción</span>
-            <span class="font-medium text-md">{{ dataModal.description }}</span>
-        </div>
-        <div class="flex justify-between mt-1 bg-blue-100 border-b-2 border-blue-300 p-2">
-            <span class="font-bold text-md uppercase">Obeservación</span>
-            <span class="font-medium text-md">{{ dataModal.observation }}</span>
-        </div>
-        <h2 class="py-4 text-3xl font-bold text-center text-black">
-            Fotos
-          </h2>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-            <div class="w-full lg:w-1/3" v-for="photo in dataModal.photos" :key="photo.id">
-              <img :src="
-                pp.resizeImgVehicle.value +
-                photo.path
-            " alt="image" />
-            </div>
-          </div>
-        <template #footer>
-            <Button label="Cerrar" icon="pi pi-times" @click="closeMaximizable" class="p-button-text"/>
-        </template>
-    </Dialog> -->
     <ModalVehicle :show="displayMaximizable" :vehicle="dataModal" @close="closeMaximizable" />
+
 </template>
 
 <script setup>
@@ -180,11 +120,9 @@ import Column from 'primevue/column';
 import {ref,onMounted} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
-import Badge from 'primevue/badge';
 import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
 import ModalVehicle from './ModalVehicle.vue';
-
 
 
     const props = defineProps({

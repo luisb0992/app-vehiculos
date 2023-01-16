@@ -64,18 +64,17 @@ class VehicleDB
     return $data->where('user_id', $user->id)->get();
   }
 
-  public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null)
+  public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null,$status = null)
   {
     $vehicles = $this->vehicle
       ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user'])
       ->withCount('repairOrders')
       ->brand($brand)
+      ->status($status)
       ->model($model)
       ->user($user_id)
       ->chassis($nro_chasis)
       ->dateBetween($dates);
-
-    //dd($vehicles->get());
 
     $result = $vehicles->get()->map(function ($vehicle) {
       return [

@@ -10,7 +10,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Contracts\Activity;
 use App\Traits\UtilsLogs;
-use Termwind\Components\Dd;
+use Illuminate\Database\Eloquent\Builder;
 
 class Vehicle extends Model
 {
@@ -137,12 +137,21 @@ class Vehicle extends Model
        return $this->repairOrders()->latest()->first()->status ?? 0;
     }
 
-    //scopes querys (Model, Brand, Date Between, Shassis, Status ORder, User)
+    //scopes querys (Model, Brand, Date Between, Shassis, Status ORder, User,status)
 
     public function scopeWhereStatusOrders($query){
 
         $query->repairOrders->whereIn('status', [3,5,6,7]);
 
+    }
+
+    public function scopeStatus($query, $status)
+    {
+        if ($status) {
+            return $query->whereHas('repairOrders', function (Builder $query) use ($status) {
+                $query->where('status',$status);
+            });
+        }
     }
 
     public function scopeUser($query, $user)
@@ -181,5 +190,5 @@ class Vehicle extends Model
             return $query->where('chassis_number', 'LIKE',"{$nro_chasis}%");
         }
     }
-    //end scopes querys (Model, Brand, Date Between, Shassis,Status ORder, User)
+    //end scopes querys (Model, Brand, Date Between, Shassis,Status ORder, User,status)
 }

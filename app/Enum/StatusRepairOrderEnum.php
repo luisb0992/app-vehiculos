@@ -68,7 +68,7 @@ class StatusRepairOrderEnum
       self::REPAIRED => 'Reparada',
       self::FINALIZED => 'Finalizada',
       self::APPROVED => 'Aprobada',
-      self::NOT_ORDER => 'Sin solicitar',
+      //self::NOT_ORDER => 'Sin solicitar',
     ];
   }
 
@@ -86,4 +86,6 @@ class StatusRepairOrderEnum
       'not_order' => self::NOT_ORDER,
     ];
   }
+
+
 }

@@ -7,10 +7,10 @@ import { defineProps,onMounted , ref, watch } from "vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Datepicker from '@vuepic/vue-datepicker';
 import {useForm} from "@inertiajs/inertia-vue3";
 import axios from "axios";
+
     const props = defineProps({
         brands : Array,
         models: Array,
@@ -18,14 +18,16 @@ import axios from "axios";
         vehicles: Array,
         filters : Object,
         users : Array,
+        status : Array,
     });
-console.log(props.vehicles);
+
 
     const form = useForm({
         brand_id: props.filters.brand ?? "",
         model_id: props.filters.model ?? "",
         nro_chasis: props.filters.nro_chasis ?? "",
         user_id : props.filters.user_id ?? "",
+        status : props.filters.status ?? "",
         dates : {
             start: "",
             end: "",
@@ -48,6 +50,12 @@ console.log(props.vehicles);
         .then(res => {
             props.models.push(...res.data);
         })
+    };
+
+    const getStatus = (status) => {
+        form.post(route('reports.post',form.value,{replace : true , preserveState : true, preserveScroll : true}));
+        const data = status.filter((status,i) => console.log(status.i));
+        filterModels.value = data;
     };
 
     const getModels = (models) => {
@@ -107,6 +115,7 @@ console.log(props.vehicles);
         form.model_id = "";
         form.dates.start = "";
         form.dates.end = "";
+        form.status = "";
         form.post(route('reports.post',form.value,{replace : true , preserveState : true}));
     }
 
@@ -194,6 +203,27 @@ console.log(props.vehicles);
                                         :value="user.id"
                                     >
                                         {{ user.name }} {{ user.last_name }}
+                                    </option>
+                                </select>
+                                <InputError
+                                    class="mt-2"
+                                />
+                            </div>
+                            <div class="flex-1">
+                                <InputLabel for="status" value="Estatus de orden" />
+                                <select
+                                    id="status"
+                                    class="mt-1 block w-full border-gray-200 border"
+                                    v-model="form.status"
+                                    required
+                                    @change="getStatus(status)"
+                                >
+                                    <option value="">Seleccione un status</option>
+                                    <option
+                                        v-for="(item, index) in status"
+                                        :value="index"
+                                    >
+                                        {{ item }}
                                     </option>
                                 </select>
                                 <InputError
