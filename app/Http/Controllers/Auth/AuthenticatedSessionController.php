@@ -42,6 +42,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = auth()->user();
+
         activity()->tap(function(Activity $activity) {
             $activity->log_name = 'Usuario';
          })->log('Inicio de sesión - '.date('Y-m-d H:i:s'));
@@ -53,13 +54,14 @@ class AuthenticatedSessionController extends Controller
 
         // registrador
         if ($user->isRecorder()) {
-            return redirect()->intended(RouteServiceProvider::VEHICLE);
+            return redirect()->intended(RouteServiceProvider::RECORDED);
         }
 
         // si es usuario proveedor taller
         if ($user->isSupplier()) {
             return redirect()->intended(RouteServiceProvider::QUOTE);
         }
+
 
         // falta por definir el usuario para reportes ...
     }

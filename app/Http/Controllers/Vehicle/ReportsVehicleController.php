@@ -28,7 +28,7 @@ class ReportsVehicleController extends Controller
         return Inertia::render('Reports/Vehicle/Index',[
             'vehicles' => $this->dbVehicle->getVehiclesReportsFilter(),
             'models' => [],
-            'users' => $this->userF->getUsersWithRol(RoleEnum::getArrayKeyValue()['recorder']),
+            'users' => $this->userF->getUsersWithRol(RoleEnum::RECORDER),
             'brands' => $this->brandF->getBrands(),
             'filters' => [
                 'brand' => null,
@@ -55,7 +55,7 @@ class ReportsVehicleController extends Controller
             'vehicles' => $this->dbVehicle->getVehiclesReportsFilter($brand,$model,$dates,$nro_chasis,$user_id),
             'models' => $this->modelVehicleF->getModelsByBrand($brand),
             'brands' => $this->brandF->getBrands(),
-            'users' => $this->userF->getUsersWithRol(RoleEnum::getArrayKeyValue()['recorder']),
+            'users' => $this->userF->getUsersWithRol(RoleEnum::RECORDER),
             'filters' => [
                 'brand' => $brand,
                 'model' => $model,
