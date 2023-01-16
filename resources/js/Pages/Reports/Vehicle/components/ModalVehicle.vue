@@ -78,12 +78,13 @@
                 <img :src="
                 pp.resizeImgVehicle.value +
                 photo.path
-            " alt="image" class="w-full h-full" />
+            " alt="image"
+            @click.stop="openImage(photo.path)" />
             </div>
         </div>
-        <template #footer>
-            <Button label="Cerrar" icon="pi pi-times" @click="$emit('close')" class="p-button-text"/>
-        </template>
+            <template #footer>
+                <Button label="Cerrar" icon="pi pi-times" @click="$emit('close')" class="p-button-text"/>
+            </template>
     </Dialog>
     <Dialog header="Header"  :modal="true" v-model:visible="displayBasic" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :position="'bottom'">
             <img
@@ -97,7 +98,6 @@ import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import {ref,defineEmits} from 'vue'
 import { pp } from "@/Utils/Common/common";
-
 
 const props = defineProps({
     show: {
@@ -115,9 +115,7 @@ const showModal = ref(false);
 const image = ref({});
 
 const openImage = (img = null) => {
-    const firstImage = props.vehicle?.photos[0];
     image.value = !img ? firstImage : img;
-    showModal.value = true;
     displayBasic.value = true;
 };
 
@@ -127,7 +125,6 @@ const imgPath = (path) => {
     }
     return "/";
 };
-
 const emits = defineEmits(['close']);
 
 </script>
