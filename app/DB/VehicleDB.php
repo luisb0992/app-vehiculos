@@ -102,9 +102,9 @@ class VehicleDB
             'workshop' => $order->workshop->name,
             'date' => $order->send_date,
             'status' => StatusRepairOrderEnum::getValueFromKey($order->status),
-            'total' => $order->quotation->total ?? 0,
-            'subtotal' => $order->quotation->subtotal ?? 0,
-            'iva' => $order->quotation->iva ?? 0,
+            'total' => $order->status == 2 ? 0 : $order->quotation->total ?? 0,
+            'subtotal' => $order->status == 2 ? 0 : $order->quotation->subtotal ?? 0,
+            'iva' => $order->status == 2 ? 0 : $order->quotation->iva ?? 0,
           ];
         }),
       ];
