@@ -79,6 +79,7 @@
                 pp.resizeImgVehicle.value +
                 photo.path
             " alt="image"
+            class="cursor-pointer"
             @click.stop="openImage(photo.path)" />
             </div>
         </div>
