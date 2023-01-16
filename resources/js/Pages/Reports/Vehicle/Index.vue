@@ -53,8 +53,8 @@ import axios from "axios";
 
     const getStatus = (status) => {
         form.post(route('reports.post',form.value,{replace : true , preserveState : true, preserveScroll : true}));
-        const data = status.filter((status,i) => console.log(status.i));
-        filterModels.value = data;
+        /* const data = status.filter((status,i) => console.log(status.i));
+        filterModels.value = data; */
     };
 
     const getModels = (models) => {
