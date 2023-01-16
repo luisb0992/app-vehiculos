@@ -2,7 +2,6 @@
 import { Head } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/Layout.vue";
 import Table from './components/Table.vue'
-import Toolbar from "primevue/toolbar";
 import { defineProps,onMounted , ref, watch } from "vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -123,143 +122,145 @@ import axios from "axios";
 <template>
     <Head title="Reporte de Vehiculos" />
     <Layout>
-        <div class="mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="bg-white p-7 rounded-md">
-                <div class="w-full pb-5">
-                    <div class="flex justify-between overflow-hidden shadow-sm sm:rounded-lg">
-                        <h3 class="text-gray-900 text-2xl font-bold">
-                            Vehiculos
-                        </h3>
+        <div class="py-12 mx-auto pt-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white p-7 rounded-md">
+                    <div class="w-full pb-5">
+                        <div class="flex justify-between overflow-hidden shadow-sm sm:rounded-lg">
+                            <h3 class="text-gray-900 text-2xl font-bold">
+                                Reporte
+                            </h3>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-100 w-full p-6 mb-4 rounded-lg shadow-sm">
-                    <form>
-                        <span class="font-bold text-xl mb-2">Filtros <i class="pi pi-arrow-right-arrow-left"></i></span>
-                        <div class="grid grid-cols-1 md:lg:grid-cols-2 gap-5 mb-4">
-                            <div>
-                                <InputLabel for="brand" value="Marca" />
-                                <select
-                                    id="marca"
-                                    class="mt-1 block w-full border-gray-200 border"
-                                    v-model="form.brand_id"
-                                    required
-                                    @change="getBrands(brands)"
-                                >
-                                    <option value="">Seleccione una marca</option>
-                                    <option
-                                        v-for="brand in brands"
-                                        :key="brand.id"
-                                        :value="brand.id"
+                    <div class="bg-gray-100 w-full p-6 mb-4 rounded-lg shadow-sm">
+                        <form>
+                            <span class="font-bold text-xl mb-2">Filtros <i class="pi pi-arrow-right-arrow-left"></i></span>
+                            <div class="grid grid-cols-1 md:lg:grid-cols-2 gap-5 mb-4">
+                                <div>
+                                    <InputLabel for="brand" value="Marca" />
+                                    <select
+                                        id="marca"
+                                        class="mt-1 block w-full border-gray-200 border"
+                                        v-model="form.brand_id"
+                                        required
+                                        @change="getBrands(brands)"
                                     >
-                                        {{ brand.name }}
-                                    </option>
-                                </select>
-                                <InputError
-                                    class="mt-2"
-                                />
-                            </div>
-                            <div class="flex-1">
-                                <InputLabel for="model" value="Modelo" />
-                                <select
-                                    id="modelo"
-                                    class="mt-1 block w-full border-gray-200 border"
-                                    v-model="form.model_id"
-                                    required
-                                    @change="getModels(models)"
-                                >
-                                    <option value="">Seleccione un modelo</option>
-                                    <option
-                                        v-for="model in models"
-                                        :key="model.id"
-                                        :value="model.id"
+                                        <option value="">Seleccione una marca</option>
+                                        <option
+                                            v-for="brand in brands"
+                                            :key="brand.id"
+                                            :value="brand.id"
+                                        >
+                                            {{ brand.name }}
+                                        </option>
+                                    </select>
+                                    <InputError
+                                        class="mt-2"
+                                    />
+                                </div>
+                                <div class="flex-1">
+                                    <InputLabel for="model" value="Modelo" />
+                                    <select
+                                        id="modelo"
+                                        class="mt-1 block w-full border-gray-200 border"
+                                        v-model="form.model_id"
+                                        required
+                                        @change="getModels(models)"
                                     >
-                                        {{ model.name }}
-                                    </option>
-                                </select>
-                                <InputError
-                                    class="mt-2"
-                                />
-                            </div>
-                            <div>
-                                <InputLabel for="date" value="Fecha" class="mb-1" />
-                                <Datepicker @update:modelValue="changeDate()" :format="format" cancelText="Cancelar" selectText="Seleccionar" v-model="date" range locale="es" multi-calendars placeholder="Seleccionar Fecha" :enable-time-picker="false"/>
-                                <InputError
-                                    class="mt-2"
-                                />
-                            </div>
-                            <div class="flex-1">
-                                <InputLabel for="user" value="Usuario Registrador" />
-                                <select
-                                    id="user"
-                                    class="mt-1 block w-full border-gray-200 border"
-                                    v-model="form.user_id"
-                                    required
-                                    @change="getUsers(users)"
-                                >
-                                    <option value="">Seleccione un usuario registrador</option>
-                                    <option
-                                        v-for="user in users"
-                                        :key="user.id"
-                                        :value="user.id"
+                                        <option value="">Seleccione un modelo</option>
+                                        <option
+                                            v-for="model in models"
+                                            :key="model.id"
+                                            :value="model.id"
+                                        >
+                                            {{ model.name }}
+                                        </option>
+                                    </select>
+                                    <InputError
+                                        class="mt-2"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel for="date" value="Fecha" class="mb-1" />
+                                    <Datepicker @update:modelValue="changeDate()" :format="format" cancelText="Cancelar" selectText="Seleccionar" v-model="date" range locale="es" multi-calendars placeholder="Seleccionar Fecha" :enable-time-picker="false"/>
+                                    <InputError
+                                        class="mt-2"
+                                    />
+                                </div>
+                                <div class="flex-1">
+                                    <InputLabel for="user" value="Usuario Registrador" />
+                                    <select
+                                        id="user"
+                                        class="mt-1 block w-full border-gray-200 border"
+                                        v-model="form.user_id"
+                                        required
+                                        @change="getUsers(users)"
                                     >
-                                        {{ user.name }} {{ user.last_name }}
-                                    </option>
-                                </select>
-                                <InputError
-                                    class="mt-2"
-                                />
-                            </div>
-                            <div class="flex-1">
-                                <InputLabel for="status" value="Estatus de orden" />
-                                <select
-                                    id="status"
-                                    class="mt-1 block w-full border-gray-200 border"
-                                    v-model="form.status"
-                                    required
-                                    @change="getStatus(status)"
-                                >
-                                    <option value="">Seleccione un status</option>
-                                    <option
-                                        v-for="(item, index) in status"
-                                        :value="index"
+                                        <option value="">Seleccione un usuario registrador</option>
+                                        <option
+                                            v-for="user in users"
+                                            :key="user.id"
+                                            :value="user.id"
+                                        >
+                                            {{ user.name }} {{ user.last_name }}
+                                        </option>
+                                    </select>
+                                    <InputError
+                                        class="mt-2"
+                                    />
+                                </div>
+                                <div class="flex-1">
+                                    <InputLabel for="status" value="Estatus de orden" />
+                                    <select
+                                        id="status"
+                                        class="mt-1 block w-full border-gray-200 border"
+                                        v-model="form.status"
+                                        required
+                                        @change="getStatus(status)"
                                     >
-                                        {{ item }}
-                                    </option>
-                                </select>
-                                <InputError
-                                    class="mt-2"
-                                />
+                                        <option value="">Seleccione un status</option>
+                                        <option
+                                            v-for="(item, index) in status"
+                                            :value="index"
+                                        >
+                                            {{ item }}
+                                        </option>
+                                    </select>
+                                    <InputError
+                                        class="mt-2"
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <span class="font-bold text-xl mb-2">Busqueda <i class="pi pi-search"></i></span>
-                        <div class="grid grid-cols-1 md:lg:grid-cols-3 gap-5 mt-2">
-                            <div>
-                                <InputLabel for="chasis" value="Nro Chasis" />
-                                <TextInput
-                                    id="chasis"
-                                    class="mt-1 block w-full border-gray-200 border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                                    v-model="form.nro_chasis"
-                                    required
-                                    @input="clearSelects()"
-                                />
-                                <InputError
-                                    class="mt-2"
-                                />
+                            <span class="font-bold text-xl mb-2">Busqueda <i class="pi pi-search"></i></span>
+                            <div class="grid grid-cols-1 md:lg:grid-cols-3 gap-5 mt-2">
+                                <div>
+                                    <InputLabel for="chasis" value="Nro Chasis" />
+                                    <TextInput
+                                        id="chasis"
+                                        class="mt-1 block w-full border-gray-200 border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                                        v-model="form.nro_chasis"
+                                        required
+                                        @input="clearSelects()"
+                                    />
+                                    <InputError
+                                        class="mt-2"
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="w-full">
+                        </form>
+                    </div>
+                    <div class="w-full">
 
-                    <div>
-                        <Table
-                            :vehicles = "vehicles"
-                            :form = "form"
-                        />
+                        <div>
+                            <Table
+                                :vehicles = "vehicles"
+                                :form = "form"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     </Layout>
 </template>
 
