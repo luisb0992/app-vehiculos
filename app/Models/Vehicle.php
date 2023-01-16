@@ -138,7 +138,7 @@ class Vehicle extends Model
     }
 
     public function getStatusLastOrderAttribute(){
-       return $this->repairOrdersWithoutListed()->latest()->first()->status ?? 0;
+       return $this->repairOrders()->latest()->first()->status ?? 0;
     }
 
     //scopes querys (Model, Brand, Date Between, Shassis, Status ORder, User)
