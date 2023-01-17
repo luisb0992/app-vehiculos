@@ -4,7 +4,7 @@
     </div>
     <div class="col-xs-8">
         <div>
-            <table class="w-auto">
+            <table class="table table-bordered" style="width: 428px;">
                 <tr>
                     <td>
                         <span class="font-weight-bold text-uppercase"> <b>Nº chasis</b> </span>
@@ -16,7 +16,7 @@
             </table>
         </div>
         <div>
-            <table class="w-auto">
+            <table class="table table-bordered" style="width: 428px;">
                 <tr>
                     <td>
                         <span class="font-weight-bold text-uppercase"> <b>Marca</b> </span>

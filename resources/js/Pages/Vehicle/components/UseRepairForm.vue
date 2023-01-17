@@ -65,14 +65,14 @@ onMounted(() => {
                                 <div class="flex flex-row justify-between py-1">
                                     <div>
                                         <label
-                                            class="form-check-label inline-block text-zinc-900 text-xs font-medium cursor-pointer"
+                                            class="form-check-label inline-block text-zinc-900 text-xs font-medium"
                                         >
                                             {{ sub.name }}
                                         </label>
                                     </div>
-                                    <div>
+                                    <div class="flex gap-5">
                                         <input
-                                            class="form-check-input appearance-none h-5 w-5 border border-gray-600 rounded-lg bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            class="form-check-input appearance-none h-5 w-5 md:h-7 md:w-7 border border-gray-600 rounded-lg bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                             type="checkbox"
                                             @change="
                                                 addOrRemoveToArray(
@@ -86,7 +86,7 @@ onMounted(() => {
                                             :id="'dock' + sub.id"
                                         />
                                         <input
-                                            class="form-check-input appearance-none h-5 w-5 border border-gray-600 rounded-lg bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            class="form-check-input appearance-none h-5 w-5 md:h-7 md:w-7 border border-gray-600 rounded-lg bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                             type="checkbox"
                                             @change="
                                                 addOrRemoveToArray(
@@ -113,7 +113,7 @@ onMounted(() => {
                 v-show="continueRepair"
             >
                 <!-- info message -->
-                <div class="p-4 mb-4 bg-blue-100 rounded-lg">
+                <div class="p-4 mb-4 bg-blue-100 rounded-lg" v-if="canFinish">
                     <i class="fas fa-info-circle"></i>
                     <strong class="ml-3 text-sm font-medium text-blue-700">
                         Selecciona las garantías y/o muelles que se van a
@@ -364,7 +364,7 @@ onMounted(() => {
                     :type="form.processing ? 'button' : 'submit'"
                     v-if="continueRepair"
                 >
-                    <span class="px-6 py-3 uppercase"> FInalizar caso </span>
+                    <span class="px-6 py-3 uppercase"> FInalizar ordenes de reparación </span>
                 </PrimaryButton>
             </div>
         </div>

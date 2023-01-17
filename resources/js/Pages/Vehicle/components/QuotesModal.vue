@@ -135,6 +135,12 @@ const finalizedCase = () => {
                             <div>
                                 <p>
                                     <span class="font-bold text-gray-900">
+                                        Taller:
+                                    </span>
+                                    {{ order.workshop.name }}
+                                </p>
+                                <p>
+                                    <span class="font-bold text-gray-900">
                                         Orden de reparación:
                                     </span>
                                     Nº {{ "000" + order.id }}

@@ -19,6 +19,13 @@ export const currentDate = computed(() => {
     return `${year}-${month}-${day}`;
 });
 
+// fecha actual en formato mm/dd/yyyy
+export const currentDateTime = computed(() => {
+    const date = new Date();
+
+    return date.toISOString().split("T")[0];
+});
+
 // verificar si hay cámaras disponibles
 export const hasCamera = computed(() => {
     const nav =
@@ -56,3 +63,19 @@ export const manageError = ({
 }) => {
     return Swal.fire({ icon, title, text });
 };
+
+// formatear una fecha dada a formato dd/mm/yyyy
+export const formatDate = (date) => {
+    const d = new Date(date);
+    const day = d.getDate();
+    const month = d.getMonth() + 1;
+    const year = d.getFullYear();
+
+    return `${day}/${month}/${year}`;
+};
+
+// refrescar pagina actual
+export const refreshPage = () => {
+    window.location.reload();
+}
+

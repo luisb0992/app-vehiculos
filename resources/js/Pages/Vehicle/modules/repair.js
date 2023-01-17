@@ -1,11 +1,14 @@
 import { useForm } from "@inertiajs/inertia-vue3";
 import { computed, ref } from "vue";
 import Swal from "sweetalert2";
+import { currentDate, currentDateTime } from "@/Utils/Common/common";
 
 export const form = useForm({
     // cargar el id del vehículo desde el parámetro recibido
     vehicle_id: "",
-    send_date: "",
+
+    // iniciar en la fecha actual, format MM-DD-YYYY
+    send_date: currentDateTime.value,
     categories: [],
 
     // garantia y dock seleccionados
@@ -16,6 +19,8 @@ export const form = useForm({
     // cada selección
     orders: [],
 });
+
+console.log(currentDateTime.value);
 
 // backup de categorias
 export const catBackup = ref([]);
@@ -236,6 +241,9 @@ export const loadOrder = () => {
 
     // vaciar el array de seleccionadas
     form.selectedOptions = [];
+
+    // devolver el select de opciones a su estado inicial
+    form.workshop_id = "";
 };
 
 // elimina la orden y vuelve a agregar
