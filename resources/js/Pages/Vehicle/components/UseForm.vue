@@ -39,7 +39,7 @@ onMounted(() => {
     <form @submit.prevent="submitVehicle">
         <div class="flex flex-col gap-5">
             <div>
-                <InputLabel for="chassis" value="Chasis" />
+                <InputLabel for="chassis" value="Nº de Chasis" />
                 <TextInput
                     id="chassis"
                     type="text"

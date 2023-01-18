@@ -23,6 +23,11 @@ export const showQuotesModal = ref(false);
 export const vehicle = ref({});
 
 /**
+ * Select de status
+ */
+export const filterStatus = ref("");
+
+/**
  * Abre el modal de cotizaciones y estado de ordenes
  *
  * @param {Object} data   Datos del vehiculo
@@ -30,4 +35,11 @@ export const vehicle = ref({});
 export const openModalQuotes = (data) => {
     vehicle.value = data;
     showQuotesModal.value = true;
+};
+
+/**
+ * Filtrar datos por el estado seleccionado
+ */
+export const FilterData = () => {
+    console.log(filterStatus.value);
 };

@@ -5,6 +5,7 @@ namespace App\DB;
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Collection;
 use App\Enum\StatusRepairOrderEnum;
+use App\Enum\StatusVehicleEnum;
 
 class VehicleDB
 {
@@ -52,8 +53,11 @@ class VehicleDB
     $user = auth()->user();
 
     $data =  $this->vehicle
-      ->with(['repairOrders.quotation', 'color', 'brand', 'model', 'gallery', 'repairOrders.purchaseOrder'])
+      ->with(['color', 'brand', 'model', 'gallery', 'repairOrders.purchaseOrder', 'repairOrders.workshop', 'repairOrders.quotation'])
       ->withCount('repairOrders')
+      ->where('status', '!=', StatusVehicleEnum::FINALIZED)
+      ->where('status', '!=', StatusVehicleEnum::CANCELLED)
+      ->where('status', '!=', StatusVehicleEnum::REJECTED_QUOTE)
       ->orderByDesc('created_at');
 
     // si es un supera admin, devolver todos los vehículos
@@ -64,7 +68,7 @@ class VehicleDB
     return $data->where('user_id', $user->id)->get();
   }
 
-  public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null,$status = null)
+  public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null, $status = null)
   {
     //dd('ss',$brand,$model,$dates,$nro_chasis,$user_id,$status);
     $vehicles = $this->vehicle

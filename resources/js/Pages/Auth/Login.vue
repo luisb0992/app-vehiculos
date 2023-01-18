@@ -6,6 +6,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import Password from "primevue/password";
 import Banner from "@/Components/Banner.vue";
 
 const props = defineProps({
@@ -85,14 +86,23 @@ const submit = () => {
                                     value="Contraseña"
                                 />
 
-                                <TextInput
+                                <!-- <TextInput
                                     id="password"
                                     type="password"
                                     class="mt-1 block w-full"
                                     v-model="form.password"
                                     required
                                     autocomplete="current-password"
-                                />
+                                /> -->
+
+                                <Password
+                                    v-model="form.password"
+                                    toggleMask
+                                    :feedback="false"
+                                    id="password"
+                                    class="mt-1 block w-full"
+                                    required
+                                ></Password>
 
                                 <InputError
                                     class="mt-2 text-gray-50"
@@ -128,3 +138,9 @@ const submit = () => {
         </div>
     </GuestLayout>
 </template>
+
+<style scoped>
+::v-deep(.p-password input) {
+    width: 100%;
+}
+</style>

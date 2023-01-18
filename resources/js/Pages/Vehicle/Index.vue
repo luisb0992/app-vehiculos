@@ -6,13 +6,15 @@ import InputText from "primevue/inputtext";
 import Toolbar from "primevue/toolbar";
 import StatusVehicle from "./components/StatusVehicle.vue";
 import QuotesModal from "./components/QuotesModal.vue";
-import { pp } from "@/Utils/Common/common";
+import { formatDate, pp, refreshPage } from "@/Utils/Common/common";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import {
     filter,
     showQuotesModal,
     vehicle,
     openModalQuotes,
+    FilterData,
+    filterStatus
 } from "./modules/index";
 
 // props
@@ -37,12 +39,25 @@ const props = defineProps({
                     <div class="w-full py-5">
                         <Toolbar class="mb-4">
                             <template #start>
-                                <Link
-                                    class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded uppercase"
-                                    :href="route('vehicle.create')"
+                                <div
+                                    class="flex flex-col md:flex-row md:justify-start gap-8"
                                 >
-                                    <i class="fas fa-plus"></i> Agregar Nuevo
-                                </Link>
+                                    <Link
+                                        class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded uppercase"
+                                        :href="route('vehicle.create')"
+                                    >
+                                        <i class="fas fa-plus"></i> Agregar
+                                        Nuevo
+                                    </Link>
+
+                                    <button
+                                        class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded uppercase"
+                                        type="button"
+                                        @click.stop="refreshPage"
+                                    >
+                                        <i class="fas fa-sync"></i> Actualizar
+                                    </button>
+                                </div>
                             </template>
                         </Toolbar>
                         <DataTable
@@ -57,7 +72,9 @@ const props = defineProps({
                             dataKey="id"
                         >
                             <template #header>
-                                <div class="flex justify-between">
+                                <div
+                                    class="flex flex-col md:flex-row justify-start gap-5"
+                                >
                                     <span class="p-input-icon-left">
                                         <i class="pi pi-search" />
                                         <InputText
@@ -66,6 +83,23 @@ const props = defineProps({
                                             class="w-52"
                                         />
                                     </span>
+                                    <div>
+                                        <!-- filtrar por status de la orden -->
+                                        <label class="px-3">Estado</label>
+                                        <select
+                                            class="p-inputtext p-component pl-3"
+                                            v-model="filterStatus"
+                                            @change="FilterData"
+                                        >
+                                            <option value="">Todos</option>
+                                            <option value="1">
+                                                En proceso
+                                            </option>
+                                            <option value="2">
+                                                Finalizadas
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                             </template>
                             <Column
@@ -103,6 +137,15 @@ const props = defineProps({
                                 header="Color"
                                 :sortable="true"
                             ></Column>
+                            <Column
+                                field="created_at"
+                                header="Fecha de ingreso"
+                                :sortable="true"
+                            >
+                                <template #body="{ data }">
+                                    {{ formatDate(data.created_at) }}
+                                </template>
+                            </Column>
                             <Column
                                 field="status"
                                 header="Status Reparación"

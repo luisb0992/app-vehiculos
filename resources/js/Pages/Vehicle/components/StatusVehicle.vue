@@ -14,7 +14,7 @@ const status = computed(() => props.vehicle.status);
         :class="{
             'text-green-600 text-xs font-semibold':
                 status === $page.props.status.vehicle.add,
-            'text-yellow-600 text-xs font-semibold':
+            'text-orange-600 text-xs font-semibold':
                 status === $page.props.status.vehicle.requested_repair,
             'text-blue-600 text-xs font-semibold':
                 status === $page.props.status.vehicle.quoted,
@@ -47,7 +47,7 @@ const status = computed(() => props.vehicle.status);
         <span
             v-else-if="status === $page.props.status.vehicle.requested_repair"
         >
-            <p class="mb-3">Solicitud enviada</p>
+            <p class="mb-3">Cotizaciones creadas ({{ vehicle.repair_orders_count }})</p>
 
             <button
                 type="button"
