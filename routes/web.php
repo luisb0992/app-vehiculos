@@ -23,6 +23,8 @@ Route::name('reports.')
         Route::get('reports/excel', [ReportsVehicleController::class, 'downloadEXCEL'])->name('excel');
 
         Route::post('brands/models', [ReportsVehicleController::class, 'modelsByBrands'])->name('brands.models');
+
+        Route::get('vehicle/reports/{id}', [ReportsVehicleController::class, 'printPDFVehicleByID'])->name('vehicle.pdf');
     });
 
 require __DIR__ . '/modules/profile.php';

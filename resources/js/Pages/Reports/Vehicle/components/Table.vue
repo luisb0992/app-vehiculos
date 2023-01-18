@@ -103,7 +103,7 @@
                     <button type="button"  @click="openModalVehicle(data)" class="inline-block px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                         Ver Detalles
                     </button>
-                    <a @click="construccion()" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                    <a  :href="route('reports.vehicle.pdf',data.id)" target="_blank" class="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                         Descargar Reporte
                     </a>
                 </div>
@@ -129,10 +129,6 @@ import ModalVehicle from './ModalVehicle.vue';
         vehicles: Array,
         form : Object
     });
-
-    const construccion = () => {
-        alert("construccion")
-    }
 
     const loading1 = ref(true);
     const displayMaximizable = ref(false);
