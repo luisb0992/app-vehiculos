@@ -124,6 +124,7 @@ class VehicleDB
 
     $result = $vehicles->get()->map(function ($vehicle) {
       return [
+        'id' => $vehicle->id,
         'chassis_number' => $vehicle->chassis_number,
         'brand' => $vehicle->brand->name,
         'model' => $vehicle->model->name,
@@ -159,14 +160,15 @@ class VehicleDB
     return $result;
   }
 
-  public function getVehiclesReportsFilterById($id)
+  public function getVehicleReportById($id)
   {
-    $vehicles = $this->vehicle
+    $vehicle = $this->vehicle
       ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user'])
       ->withCount('repairOrders')
       ->findOrfail($id);
 
-    $result = $vehicles->get()->map(function ($vehicle) {
+
+    /* $result = $vehicle->first()->map(function ($vehicle) {
       return [
         'chassis_number' => $vehicle->chassis_number,
         'brand' => $vehicle->brand->name,
@@ -197,9 +199,9 @@ class VehicleDB
           ];
         }),
       ];
-    });
+    }); */
 
 
-    return $result;
+    return $vehicle;
   }
 }

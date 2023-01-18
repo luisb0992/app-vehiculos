@@ -121,10 +121,4 @@ class VehicleController extends Controller
             ->with('success', 'Orden(es) generadas correctamente.');
     }
 
-    public function printPDF($id)
-    {
-        $vehicle = $this->db->getVehiclesReportsFilterById($id);
-        $pdf = Pdf::loadView('pdf.vehicle', compact('vehicle'));
-        return $pdf->download('vehiculo.pdf');
-    }
 }

@@ -27,4 +27,5 @@ Route::middleware(['auth', 'is_superadmin_or_recorder'])
     // guardar datos de reparación
     Route::post('store-repair', [VehicleController::class, 'storeRepair'])
       ->name('vehicle.store.repair');
+
   });
