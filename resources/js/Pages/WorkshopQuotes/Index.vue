@@ -4,7 +4,7 @@ import Column from "primevue/column";
 import DataTable from "primevue/datatable";
 import InputText from "primevue/inputtext";
 import StatusOrder from "./components/StatusOrder.vue";
-import { pp } from "@/Utils/Common/common";
+import { formatDate, pp, refreshPage } from "@/Utils/Common/common";
 import { Head } from "@inertiajs/inertia-vue3";
 import { FilterMatchMode } from "primevue/api";
 import { ref } from "vue";
@@ -25,14 +25,23 @@ const filter = ref({
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-white p-5 border-2 border-turquesa rounded-lg">
                     <div class="w-full pb-5">
-                        <div class="overflow-hidden shadow-sm sm:rounded-lg">
+                        <div
+                            class="flex flex-col md:flex-row md:justify-between items-center"
+                        >
                             <h3 class="text-gray-900 text-2xl font-bold">
-                                Solicitudes de reparación - taller
-                                {{
-                                    $page.props.auth.user?.workshop?.name ??
-                                    "DESCONOCIDO"
-                                }}
+                                Solicitudes de reparación
                             </h3>
+                            <p
+                                class="text-blue-800 text-xl font-bold uppercase"
+                            >
+                                taller:
+                                <span class="font-normal text-blue-800">
+                                    {{
+                                        $page.props.auth.user?.workshop?.name ??
+                                        "DESCONOCIDO"
+                                    }}
+                                </span>
+                            </p>
                         </div>
                     </div>
                     <div class="w-full py-5">
@@ -48,7 +57,7 @@ const filter = ref({
                             dataKey="id"
                         >
                             <template #header>
-                                <div class="flex justify-between">
+                                <div class="flex flex-col md:flex-row gap-5">
                                     <span class="p-input-icon-left">
                                         <i class="pi pi-search" />
                                         <InputText
@@ -57,6 +66,13 @@ const filter = ref({
                                             class="w-52"
                                         />
                                     </span>
+                                    <button
+                                        class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded uppercase"
+                                        type="button"
+                                        @click.stop="refreshPage"
+                                    >
+                                        <i class="fas fa-sync"></i> Actualizar
+                                    </button>
                                 </div>
                             </template>
                             <Column
@@ -95,13 +111,31 @@ const filter = ref({
                                 :sortable="true"
                             ></Column>
                             <Column
+                                field="quotation.created_at"
+                                header="Fecha de cotización"
+                                :sortable="true"
+                            >
+                                <template #body="{ data }">
+                                    <span v-if="data.quotation">
+                                        {{ formatDate(data.quotation.created_at) }}
+                                    </span>
+                                    <span v-else class="text-orange-700">
+                                        No cotizada
+                                    </span>
+                                </template>
+                            </Column>
+                            <Column
                                 field="status"
                                 header="Status Reparación"
                                 :sortable="true"
                                 style="min-width: 15rem"
                             >
                                 <template #body="{ data }">
-                                    <StatusOrder :status="data.status" :id="data.id" />
+                                    <StatusOrder
+                                        :status="data.status"
+                                        :id="data.id"
+                                        :order="data"
+                                    />
                                 </template>
                             </Column>
                             <!-- <Column

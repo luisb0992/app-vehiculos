@@ -117,6 +117,15 @@ const finalizedCase = () => {
 <template>
     <Modal :show="show" :max-width="maxWidth">
         <div class="p-4">
+            <div class="flex justify-end pb-3">
+                <PrimaryButton
+                    @click="$emit('close')"
+                    type="button"
+                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-900 transition ease-in-out duration-150"
+                >
+                    <i class="fa fa-times"></i>
+                </PrimaryButton>
+            </div>
             <div class="w-full">
                 <div class="flex flex-col md:flex-row  md:justify-between items-center">
                     <h1 class="uppercase text-zinc-900 font-bold pb-2">
@@ -127,7 +136,7 @@ const finalizedCase = () => {
                     </h3>
                 </div>
                 <hr />
-                <div class="w-full pt-2">
+                <div class="w-full pt-2 h-60 overflow-y-auto">
                     <div v-for="order in orders" class="mb-2">
                         <div
                             class="border border-turquesa p-3 rounded-md flex justify-between items-start"

@@ -18,7 +18,9 @@ class WorkshopQuoteDB
   {
     $user = auth()->user();
     return RepairOrder::where('workshop_id', $user->workshop_id)
-      ->with(['vehicle.brand', 'vehicle.model', 'vehicle.color', 'vehicle.gallery', 'quotation'])
+      ->with([
+        'vehicle.brand', 'vehicle.model', 'vehicle.color', 'vehicle.gallery', 'quotation'
+      ])
       ->orderByDesc('created_at')
       ->get();
   }

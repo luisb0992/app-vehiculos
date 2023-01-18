@@ -44,10 +44,12 @@ export const pp = {
     ),
 };
 
-// devolver el valor en el formato 1.000,00
-// formato europeo
+// devolver el valor en el formato 1,000.00
+// formato dólar americanos
 export const numberToDecimal = (value) => {
-    return new Intl.NumberFormat("de-DE").format(value);
+    return new Intl.NumberFormat("en-US", {
+        currency: "USD",
+    }).format(value);
 };
 
 /**
@@ -77,5 +79,4 @@ export const formatDate = (date) => {
 // refrescar pagina actual
 export const refreshPage = () => {
     window.location.reload();
-}
-
+};

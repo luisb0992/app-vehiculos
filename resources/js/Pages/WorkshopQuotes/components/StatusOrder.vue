@@ -2,10 +2,12 @@
 import { manageError } from "@/Utils/Common/common";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import Swal from "sweetalert2/dist/sweetalert2";
+import ButtonDownloadQuotation from "./ButtonDownloadQuotation.vue";
 
 const props = defineProps({
     status: Number,
     id: Number,
+    order: Object,
 });
 
 const startRepair = () => {
@@ -85,7 +87,7 @@ const finishRepair = () => {
         class="text-center"
     >
         <!-- por cotizar - abierta -->
-        <span v-if="status === $page.props.status.repair_order.open">
+        <div v-if="status === $page.props.status.repair_order.open">
             <Link
                 :href="route('workshop_quotes.createQuote', id)"
                 class="hover:no-underline bg-blue-100 px-3 py-2 hover:bg-blue-300 text-blue-600 hover:text-blue-900 rounded-lg text-xs font-bold"
@@ -93,16 +95,20 @@ const finishRepair = () => {
                 <i class="fas fa-arrow-right"></i>
                 Cotizar ahora
             </Link>
-        </span>
+        </div>
 
         <!-- cotizada -->
-        <span v-if="status === $page.props.status.repair_order.quoted">
-            Reparación cotizada
-        </span>
+        <div v-if="status === $page.props.status.repair_order.quoted">
+            <p class="pb-2">Reparación cotizada</p>
+
+            <ButtonDownloadQuotation :id="order.quotation.id" />
+        </div>
 
         <!-- aprobada -->
-        <span v-if="status === $page.props.status.repair_order.approved">
-            <p class="pb-1">Cotización aprobada</p>
+        <div v-if="status === $page.props.status.repair_order.approved">
+            <p class="pb-2">Cotización aprobada</p>
+
+            <ButtonDownloadQuotation :id="order.quotation.id" />
 
             <button
                 class="hover:no-underline bg-purple-100 px-3 py-2 hover:bg-purple-300 text-purple-600 hover:text-purple-900 rounded-lg text-xs font-bold"
@@ -111,11 +117,13 @@ const finishRepair = () => {
                 <i class="fas fa-arrow-right"></i>
                 Iniciar reparación
             </button>
-        </span>
+        </div>
 
         <!-- en repació -->
-        <span v-if="status === $page.props.status.repair_order.in_repair">
-            <p class="pb-1">Vehiculo en reparación</p>
+        <div v-if="status === $page.props.status.repair_order.in_repair">
+            <p class="pb-2">Vehiculo en reparación</p>
+
+            <ButtonDownloadQuotation :id="order.quotation.id" />
 
             <button
                 class="hover:no-underline bg-yellow-100 px-3 py-2 hover:bg-yellow-300 text-yellow-600 hover:text-yellow-900 rounded-lg text-xs font-bold"
@@ -124,22 +132,28 @@ const finishRepair = () => {
                 <i class="fas fa-arrow-right"></i>
                 Finalizar reparación
             </button>
-        </span>
+        </div>
 
         <!-- orden cancelada -->
-        <span v-if="status === $page.props.status.repair_order.cancelLed">
+        <div v-if="status === $page.props.status.repair_order.cancelLed">
             Orden cancelada
-        </span>
+        </div>
 
         <!-- vehiculo reparado -->
-        <span v-if="status === $page.props.status.repair_order.repaired">
-            Vehiculo reparado
-        </span>
+        <div v-if="status === $page.props.status.repair_order.repaired">
+            <p class="pb-2">Vehiculo reparado</p>
+
+            <ButtonDownloadQuotation :id="order.quotation.id" />
+        </div>
 
         <!-- caso finalizado -->
-        <span v-if="status === $page.props.status.repair_order.finalized">
-            <i class="fas fa-check text-green-600"></i>
-            Caso finalizado
-        </span>
+        <div v-if="status === $page.props.status.repair_order.finalized">
+            <p class="pb-2">
+                <i class="fas fa-check text-green-600"></i>
+                Caso finalizado
+            </p>
+
+            <ButtonDownloadQuotation :id="order.quotation.id" />
+        </div>
     </div>
 </template>

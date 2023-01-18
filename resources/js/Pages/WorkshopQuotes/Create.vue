@@ -13,6 +13,8 @@ import {
     subtotal,
     total,
     hasZero,
+    includeTax,
+    validateFormat,
 } from "./modules/create-quote";
 
 const props = defineProps({
@@ -30,56 +32,6 @@ props.order.subcategories.forEach((sub) => {
         cost: "",
     });
 });
-
-// const startFromBeginning = (e) => {
-//     // form.subs.forEach((sub) => {
-//     //     sub.cost = 0;
-//     // });
-
-//     // ubicar el puntero al principio del input
-//     e.target.selectionStart = 0;
-//     e.target.value = "";
-
-//     // eliminar el valor del input
-//     // e.target.value = "";
-// };
-
-// const hasValue = (e) => {
-//     console.log(e);
-//     // verifica si hay valor y agrega los decimales
-//     if (e.target.value === "") {
-//         return 0;
-//     }
-
-//     return 2;
-// };
-
-/**
- * Funcion que valida el formato del input
- * max 2 decimales y que no se pueda ingresar letras
- * ejemplo: 1.200,99
- *
- * @param {Input} e     Input del usuario
- */
-const validateFormat = (e) => {
-    const val = e.target.value;
-
-    // permitir max 2 decimales por regex
-    const regex = /^(\d{1,9}(\.\d{1,2})?|\.\d{1,2})$/;
-    if (!regex.test(val)) {
-        e.target.value = val.slice(0, -1);
-    }
-
-    // verifica si hay valor y agrega los decimales
-    if (val === "") {
-        return 0;
-    }
-
-    // verifica si el valor es un numero
-    if (isNaN(val)) {
-        val = val.slice(0, -1);
-    }
-};
 </script>
 <template>
     <Head title="Cotización de vehículo" />
@@ -103,10 +55,10 @@ const validateFormat = (e) => {
                     </div>
                     <div class="w-full">
                         <div
-                            class="bg-blue-800 text-white p-4 rounded text-center uppercase"
+                            class="bg-blue-800 text-white p-4 rounded text-left uppercase font-bold"
                         >
-                            Nombre del taller:
-                            <span class="font-bold">
+                            Taller
+                            <span class="font-normal">
                                 {{ order.workshop.name }}
                             </span>
                         </div>
@@ -121,7 +73,7 @@ const validateFormat = (e) => {
                             Cotización
                         </div>
                         <div class="py-5 w-full">
-                            <table class="min-w-full">
+                            <table class="min-w-full border">
                                 <thead class="border-b">
                                     <tr>
                                         <th class="text-center font-bold py-3">
@@ -133,7 +85,10 @@ const validateFormat = (e) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="sub in form.subs" :key="sub.id">
+                                    <tr
+                                        v-for="(sub, index) in form.subs"
+                                        :key="sub.id"
+                                    >
                                         <td
                                             class="text-center py-3 text-sm md:text-lg"
                                         >
@@ -142,15 +97,20 @@ const validateFormat = (e) => {
                                         <td
                                             class="text-center py-3 text-sm md:text-lg"
                                         >
-                                            <input
-                                                type="number"
-                                                step="1,99"
-                                                min="1"
-                                                max="999999999"
-                                                v-model="sub.cost"
-                                                class="w-full border border-turquesa rounded-md shadow-sm focus:border-indigo-800 focus:ring focus:ring-indigo-800 focus:ring-opacity-50"
-                                                @input="validateFormat"
-                                            />
+                                            <div
+                                                class="flex justify-center items-center gap-2"
+                                            >
+                                                <span>$</span>
+                                                <input
+                                                    type="text"
+                                                    v-model="sub.cost"
+                                                    placeholder="1,200.00"
+                                                    class="w-full border border-turquesa rounded-md shadow-sm focus:border-indigo-800 focus:ring focus:ring-indigo-800 focus:ring-opacity-50"
+                                                    @input="
+                                                        validateFormat(index)
+                                                    "
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -159,13 +119,27 @@ const validateFormat = (e) => {
                             <div
                                 class="flex flex-col justify-end py-5 border-t"
                             >
+                                <div class="text-right p-3 text-sm md:text-lg">
+                                    <label
+                                        for="tax"
+                                        class="cursor-pointer text-zinc-900 font-bold pr-1"
+                                    >
+                                        ¿Incluir impuesto?
+                                    </label>
+                                    <input
+                                        type="checkbox"
+                                        class="w-6 h-6 rounded-lg bg-gray-100 cursor-pointer"
+                                        id="tax"
+                                        v-model="includeTax"
+                                    />
+                                </div>
                                 <div>
                                     <p
                                         class="text-right p-3 text-sm md:text-lg"
                                     >
-                                        Subtotal
+                                        <b>Subtotal</b>
                                         <span class="bg-gray-100 p-3 rounded">
-                                            {{ numberToDecimal(subtotal) }}
+                                            ${{ numberToDecimal(subtotal) }}
                                         </span>
 
                                         <InputError
@@ -175,27 +149,37 @@ const validateFormat = (e) => {
                                     </p>
                                 </div>
                                 <div>
-                                    <p
-                                        class="text-right p-3 text-sm md:text-lg"
+                                    <div
+                                        class="flex flex-col justify-end"
+                                        :class="{
+                                            'opacity-50': !includeTax,
+                                            'pointer-events-none': !includeTax,
+                                        }"
                                     >
-                                        Impuesto
-                                        <span class="bg-gray-100 p-3 rounded">
-                                            {{ taxString }}
-                                        </span>
+                                        <p
+                                            class="text-right p-3 text-sm md:text-lg"
+                                        >
+                                            <b>Impuesto</b>
+                                            <span
+                                                class="bg-gray-100 p-3 rounded"
+                                            >
+                                                {{ taxString }}
+                                            </span>
 
-                                        <InputError
-                                            class="mt-2"
-                                            :message="form.errors.tax"
-                                        />
-                                    </p>
+                                            <InputError
+                                                class="mt-2"
+                                                :message="form.errors.tax"
+                                            />
+                                        </p>
+                                    </div>
                                 </div>
                                 <div>
                                     <p
                                         class="text-right p-3 text-sm md:text-lg"
                                     >
-                                        Total
+                                        <b>Total</b>
                                         <span class="bg-gray-100 p-3 rounded">
-                                            {{ total }}
+                                            ${{ numberToDecimal(total) }}
                                         </span>
 
                                         <InputError

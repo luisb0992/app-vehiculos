@@ -24,7 +24,7 @@ Route::middleware('auth')->prefix('workshop_quotes')->group(function () {
   // descargar la orden de cotización - pdf cotización
   Route::get('download-quote/{id}', [WorkshopQuoteController::class, 'downloadQuote'])
     ->name('workshop_quotes.downloadPDFQuote')
-    ->middleware('is_superadmin_or_recorder');
+    ->middleware('is_superadmin_or_recorder_or_supplier');
 
   // aprobar una cotización
   Route::post('approve-quote', [WorkshopQuoteController::class, 'approveQuotation'])

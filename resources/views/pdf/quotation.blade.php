@@ -53,7 +53,7 @@
                                 {{ $sub->name }}
                             </td>
                             <td class="text-center">
-                                ${{ number_format($sub->pivot->cost, 2, ',', '.') }}
+                                ${{ number_format($sub->pivot->cost, 2, '.', ',') }}
                             </td>
                         </tr>
                     @endforeach
@@ -65,7 +65,7 @@
                     <p class="text-right text-sm">
                         <span class="font-weight-bold"><b>Subtotal</b></span>
                         <span class="bg-light p-3 rounded">
-                            ${{ number_format($quota->subtotal, 2, ',', '.') }}
+                            ${{ number_format($quota->subtotal, 2, '.', ',') }}
                         </span>
                     </p>
                 </div>
@@ -83,7 +83,7 @@
                     <p class="text-right text-sm">
                         <span class="font-weight-bold"><b>Total</b></span>
                         <span class="bg-light p-3 rounded">
-                            ${{ number_format($quota->total, 2, ',', '.') }}
+                            ${{ number_format($quota->total, 2, '.', ',') }}
                         </span>
                     </p>
                 </div>

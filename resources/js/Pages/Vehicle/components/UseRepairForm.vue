@@ -113,7 +113,7 @@ onMounted(() => {
                 v-show="continueRepair"
             >
                 <!-- info message -->
-                <div class="p-4 mb-4 bg-blue-100 rounded-lg" v-if="canFinish">
+                <div class="p-4 mb-4 bg-blue-100 rounded-lg" v-if="hasSubToAssign">
                     <i class="fas fa-info-circle"></i>
                     <strong class="ml-3 text-sm font-medium text-blue-700">
                         Selecciona las garantías y/o muelles que se van a

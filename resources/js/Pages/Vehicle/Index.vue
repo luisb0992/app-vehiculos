@@ -14,7 +14,7 @@ import {
     vehicle,
     openModalQuotes,
     FilterData,
-    filterStatus
+    form
 } from "./modules/index";
 
 // props
@@ -88,13 +88,10 @@ const props = defineProps({
                                         <label class="px-3">Estado</label>
                                         <select
                                             class="p-inputtext p-component pl-3"
-                                            v-model="filterStatus"
+                                            v-model="form.status"
                                             @change="FilterData"
                                         >
                                             <option value="">Todos</option>
-                                            <option value="1">
-                                                En proceso
-                                            </option>
                                             <option value="2">
                                                 Finalizadas
                                             </option>
