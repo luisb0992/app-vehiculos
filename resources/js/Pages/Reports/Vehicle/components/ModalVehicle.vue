@@ -87,11 +87,14 @@
                 <Button label="Cerrar" icon="pi pi-times" @click="$emit('close')" class="p-button-text"/>
             </template>
     </Dialog>
-    <Dialog header="Header"  :modal="true" v-model:visible="displayBasic" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" >
+    <Dialog header="Foto"  :modal="true" v-model:visible="displayBasic" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" >
             <img
                 :src="imgPath(image)"
                 class="w-full h-full object-cover object-center rounded cursor-pointer"
             />
+            <template #footer>
+                <Button label="Cerrar" icon="pi pi-times" @click="closeModalVehicle" class="p-button-text"/>
+            </template>
     </Dialog>
 </template>
 <script setup>
@@ -118,6 +121,10 @@ const image = ref({});
 const openImage = (img = null) => {
     image.value = !img ? firstImage : img;
     displayBasic.value = true;
+};
+
+const closeModalVehicle = () => {
+    displayBasic.value = false;
 };
 
 const imgPath = (path) => {

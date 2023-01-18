@@ -114,9 +114,7 @@ class ReportsVehicleController extends Controller
     //reporte individual PDF {id}
     public function printPDFVehicleByID($id)
     {
-        ini_set('max_execution_time', 360);
         $vehicle = $this->dbVehicle->getVehicleReportById($id);
-        //dd($vehicle);
         $pdf = Pdf::loadView('pdf.vehicle.pdf', compact('vehicle'));
         return $pdf->stream('vehiculo.pdf');
     }

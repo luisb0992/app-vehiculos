@@ -118,6 +118,11 @@ class Vehicle extends Model
         return $warranty;
     }
 
+    public function getMainImageAttribute()
+    {
+        return $this->gallery[0]->path ?? null;
+    }
+
     public function getStatusWordAttribute()
     {
         if ($this->status == 1) {
