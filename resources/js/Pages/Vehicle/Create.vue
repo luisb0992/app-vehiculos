@@ -1,7 +1,7 @@
 <script setup>
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/Layout.vue";
-import UseForm from "./components/UseForm.vue";
+import UseFormApi from "./components/UseFormApi.vue";
 
 const props = defineProps({
     brands: Array,
@@ -35,7 +35,7 @@ const props = defineProps({
                         </div>
                     </div>
                     <div class="w-full">
-                        <UseForm
+                        <UseFormApi
                             :brands="brands"
                             :models="models"
                             :colors="colors"

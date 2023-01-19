@@ -1,6 +1,8 @@
 import { useForm } from "@inertiajs/inertia-vue3";
 import { onMounted, ref } from "vue";
 import { hasCamera } from "@/Utils/Common/common";
+import axios from "axios";
+import  "@/Utils/Common/api";
 
 export const filterModels = ref([]);
 export const allColors = ref([]);
@@ -32,6 +34,18 @@ export const clearForm = () => {
     form.reset("color_id", "");
     form.reset("gallery", []);
 };
+
+//get api vehicle
+export const handleSearchVehicle = () => {
+    axios.post('/api/formautos/consulta_vehiculo', { chassis_number: form.chassis_number })
+    .then((response) => {
+        console.log(response.data);
+    });
+
+    /* axios.post("https://jsonplaceholder.typicode.com/posts", post).then((result) => {
+    console.log(result);
+  }); */
+}
 
 export const saveVehicle = () => {
     form.post(route("vehicle.store"), {
