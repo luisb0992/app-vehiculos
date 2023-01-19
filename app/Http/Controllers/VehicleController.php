@@ -66,6 +66,7 @@ class VehicleController extends Controller
      */
     public function store(CreateVehicleRequest $request): RedirectResponse
     {
+        dd($request->all());
         // guardar vehículo
         $vehicle = $this->vehicleF->createVehicle($request->validated());
 

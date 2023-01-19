@@ -6,7 +6,8 @@ import TextInput from "@/Components/TextInput.vue";
 import UseUploadFiles from "./UseUploadFiles.vue";
 import AutoComplete from "primevue/autocomplete";
 import ProgressBar from "@/Components/ProgressBar.vue";
-import { onMounted } from "vue";
+import Swal from 'sweetalert2'
+import { onMounted,ref } from "vue";
 import { useGalleryStore } from "@/Store/gallery";
 import {
     form,
@@ -16,7 +17,6 @@ import {
     searchModels,
     searchColor,
     allColors,
-    handleSearchVehicle
 } from "../modules/create";
 
 const props = defineProps({
@@ -25,24 +25,70 @@ const props = defineProps({
     colors: Array,
 });
 
+const loading = ref(false);
 
-const submitVehicle = () => {
+
+const submitVehicle = () => { //te deje un dd en el controlador para que veas que llega
     form.gallery = useGalleryStore().getImages();
-    form.color_id = form.color_id?.id || "";
-    form.model_id = form.model_id?.id || "";
+    /* form.color_id = form.color_id?.id || "";
+    form.model_id = form.model_id?.id || ""; */
     saveVehicle();
 };
 
 onMounted(() => {
     form.gallery = useGalleryStore().getImages();
 });
+
+const clearForm = () => {
+    form.reset("chassis_number", "");
+    form.reset("brand_id", "");
+    form.reset("compania", "");
+    form.reset("model_id", "");
+    form.reset("color_id", "");
+    form.reset("gallery", []);
+};
+
+const swalWithBootstrapButtons = Swal.mixin({
+    buttonsStyling: true
+})
+
+//get api vehicle
+const handleSearchVehicle = () => {
+    loading.value = true;
+    axios.post(import.meta.env.VITE_API_URL_TEST+import.meta.env.VITE_API_BASE_URL_TEST, { chasis: form.chassis_number })
+    .then((response) => {
+        const data = response.data.data; //response
+        const status = response.data.data.vehiculo.status //status del vehiculo
+
+        if(status == 'ERROR'){ // este status ERROR lo hice yo, no viene en la api. Este status es cuando nos e consigue el vehiculo
+            swalWithBootstrapButtons.fire({
+                title: 'Error!',
+                text: 'No se encontro el vehiculo',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    clearForm();
+                }
+            })
+            loading.value = false;
+            return;
+        }
+         form.color_id = data.vehiculo.auto.color;
+         form.model_id = data.vehiculo.auto.modelo;
+         form.brand_id = data.vehiculo.auto.marca;
+         form.compania = data.vehiculo.auto.compania;
+
+        loading.value = false;
+    });
+
+}
 </script>
 <template>
     <form @submit.prevent="submitVehicle">
         <div class="flex flex-col gap-5">
             <InputLabel for="chassis" value="Nº de Chasis" />
             <div class="flex flex-col md:lg:flex-row gap-3">
-
                 <TextInput
                     id="chassis"
                     type="text"
@@ -55,110 +101,90 @@ onMounted(() => {
                     class="mt-2"
                     :message="form.errors.chassis_number"
                 />
-                <Button type="button" @click.stop="handleSearchVehicle" class="bg-gray-800 hover:bg-gray-900 py-1 px-3 text-white rounded">
-                    <span class="uppercase font-medium text-xs ">
+                <Button :disabled="loading" type="button" @click.stop="handleSearchVehicle" :class="{
+                        'bg-gray-600': loading,
+                        'bg-gray-800': !loading,
+                    }" class="flex flex-col items-center justify-center hover:bg-gray-900 py-1 px-3 text-white rounded">
+                    <svg v-if="loading" class="w-5 h-5 text-white animate-spin" fill="none"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            fill="currentColor"></path>
+                    </svg>
+                    <span class="uppercase font-medium text-xs">
                         Buscar
                     </span>
                 </Button>
             </div>
 
-            <div>
-                <div class="flex justify-start gap-3">
-                    <InputLabel for="brand" value="Marca" />
-                    <!-- <button
-                        class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-light text-xs text-white uppercase tracking-wide hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                        type="button"
-                        @click.stop="showModalBrand = true"
-                    >
-                        <i class="fas fa-plus"></i>
-                        Nueva marca
-                    </button> -->
-                    <!-- <UseCreateBrandModal
-                        :show="showModalBrand"
-                        @close="showModalBrand = false"
-                    /> -->
+            <div class="grid grid-cols-1 md:lg:grid-cols-2 gap-2">
+                <div>
+                    <InputLabel
+                    value="Compañia"
+                    class="font-bold text-lg"
+                    />
+                    <TextInput
+                        id="compania"
+                        type="text"
+                        class="mt-1 block w-full border-gray-200 border bg-gray-300"
+                        v-model="form.compania"
+                        required
+                        autofocus
+                        readonly
+                    />
+                    <InputError class="mt-2" :message="form.errors.compania" />
                 </div>
-
-                <!-- radio button -->
-                <div class="mt-2 flex gap-5">
-                    <div v-for="brand in brands" :key="brand.id">
-                        <div
-                            class="flex items-center gap-1 border-2 rounded-lg p-1 md:p-3"
-                        >
-                            <input
-                                type="radio"
-                                name="brand"
-                                :id="brand.name"
-                                :value="brand.id"
-                                v-model="form.brand_id"
-                                @change="getModels(models)"
-                                class="mt-1 text-turquesa border border-turquesa focus:ring-turquesa focus:ring-2 w-5 h-5"
-                            />
-                            <label
-                                :for="brand.name"
-                                class="hover:cursor-pointer"
-                                >{{ brand.name }}</label
-                            >
-                        </div>
-                    </div>
+                <div>
+                    <InputLabel
+                    value="Marca"
+                    class="font-bold text-lg"
+                    />
+                    <TextInput
+                        id="marca"
+                        type="text"
+                        class="mt-1 block w-full border-gray-200 border bg-gray-300"
+                        v-model="form.brand_id"
+                        required
+                        autofocus
+                        readonly
+                    />
+                    <InputError class="mt-2" :message="form.errors.brand_id" />
                 </div>
-                <InputError class="mt-2" :message="form.errors.brand_id" />
+                <div>
+                    <InputLabel
+                    value="Modelo"
+                    class="font-bold text-lg"
+                    />
+                    <TextInput
+                        id="model"
+                        type="text"
+                        class="mt-1 block w-full border-gray-200 border bg-gray-300"
+                        v-model="form.model_id"
+                        required
+                        autofocus
+                        readonly
+                    />
+                    <InputError class="mt-2" :message="form.errors.model_id" />
+                </div>
+                <div>
+                    <InputLabel
+                    value="Color"
+                    class="font-bold text-lg"
+                    />
+                    <TextInput
+                        id="color"
+                        type="text"
+                        class="mt-1 block w-full border-gray-200 border bg-gray-300"
+                        v-model="form.color_id"
+                        required
+                        autofocus
+                        readonly
+                    />
+                    <InputError class="mt-2" :message="form.errors.color_id" />
+                </div>
             </div>
-
-            <div>
-                <div class="flex justify-start gap-3">
-                    <InputLabel for="model" value="Modelo" />
-                    <!-- <button
-                        class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-light text-xs text-white uppercase tracking-wide hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                        type="button"
-                        @click.stop="showModalModel = true"
-                    >
-                        <i class="fas fa-plus"></i>
-                        Nuevo modelo
-                    </button>
-                    <UseCreateModelModal
-                        :show="showModalModel"
-                        :brands="brands"
-                        @close="showModalModel = false"
-                    /> -->
-                </div>
-                <AutoComplete
-                    v-model="form.model_id"
-                    :suggestions="filterModels"
-                    field="name"
-                    dropdown
-                    forceSelection
-                    @complete="searchModels($event, models)"
-                />
-                <InputError class="mt-2" :message="form.errors.model_id" />
-            </div>
-
-            <div>
-                <div class="flex justify-start gap-3">
-                    <InputLabel for="color" value="Color" />
-                    <!-- <button
-                        class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-light text-xs text-white uppercase tracking-wide hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                        type="button"
-                        @click.stop="showModalColor = true"
-                    >
-                        <i class="fas fa-plus"></i>
-                        Nuevo color
-                    </button>
-                    <UseCreateColorModal
-                        :show="showModalColor"
-                        @close="showModalColor = false"
-                    /> -->
-                </div>
-                <AutoComplete
-                    v-model="form.color_id"
-                    field="name"
-                    dropdown
-                    :suggestions="allColors"
-                    @complete="searchColor($event, colors)"
-                />
-                <InputError class="mt-2" :message="form.errors.color_id" />
-            </div>
-
             <div>
                 <InputLabel
                     value="Tomar fotos o elegir imagenes del dispositivo"

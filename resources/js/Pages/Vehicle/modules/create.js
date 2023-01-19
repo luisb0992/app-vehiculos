@@ -16,6 +16,7 @@ export const form = useForm({
     brand_id: "",
     model_id: "",
     color_id: "",
+    compania : "",
     gallery: [],
 });
 
@@ -35,19 +36,10 @@ export const clearForm = () => {
     form.reset("gallery", []);
 };
 
-//get api vehicle
-export const handleSearchVehicle = () => {
-    axios.post('/api/formautos/consulta_vehiculo', { chassis_number: form.chassis_number })
-    .then((response) => {
-        console.log(response.data);
-    });
 
-    /* axios.post("https://jsonplaceholder.typicode.com/posts", post).then((result) => {
-    console.log(result);
-  }); */
-}
 
 export const saveVehicle = () => {
+    console.log('form', form.value);
     form.post(route("vehicle.store"), {
         // onStart: () => console.log("start"),
         onError: (error) => console.log(error),

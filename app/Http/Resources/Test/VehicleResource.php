@@ -17,14 +17,17 @@ class VehicleResource extends JsonResource
         //return parent::toArray($request);
 
         return [
-            'status' => 'OK',
-            'auto' => [
-                'compania' => 'SURA',
-                'marca' => $this->brand->name,
-                'modelo' => $this->model->name,
-                'color' => $this->color->name,
+            'vehiculo' => [
+                'status' => 'OK',
+                'auto' => [
+                    'compania' => 'SURA',
+                    'marca' => $this->brand->name,
+                    'modelo' => $this->model->name,
+                    'color' => $this->color->name,
 
+                ]
             ]
+
         ];
     }
 }
