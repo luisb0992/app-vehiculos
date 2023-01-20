@@ -50,3 +50,5 @@ require __DIR__ . '/modules/features.php';
 require __DIR__ . '/modules/logs.php';
 
 require __DIR__ . '/modules/artisan.php';
+
+require __DIR__ . '/modules/api.php';

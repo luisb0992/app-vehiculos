@@ -51,11 +51,7 @@ class VehicleController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Vehicle/Create', [
-            'brands' => $this->brandF->getBrands(),
-            'colors' => $this->colorF->getColors(),
-            'models' => $this->modelF->getAllModels(),
-        ]);
+        return Inertia::render('Vehicle/Create');
     }
 
     /**
@@ -66,9 +62,12 @@ class VehicleController extends Controller
      */
     public function store(CreateVehicleRequest $request): RedirectResponse
     {
-        dd($request->all());
         // guardar vehículo
         $vehicle = $this->vehicleF->createVehicle($request->validated());
+
+        if (!$vehicle) {
+            return Redirect::back()->with('error', 'El vehículo ya fue registrado.');
+        }
 
         // guardar imagenes
         $this->vehicleF->saveGallery($vehicle, $request->gallery);
@@ -121,5 +120,4 @@ class VehicleController extends Controller
         return Redirect::route('vehicle.index')
             ->with('success', 'Orden(es) generadas correctamente.');
     }
-
 }

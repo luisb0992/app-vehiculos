@@ -1,8 +1,8 @@
 import { useForm } from "@inertiajs/inertia-vue3";
-import { onMounted, ref } from "vue";
-import { hasCamera } from "@/Utils/Common/common";
+import { ref } from "vue";
+import { manageError } from "@/Utils/Common/common";
 import axios from "axios";
-import  "@/Utils/Common/api";
+import Swal from "sweetalert2";
 
 export const filterModels = ref([]);
 export const allColors = ref([]);
@@ -10,21 +10,16 @@ export const showModalBrand = ref(false);
 export const showModalModel = ref(false);
 export const showModalColor = ref(false);
 export const showCamera = ref(false);
+export const loading = ref(false);
 
 export const form = useForm({
     chassis_number: "",
     brand_id: "",
     model_id: "",
     color_id: "",
-    compania : "",
+    company: "",
     gallery: [],
 });
-
-export const getModels = (models) => {
-    const data = models.filter((model) => model.brand_id === form.brand_id);
-    filterModels.value = data;
-    form.model_id = "";
-};
 
 // limpiar los datos del formulario
 // cuando se inicializa el componente
@@ -33,15 +28,15 @@ export const clearForm = () => {
     form.reset("brand_id", "");
     form.reset("model_id", "");
     form.reset("color_id", "");
+    form.reset("company", "");
     form.reset("gallery", []);
 };
 
-
-
+/**
+ * Guardar el vehiculo
+ */
 export const saveVehicle = () => {
-    console.log('form', form.value);
     form.post(route("vehicle.store"), {
-        // onStart: () => console.log("start"),
         onError: (error) => console.log(error),
         onSuccess: (resp) => clearForm(),
         onFinish: (resp) => console.log(resp),
@@ -49,43 +44,35 @@ export const saveVehicle = () => {
 };
 
 /**
- * Filtrar los modelos por el buscador
- *
- * @param {String} event        // evento del buscador
- * @param {Array} models        // lista de modelos
+ * Buscar vehiculo en la api
  */
-export const searchModels = (event, models) => {
-    setTimeout(() => {
-        if (!event.query.trim().length) {
-            getModels(models);
-            return;
-        }
+export const searchVehicle = () => {
+    loading.value = true;
+    const data = { chassis_number: form.chassis_number };
+    axios
+        .post(route("external_api.search.vehicle"), data)
+        .then((resp) => {
+            if (resp.status === 200) {
+                const data = resp.data;
+                form.color_id = data.vehiculo.auto.color;
+                form.model_id = data.vehiculo.auto.modelo;
+                form.brand_id = data.vehiculo.auto.marca;
+                form.company = data.vehiculo.auto.compania;
+            }
 
-        // filtrar
-        const text = event.query.toLowerCase();
-        const fnFilter = (model) => model.name.toLowerCase().startsWith(text);
-        filterModels.value = models.filter(fnFilter);
-    }, 250);
-};
+            if (resp.status === 204) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Aviso!",
+                    text: "Vehiculo no encontrado",
+                });
 
-/**
- * Filtrar los colores por el buscador
- *
- * @param {String} event        // evento del buscador
- * @param {Array} colors        // lista de colores
- */
-export const searchColor = (event, colors) => {
-    const query = event.query;
-
-    setTimeout(() => {
-        if (!query.trim().length) {
-            allColors.value = colors;
-            return;
-        }
-
-        // filtrar
-        const text = query.toLowerCase();
-        const fnFilter = (color) => color.name.toLowerCase().startsWith(text);
-        allColors.value = colors.filter(fnFilter);
-    }, 250);
+                form.reset("brand_id", "");
+                form.reset("model_id", "");
+                form.reset("color_id", "");
+                form.reset("company", "");
+            }
+        })
+        .catch((err) => manageError())
+        .finally(() => (loading.value = false));
 };
