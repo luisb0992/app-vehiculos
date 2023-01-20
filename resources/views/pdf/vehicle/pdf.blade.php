@@ -2,7 +2,7 @@
 @section('content')
     <br>
     <div class="w-100">
-        <div class="bg-info text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;">
+        <div class="bg-info text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;padding-left: 1rem;text-align: left;">
             <b>Reporte Vehiculo - {{ $vehicle->chassis_number }} </b>
         </div>
         <br>
@@ -53,7 +53,7 @@
     <br>
     <br>
     <div class="w-100">
-        <div class="bg-info text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;">
+        <div class="bg-info text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;padding-left: 1rem;text-align: left;">
             <b>Ordenes</b>
         </div>
         <div class="w-100">
@@ -94,13 +94,13 @@
                                 {{ $order->send_date }}
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->subtotal ?? 0 }}
+                                ${{ $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->subtotal ?? 0 }}
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->iva ?? 0 }}
+                                ${{ $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->iva ?? 0 }}
                             </td>
                             <td class="text-center py-3 text-sm md:text-lg">
-                                {{ $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->total ?? 0 }}
+                                ${{ $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->total ?? 0 }}
                             </td>
                         </tr>
                     @empty
@@ -117,7 +117,7 @@
     <br>
     <br>
     <div class="w-100">
-        <div class="bg-info text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;">
+        <div class="bg-info text-white p-2 rounded text-center text-uppercase" style="padding-top: 1rem; padding-bottom: 1rem;padding-left: 1rem;text-align: left;">
             <b>Fotos</b>
         </div>
         <br>
