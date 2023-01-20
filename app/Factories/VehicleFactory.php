@@ -4,6 +4,9 @@ namespace App\Factories;
 
 use App\Enum\StatusRepairOrderEnum;
 use App\Enum\StatusVehicleEnum;
+use App\Models\Brand;
+use App\Models\Color;
+use App\Models\ModelVehicle;
 use App\Models\RepairOrder;
 use App\Models\RepairSubCategory;
 use App\Models\Vehicle;
@@ -18,15 +21,46 @@ class VehicleFactory
 
   /**
    * @param array<string, mixed> $data
-   * @return Vehicle
+   * @return Vehicle|null
    */
-  public function createVehicle(array $data): Vehicle
+  public function createVehicle(array $data): ?Vehicle
   {
+
+    // buscar primero si existe el vehiculo
+    $vehicle = Vehicle::where('chassis_number', $data['chassis_number'])->first();
+
+    // si existe, retornar el vehiculo
+    if ($vehicle) {
+      return null;
+    }
+
+    // verificar si existen
+    $brand = Brand::where('name', $data['brand_id'])->first();
+    $model = ModelVehicle::where('name', $data['model_id'])->first();
+    $color = Color::where('name', $data['color_id'])->first();
+
+    if (!$brand) {
+      $brand = Brand::create(['name' => $data['brand_id']]);
+    }
+
+    if (!$model) {
+      $model = ModelVehicle::create(['name' => $data['model_id'], 'brand_id' => $brand->id]);
+    }
+
+    if (!$color) {
+      $color = Color::create(['name' => $data['color_id']]);
+    }
+
+    $brandID = $brand->id;
+    $modelID = $model->id;
+    $colorID = $color->id;
+
     return Vehicle::create([
-      'chassis_number' => $data['chassis_number'],
-      'brand_id' => $data['brand_id'],
-      'model_id' => $data['model_id'],
-      'color_id' => $data['color_id'],
+      'chassis_number' => strtoupper($data['chassis_number']),
+      'brand_id' => $brandID,
+      'model_id' => $modelID,
+      'color_id' => $colorID,
+      'company' => $data['company'],
       'user_id' => auth()->user()->id,
       'status' => StatusVehicleEnum::ADD,
     ]);

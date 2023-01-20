@@ -9,13 +9,13 @@ import ProgressBar from "@/Components/ProgressBar.vue";
 import { onMounted } from "vue";
 import { useGalleryStore } from "@/Store/gallery";
 import {
-    form,
-    getModels,
-    saveVehicle,
-    filterModels,
-    searchModels,
-    searchColor,
-    allColors,
+    // form,
+    // getModels,
+    // saveVehicle,
+    // filterModels,
+    // searchModels,
+    // searchColor,
+    // allColors,
 } from "../modules/create";
 
 const props = defineProps({
