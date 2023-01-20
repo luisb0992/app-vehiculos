@@ -20,8 +20,6 @@ export const form = useForm({
     orders: [],
 });
 
-console.log(currentDateTime.value);
-
 // backup de categorias
 export const catBackup = ref([]);
 
@@ -75,13 +73,21 @@ export const canCreateOrder = computed(() => {
 });
 
 // agregar o eliminar una categoría, subcategoria y opciones
-export const addOrRemoveToArray = (e, cat, sub, option, subName) => {
+export const addOrRemoveToArray = (e, cat, sub, option, subName, object) => {
     const checked = e.target?.checked;
     const addSub = { sub_id: sub, sub_name: subName, [option]: true };
     const hasCat = form.categories.some((item) => item.cat_id === cat);
+    const sub_cat = object;
 
     // si esta chequeado, agregar
     if (checked) {
+        if (option == "warranty") {
+            sub_cat.disabledDock = true;
+        }
+
+        if (option == "dock") {
+            sub_cat.disabledWarranty = true;
+        }
         if (hasCat) {
             form.categories.map((item) => {
                 if (item.cat_id === cat) {
@@ -129,9 +135,15 @@ export const addOrRemoveToArray = (e, cat, sub, option, subName) => {
         // si dock y warranty son false, se elimina la subcategoria
         form.categories.map((item) => (item.sub_ids = filterOptions(item)));
         form.categories = form.categories.filter((item) => item.sub_ids.length);
-    }
 
-    // console.log(form.categories);
+        if (option == "warranty") {
+            sub_cat.disabledDock = false;
+        }
+
+        if (option == "dock") {
+            sub_cat.disabledWarranty = false;
+        }
+    }
 };
 
 // verificar en una propiedad computada
