@@ -21,6 +21,12 @@ Route::get('/migrate-seed', function () {
   return 'Migrated with seed';
 });
 
+// migrate fresh --seed
+Route::get('/migrate-seed', function () {
+  Artisan::call('migrate:fresh --seed');
+  return 'Migrated fresh with seed';
+});
+
 // storage link
 Route::get('/storagelink', function () { //ejecutar este primero
   Artisan::call('storage:link');
