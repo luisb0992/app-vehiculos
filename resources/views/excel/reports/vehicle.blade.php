@@ -68,5 +68,23 @@
                 </td>
             </tr>
         @endforeach
+        <tr>
+            <td colspan="8"></td>
+        </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td class="text-center font-bold py-3" colspan="5">
+                Total
+            </td>
+            <td class="text-center font-bold py-3">
+                ${{ number_format($vehicles->sum('dock'),2,',','.') }}
+            </td>
+            <td class="text-center font-bold py-3">
+                ${{ number_format($vehicles->sum('warranty'),2,',','.') }}
+            </td>
+            <td class="text-center font-bold py-3">
+                ${{ number_format($vehicles->sum('total'),2,',','.') }}
+            </td>
+        </tr>
 </table>

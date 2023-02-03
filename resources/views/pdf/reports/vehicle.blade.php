@@ -46,6 +46,7 @@
                         </th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @foreach ($vehicles as $v)
                         <tr>
@@ -76,6 +77,21 @@
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="text-center font-bold py-3" colspan="5">
+                            Total
+                        </td>
+                        <td class="text-center font-bold py-3">
+                            ${{ number_format($vehicles->sum('dock'),2,',','.') }}
+                        </td>
+                        <td class="text-center font-bold py-3">
+                            ${{ number_format($vehicles->sum('warranty'),2,',','.') }}
+                        </td>
+                        <td class="text-center font-bold py-3">
+                            ${{ number_format($vehicles->sum('total'),2,',','.') }}
+                        </td>
+                    </tr>
             </table>
         </div>
     </div>
