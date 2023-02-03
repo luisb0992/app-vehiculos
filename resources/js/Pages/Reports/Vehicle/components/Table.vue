@@ -109,6 +109,14 @@
                 </div>
             </template>
         </Column>
+        <ColumnGroup type="footer">
+            <Row>
+                <Column footer="Totals:" :colspan="5" footerStyle="text-align:right"/>
+                <Column :footer="dockTotal" footerStyle="text-align:center" />
+                <Column :footer="warrantyTotal" footerStyle="text-align:center" />
+                <Column :footer="totalData" footerStyle="text-align:center" />
+            </Row>
+        </ColumnGroup>
     </DataTable>
     <ModalVehicle :show="displayMaximizable" :vehicle="dataModal" @close="closeMaximizable" />
 
@@ -117,7 +125,7 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import {ref,onMounted} from 'vue'
+import {ref,onMounted,computed} from 'vue'
 import {FilterMatchMode} from 'primevue/api';
 import InputText from 'primevue/inputtext';
 import ColumnGroup from 'primevue/columngroup';
@@ -129,6 +137,33 @@ import ModalVehicle from './ModalVehicle.vue';
         vehicles: Array,
         form : Object
     });
+
+    const dockTotal = computed(() => {
+            let total = 0;
+            for(let dock of props.vehicles) {
+                total += dock.dock;
+            }
+
+            return formatCurrency(total);
+        });
+
+    const warrantyTotal = computed(() => {
+        let total = 0;
+        for(let warranty of props.vehicles) {
+            total += warranty.warranty;
+        }
+
+        return formatCurrency(total);
+    })
+
+    const totalData = computed(() => {
+        let total = 0;
+        for(let totalAll of props.vehicles) {
+            total += totalAll.total;
+        }
+
+        return formatCurrency(total);
+    })
 
     const loading1 = ref(true);
     const displayMaximizable = ref(false);
