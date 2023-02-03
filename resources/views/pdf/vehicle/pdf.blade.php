@@ -81,7 +81,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $subtotal = 0;
+                        $iva = 0;
+                        $total = 0;
+                    @endphp
                     @forelse ($vehicle->repairOrders as $order)
+                        @php
+                            $subtotal += $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->subtotal ?? 0;
+                            $iva += $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->iva ?? 0;
+                            $total += $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->total ?? 0;
+                        @endphp
                         <tr>
                             <td class="text-center py-3 text-sm md:text-lg">
                                 {{ $order->workshop->name }}
@@ -111,6 +121,20 @@
                         </tr>
                     @endforelse
                 </tbody>
+                <tr>
+                    <td colspan="3" class="text-center py-3 text-sm md:text-lg">
+                        <b>Total</b>
+                    </td>
+                    <td class="text-center py-3 text-sm md:text-lg">
+                        <b>${{ number_format($subtotal, 2, '.', '') }}</b>
+                    </td>
+                    <td class="text-center py-3 text-sm md:text-lg">
+                        <b>${{ number_format($iva, 2, '.', '') }}</b>
+                    </td>
+                    <td class="text-center py-3 text-sm md:text-lg">
+                        <b>${{ number_format($total, 2, '.', '') }}</b>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
