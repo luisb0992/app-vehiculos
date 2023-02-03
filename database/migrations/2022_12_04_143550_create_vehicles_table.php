@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('observation')->nullable();
 
             // status
-            $table->tinyInteger('status')->default(StatusVehicleEnum::AVAILABLE)
+            $table->tinyInteger('status')->default(StatusVehicleEnum::ADD)
                 ->comment('1: disponible, 2: pendiente, 3: en mantenimiento, 4: reparado, 5: eliminado');
 
             // softdelete
