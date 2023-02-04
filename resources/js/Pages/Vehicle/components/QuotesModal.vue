@@ -129,10 +129,10 @@ const finalizedCase = () => {
             <div class="w-full">
                 <div class="flex flex-col md:flex-row  md:justify-between items-center">
                     <h1 class="uppercase text-zinc-900 font-bold pb-2">
-                        cotizaciones ({{ vehicle.repair_orders_count }})
+                        Ordenes <span class="font-light">({{ vehicle.repair_orders_count }})</span>
                     </h1>
                     <h3 class="uppercase text-zinc-900 font-bold pb-2">
-                        Nº Chasis {{ vehicle.chassis_number }}
+                        Nº Chasis: <span class="font-light">{{ vehicle.chassis_number }}</span>
                     </h3>
                 </div>
                 <hr />

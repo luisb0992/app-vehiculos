@@ -47,7 +47,7 @@ const status = computed(() => props.vehicle.status);
         <span
             v-else-if="status === $page.props.status.vehicle.requested_repair"
         >
-            <p class="mb-3">Cotizaciones creadas ({{ vehicle.repair_orders_count }})</p>
+            <p class="mb-3">Ordenes creadas ({{ vehicle.repair_orders_count }})</p>
 
             <button
                 type="button"
@@ -55,7 +55,7 @@ const status = computed(() => props.vehicle.status);
                 @click="$emit('openQuotes', vehicle)"
             >
                 <i class="fas fa-arrow-right"></i>
-                Ver cotizaciones
+                Ver Ordenes
             </button>
         </span>
 

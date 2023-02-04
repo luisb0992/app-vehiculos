@@ -168,7 +168,7 @@ const pathIcon = globalThis.$pathIcon;
                 </div>
 
                 <!-- men y submenu cotizaciones -->
-                <div
+                <!-- <div
                     class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
                 >
                     <i class="fas fa-list-alt"></i>
@@ -186,8 +186,8 @@ const pathIcon = globalThis.$pathIcon;
                             <i class="bi bi-arrow-down-square"></i>
                         </span>
                     </div>
-                </div>
-                <div
+                </div> -->
+                <!-- <div
                     class="leading-7 text-left text-sm font-thin mt-2 w-4/5 mx-auto"
                     id="submenuWorkshop"
                     :class="{
@@ -195,7 +195,7 @@ const pathIcon = globalThis.$pathIcon;
                         hidden: !route().current('workshop_quotes.*'),
                     }"
                 >
-                    <!-- <SideLink
+                    <SideLink
                         :href="route('workshop.create')"
                         :active="route().current('workshop.create')"
                         :icon="'bi bi-arrow-right-square'"
@@ -204,7 +204,7 @@ const pathIcon = globalThis.$pathIcon;
                         <span class="text-[15px] ml-4 text-gray-200">
                             Crear
                         </span>
-                    </SideLink> -->
+                    </SideLink>
                     <SideLink
                         :href="route('workshop_quotes.index')"
                         :active="route().current('workshop_quotes.*')"
@@ -215,7 +215,7 @@ const pathIcon = globalThis.$pathIcon;
                             Listado
                         </span>
                     </SideLink>
-                </div>
+                </div> -->
 
                 <div
                     class="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer"
