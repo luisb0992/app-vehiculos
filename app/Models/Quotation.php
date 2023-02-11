@@ -20,6 +20,8 @@ class Quotation extends Model
         'subtotal',
         'iva',
         'total',
+        'invoice_number',
+        'invoice_path',
     ];
 
 

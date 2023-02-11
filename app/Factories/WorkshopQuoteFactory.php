@@ -9,16 +9,20 @@ use App\Models\RepairOrder;
 use App\Models\Quotation;
 use App\Models\Vehicle;
 use App\Models\User;
+use App\Utils\AppStorage;
 
 class WorkshopQuoteFactory
 {
+
+  use AppStorage;
+
   /**
    * Crea una nueva cotización
    *
    * @param array $data
    * @return Quotation
    */
-  public static function storeQuota(array $data): mixed
+  public function storeQuota(array $data): mixed
   {
     $trans = DB::transaction(function () use ($data) {
       // verificar si ya la orden tiene una cotización
@@ -28,8 +32,9 @@ class WorkshopQuoteFactory
       $subtotal = array_sum(array_column($data['subs'], 'cost'));
       $total = $data['tax'] ? $subtotal + ($subtotal * $data['tax']) / 100 : $subtotal;
       $total = number_format($total, 2, '.', '');
+      $file = $data['invoice'];
 
-      if ($order->quotation) {
+      if ($order->quotation || !$file->isValid()) {
         return false;
       }
 
@@ -40,6 +45,12 @@ class WorkshopQuoteFactory
         $sub->pivot->save();
       }
 
+      // guardar factura
+      $path = config('storage.invoices.storage_path');
+      $name = $this->generateName('invoice_');
+      $fileName = $this->saveFile($file, $name, $path);
+      $data['invoice_path'] = $fileName;
+
       // crear cotización
       $quotation = Quotation::create([
         'repair_order_id' => $data['repair_order_id'],
@@ -48,6 +59,8 @@ class WorkshopQuoteFactory
         'subtotal' => $subtotal,
         'iva' => $data['tax'],
         'total' => $total,
+        'invoice_number' => $data['invoice_number'],
+        'invoice_path' => $data['invoice_path'],
       ]);
 
       // cambiar status de la orden a cotizada

@@ -27,4 +27,14 @@ return [
     'max_height' => 1080,
     'allowed_extensions' => ['jpg', 'jpeg', 'png', 'webp'],
   ],
+
+  /**
+   * Facturas almacenadas en el sistema
+   */
+  'invoices' => [
+
+    // original
+    'storage_path' => 'doc/invoices/',
+    'public_path' => env('APP_URL') . 'storage/doc/invoices/',
+  ],
 ];

@@ -65,7 +65,7 @@ onMounted(() => {
                             class="bg-white px-2 py-3 border border-gray-300 text-sm font-light"
                         >
                             <div class="flex flex-row justify-end">
-                                <div class="text-zinc-800">Muelle /&nbsp;</div>
+                                <div class="text-zinc-800">Gasto /&nbsp;</div>
                                 <div class="text-zinc-800">Garantía</div>
                             </div>
                             <div v-for="sub in category.repair_subcategories">
@@ -201,7 +201,7 @@ onMounted(() => {
                 >
                     <InputLabel
                         for="dock"
-                        value="Muelles seleccionados"
+                        value="Gastos seleccionados"
                         class="font-bold text-blue-800"
                     />
                     <div class="flex flex-col gap-2">

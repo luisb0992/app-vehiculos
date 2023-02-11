@@ -60,6 +60,9 @@ class HandleInertiaRequests extends Middleware
                     'resize' => config('storage.vehicle.resize_pp'),
                     'original' => config('storage.vehicle.original_pp'),
                 ],
+                'invoices' => [
+                    'pp' => config('storage.invoices.public_path'),
+                ]
             ],
 
             // status generales

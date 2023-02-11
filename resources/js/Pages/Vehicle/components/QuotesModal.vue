@@ -154,6 +154,12 @@ const finalizedCase = () => {
                                     </span>
                                     Nº {{ "000" + order.id }}
                                 </p>
+                                <p v-if="order.quotation?.invoice_number">
+                                    <span class="font-bold text-gray-900">
+                                        Nº de factura:
+                                    </span>
+                                    {{ order.quotation?.invoice_number }}
+                                </p>
                                 <p class="flex justify-start gap-3">
                                     <span class="font-bold text-gray-900">
                                         Status:
@@ -208,7 +214,7 @@ const finalizedCase = () => {
                                     </div>
                                 </p>
                             </div>
-                            <div v-if="showPdf(order) && !order.showPurchaseOrder">
+                            <div v-if="showPdf(order) && !order.showPurchaseOrder" class="flex flex-col gap-2">
                                 <a
                                     :href="
                                         route(
@@ -216,14 +222,26 @@ const finalizedCase = () => {
                                             order.quotation?.id
                                         )
                                     "
-                                    class="rounded-md bg-gray-200 hover:bg-gray-300 p-3 inline-flex items-center"
+                                    class="rounded bg-gray-300 hover:bg-gray-400 inline-flex items-center gap-2 px-3 py-1.5"
                                     target="_blank"
                                     noopener="true"
                                     v-if="order.quotation?.id"
                                 >
+                                    <span class="text-gray-900">Cotización</span>
                                     <i
-                                        class="fas fa-file-pdf text-red-600 fa-2x"
+                                        class="fas fa-file-pdf text-red-600"
                                     ></i>
+                                </a>
+                                <a
+                                    :href="$page.props.path.invoices.pp + order.quotation?.invoice_path"
+                                    class="rounded bg-red-200 hover:bg-red-300 inline-flex items-center justify-between gap-2 px-3 py-1.5"
+                                    target="_blank"
+                                    noopener="true"
+                                    :download="order.quotation?.invoice_path"
+                                    v-if="order.quotation?.invoice_path"
+                                >
+                                    <span class="text-red-800">Factura</span>
+                                    <i class="fas fa-file-pdf text-red-600"></i>
                                 </a>
                             </div>
                         </div>

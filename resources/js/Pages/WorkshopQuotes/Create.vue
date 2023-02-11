@@ -4,6 +4,8 @@ import CardVehicle from "../Vehicle/components/CardVehicle.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputError from "@/Components/InputError.vue";
 import ProgressBar from "@/Components/ProgressBar.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import TextInput from "@/Components/TextInput.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { numberToDecimal } from "@/Utils/Common/common";
 import {
@@ -15,6 +17,7 @@ import {
     hasZero,
     includeTax,
     validateFormat,
+    validateAndLoadInvoice,
 } from "./modules/create-quote";
 
 const props = defineProps({
@@ -115,6 +118,57 @@ props.order.subcategories.forEach((sub) => {
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <div class="py-5">
+                                <h3
+                                    class="text-gray-900 text-xl font-bold pb-3"
+                                >
+                                    Factura
+                                </h3>
+                                <div class="pb-3">
+                                    <InputLabel
+                                        for="invoice_number"
+                                        value="Nº de factura"
+                                        class="font-bold"
+                                    />
+                                    <TextInput
+                                        id="invoice_number"
+                                        type="text"
+                                        class="mt-1 block w-full border-gray-200 border"
+                                        v-model="form.invoice_number"
+                                        required
+                                    />
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.invoice_number"
+                                    />
+                                </div>
+                                <div class="">
+                                    <InputLabel
+                                        for="invoice"
+                                        value="Cargar factura"
+                                        class="font-bold"
+                                    />
+                                    <label class="block">
+                                        <span class="sr-only">
+                                            Cargar factura
+                                        </span>
+                                        <input
+                                            type="file"
+                                            @change="
+                                                validateAndLoadInvoice($event)
+                                            "
+                                            id="invoice"
+                                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-200 file:text-blue-700 hover:file:bg-blue-300"
+                                            required
+                                        />
+                                    </label>
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.invoice"
+                                    />
+                                </div>
+                            </div>
 
                             <div
                                 class="flex flex-col justify-end py-5 border-t"

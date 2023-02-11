@@ -112,7 +112,7 @@ class VehicleDB
   public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null, $status = null)
   {
     $vehicles = $this->vehicle
-      ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user'])
+      ->with(['repairOrdersWithStatus.subcategories', 'brand', 'model', 'gallery', 'user', 'repairOrdersWithStatus.quotation'])
       ->withCount('repairOrders')
       ->brand($brand)
       ->status($status)
@@ -150,6 +150,8 @@ class VehicleDB
             'total' => $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->total ?? 0,
             'subtotal' => $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->subtotal ?? 0,
             'iva' => $order->status == 2 ||  $order->status == 4 ? 0 : $order->quotation->iva ?? 0,
+            'invoice_number' => $order->quotation->invoice_number ?? null,
+            'invoice_path' => $order->quotation->invoice_path ?? null,
           ];
         }),
       ];
