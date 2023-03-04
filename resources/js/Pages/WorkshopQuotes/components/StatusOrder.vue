@@ -1,15 +1,21 @@
 <script setup>
 import { manageError } from "@/Utils/Common/common";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
+import { ref } from "vue";
 import Swal from "sweetalert2/dist/sweetalert2";
 import ButtonDownloadQuotation from "./ButtonDownloadQuotation.vue";
 import ButtonDownloadInvoice from "./ButtonDownloadInvoice.vue";
+import ButtonAddInvoice from "./ButtonAddInvoice.vue";
+import AddInvoiceModal from "./AddInvoiceModal.vue";
 
 const props = defineProps({
     status: Number,
     id: Number,
     order: Object,
 });
+
+const showModalInvoice = ref(false);
+const quotation_id = ref(0);
 
 const startRepair = () => {
     Swal.fire({
@@ -66,27 +72,24 @@ const finishRepair = () => {
         }
     });
 };
+
+/**
+ * Abrir modal para agregar factura
+ */
+const openModal = (id) => {
+    showModalInvoice.value = true;
+    quotation_id.value = id;
+};
 </script>
 <template>
-    <div
-        :class="{
-            'text-blue-600 text-xs font-semibold':
-                status === $page.props.status.repair_order.open,
-            'text-blue-600 text-xs font-semibold':
-                status === $page.props.status.repair_order.quoted,
-            'text-purple-600 text-xs font-semibold':
-                status === $page.props.status.repair_order.approved,
-            'text-yellow-600 text-xs font-semibold':
-                status === $page.props.status.repair_order.in_repair,
-            'text-red-600 text-xs font-semibold':
-                status === $page.props.status.repair_order.cancelLed,
-            'text-orange-600 text-xs font-semibold':
-                status === $page.props.status.repair_order.repaired,
-            'text-green-600 text-xs font-semibold':
-                status === $page.props.status.repair_order.finalized,
-        }"
-        class="text-center"
-    >
+    <AddInvoiceModal
+        :show="showModalInvoice"
+        :quotation_id="quotation_id"
+        :chassis_number="order.vehicle?.chassis_number"
+        @close="showModalInvoice = false"
+    />
+
+    <div class="text-center w-4/5">
         <!-- por cotizar - abierta -->
         <div v-if="status === $page.props.status.repair_order.open">
             <Link
@@ -100,58 +103,80 @@ const finishRepair = () => {
 
         <!-- cotizada -->
         <div v-if="status === $page.props.status.repair_order.quoted">
-            <p class="pb-2">Reparación cotizada</p>
+            <p class="pb-2 mb-2 border-b-2 text-blue-800 text-sm font-semibold">
+                Reparación cotizada
+            </p>
 
-            <div class="flex flex-col gap-3 items-center">
+            <div class="flex flex-col justify-center items-center">
                 <ButtonDownloadQuotation :id="order.quotation.id" />
 
                 <ButtonDownloadInvoice
                     :invoice="order.quotation.invoice_path"
                     v-if="order.quotation.invoice_path"
+                />
+                <ButtonAddInvoice
+                    :quotation="order.quotation"
+                    @openModalInvoice="openModal"
+                    v-if="!order.quotation.invoice_path"
                 />
             </div>
         </div>
 
         <!-- aprobada -->
         <div v-if="status === $page.props.status.repair_order.approved">
-            <p class="pb-2">Cotización aprobada</p>
+            <p class="pb-2 mb-2 border-b-2 text-blue-800 text-sm font-semibold">
+                Cotización aprobada
+            </p>
 
-            <div class="flex flex-col gap-3 items-center">
-                <ButtonDownloadQuotation :id="order.quotation.id" />
-
-                <ButtonDownloadInvoice
-                    :invoice="order.quotation.invoice_path"
-                    v-if="order.quotation.invoice_path"
-                />
+            <div class="flex flex-col items-center justify-center">
                 <button
-                    class="hover:no-underline bg-purple-100 px-3 py-2 hover:bg-purple-300 text-purple-600 hover:text-purple-900 rounded-lg text-xs font-bold"
+                    class="hover:no-underline bg-purple-100 hover:bg-purple-300 text-purple-600 hover:text-purple-900 inline-flex items-center justify-center gap-2 px-3 py-2 w-full"
                     @click="startRepair"
                 >
                     <i class="fas fa-arrow-right"></i>
-                    Iniciar reparación
+                    <span class="text-xs font-semibold">
+                        Iniciar reparación
+                    </span>
                 </button>
-            </div>
-        </div>
-
-        <!-- en repació -->
-        <div v-if="status === $page.props.status.repair_order.in_repair">
-            <p class="pb-2">Vehiculo en reparación</p>
-
-            <div class="flex flex-col gap-3 items-center">
                 <ButtonDownloadQuotation :id="order.quotation.id" />
-
                 <ButtonDownloadInvoice
                     :invoice="order.quotation.invoice_path"
                     v-if="order.quotation.invoice_path"
                 />
+                <ButtonAddInvoice
+                    :quotation="order.quotation"
+                    @openModalInvoice="openModal"
+                    v-if="!order.quotation.invoice_path"
+                />
+            </div>
+        </div>
 
+        <!-- en repación -->
+        <div v-if="status === $page.props.status.repair_order.in_repair">
+            <p class="pb-2 mb-2 border-b-2 text-blue-800 text-sm font-semibold">
+                En reparación
+            </p>
+
+            <div class="flex flex-col items-center justify-center">
                 <button
-                    class="hover:no-underline bg-yellow-100 px-3 py-2 hover:bg-yellow-300 text-yellow-600 hover:text-yellow-900 rounded-lg text-xs font-bold"
+                    class="hover:no-underline bg-yellow-100 hover:bg-yellow-300 text-yellow-600 hover:text-yellow-900 inline-flex items-center justify-center gap-2 px-3 py-2 w-full"
                     @click="finishRepair"
                 >
                     <i class="fas fa-arrow-right"></i>
-                    Finalizar reparación
+                    <span class="text-xs font-semibold">
+                        Finalizar rep.
+                    </span>
                 </button>
+                <ButtonDownloadQuotation :id="order.quotation.id" />
+                <ButtonDownloadInvoice
+                    :invoice="order.quotation.invoice_path"
+                    v-if="order.quotation.invoice_path"
+                />
+                <ButtonAddInvoice
+                    :quotation="order.quotation"
+                    @openModalInvoice="openModal"
+                    v-if="!order.quotation.invoice_path"
+                />
             </div>
         </div>
 
@@ -162,31 +187,47 @@ const finishRepair = () => {
 
         <!-- vehiculo reparado -->
         <div v-if="status === $page.props.status.repair_order.repaired">
-            <p class="pb-2">Vehiculo reparado</p>
+            <p
+                class="pb-2 mb-2 border-b-2 text-green-800 text-sm font-semibold"
+            >
+                Vehiculo reparado
+            </p>
 
-            <div class="flex flex-col gap-3 items-center">
+            <div class="flex flex-col items-center justify-center">
                 <ButtonDownloadQuotation :id="order.quotation.id" />
 
                 <ButtonDownloadInvoice
                     :invoice="order.quotation.invoice_path"
                     v-if="order.quotation.invoice_path"
                 />
+                <ButtonAddInvoice
+                    :quotation="order.quotation"
+                    @openModalInvoice="openModal"
+                    v-if="!order.quotation.invoice_path"
+                />
             </div>
         </div>
 
         <!-- caso finalizado -->
         <div v-if="status === $page.props.status.repair_order.finalized">
-            <p class="pb-2">
+            <p
+                class="pb-2 mb-2 border-b-2 text-green-800 text-sm font-semibold"
+            >
                 <i class="fas fa-check text-green-600"></i>
                 Caso finalizado
             </p>
 
-            <div class="flex flex-col gap-3 items-center">
+            <div class="flex flex-col items-center justify-center">
                 <ButtonDownloadQuotation :id="order.quotation.id" />
 
                 <ButtonDownloadInvoice
                     :invoice="order.quotation.invoice_path"
                     v-if="order.quotation.invoice_path"
+                />
+                <ButtonAddInvoice
+                    :quotation="order.quotation"
+                    @openModalInvoice="openModal"
+                    v-if="!order.quotation.invoice_path"
                 />
             </div>
         </div>

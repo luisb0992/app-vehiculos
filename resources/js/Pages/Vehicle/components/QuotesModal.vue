@@ -222,26 +222,26 @@ const finalizedCase = () => {
                                             order.quotation?.id
                                         )
                                     "
-                                    class="rounded bg-gray-300 hover:bg-gray-400 inline-flex items-center gap-2 px-3 py-1.5"
+                                    class="rounded bg-red-300 hover:bg-red-400 inline-flex items-center gap-2 px-3 py-1.5"
                                     target="_blank"
                                     noopener="true"
                                     v-if="order.quotation?.id"
                                 >
-                                    <span class="text-gray-900">Cotización</span>
+                                    <span class="text-gray-900 text-xs font-semibold">Cotización</span>
                                     <i
                                         class="fas fa-file-pdf text-red-600"
                                     ></i>
                                 </a>
                                 <a
                                     :href="$page.props.path.invoices.pp + order.quotation?.invoice_path"
-                                    class="rounded bg-red-200 hover:bg-red-300 inline-flex items-center justify-between gap-2 px-3 py-1.5"
+                                    class="rounded bg-red-600 hover:bg-red-800 inline-flex items-center justify-between gap-2 px-3 py-1.5"
                                     target="_blank"
                                     noopener="true"
                                     :download="order.quotation?.invoice_path"
                                     v-if="order.quotation?.invoice_path"
                                 >
-                                    <span class="text-red-800">Factura</span>
-                                    <i class="fas fa-file-pdf text-red-600"></i>
+                                    <span class="text-white text-xs font-semibold">Factura</span>
+                                    <i class="fas fa-file-pdf text-white"></i>
                                 </a>
                             </div>
                         </div>

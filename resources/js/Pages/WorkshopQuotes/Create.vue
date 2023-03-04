@@ -4,8 +4,6 @@ import CardVehicle from "../Vehicle/components/CardVehicle.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputError from "@/Components/InputError.vue";
 import ProgressBar from "@/Components/ProgressBar.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { numberToDecimal } from "@/Utils/Common/common";
 import {
@@ -17,7 +15,7 @@ import {
     hasZero,
     includeTax,
     validateFormat,
-    validateAndLoadInvoice,
+    // validateAndLoadInvoice,
 } from "./modules/create-quote";
 
 const props = defineProps({
@@ -119,7 +117,7 @@ props.order.subcategories.forEach((sub) => {
                                 </tbody>
                             </table>
 
-                            <div class="py-5">
+                            <!-- <div class="py-5">
                                 <h3
                                     class="text-gray-900 text-xl font-bold pb-3"
                                 >
@@ -168,7 +166,7 @@ props.order.subcategories.forEach((sub) => {
                                         :message="form.errors.invoice"
                                     />
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div
                                 class="flex flex-col justify-end py-5 border-t"

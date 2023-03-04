@@ -31,8 +31,8 @@ class CreateWorkshopQuoteRequest extends FormRequest
             'tax' => 'required|numeric',
             'total' => 'required|numeric',
             'subs' => 'required|array|min:1',
-            'invoice_number' => 'required|string',
-            'invoice' => 'required|file',
+            // 'invoice_number' => 'required|string',
+            // 'invoice' => 'required|file',
         ];
     }
 
@@ -57,10 +57,10 @@ class CreateWorkshopQuoteRequest extends FormRequest
             'subs.required' => 'Los servicios son requeridos',
             'subs.array' => 'Los servicios deben ser un arreglo',
             'subs.min' => 'Los servicios deben tener al menos un servicio',
-            'invoice_number.required' => 'El número de factura es requerido',
-            'invoice_number.string' => 'El número de factura debe ser una cadena de texto',
-            'invoice.required' => 'La factura es requerida',
-            'invoice.file' => 'La factura debe ser un archivo',
+            // 'invoice_number.required' => 'El número de factura es requerido',
+            // 'invoice_number.string' => 'El número de factura debe ser una cadena de texto',
+            // 'invoice.required' => 'La factura es requerida',
+            // 'invoice.file' => 'La factura debe ser un archivo',
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DB\WorkshopQuoteDB;
 use App\Factories\WorkshopQuoteFactory;
 use App\Http\Requests\ApproveQuotationRequest;
+use App\Http\Requests\CreateInvoiceRequest;
 use App\Http\Requests\CreateWorkshopQuoteRequest;
 use App\Models\WorkshopQuote;
 use Illuminate\Http\Request;
@@ -67,6 +68,27 @@ class WorkshopQuoteController extends Controller
         return redirect()
             ->route('workshop_quotes.index')
             ->with('error', 'No se pudo crear la cotización');
+    }
+
+    /**
+     * Guarda los datos de una factura relacionada con una cotización
+     *
+     * @param  CreateInvoiceRequest  $request
+     * @return RedirectResponse
+     */
+    public function storeInvoice(CreateInvoiceRequest $request): RedirectResponse
+    {
+        $quota = $this->factory->storeInvoice($request->validated());
+
+        if ($quota) {
+            return redirect()
+                ->route('workshop_quotes.index')
+                ->with('success', 'Datos de facturación guardados con éxito');
+        }
+
+        return redirect()
+            ->route('workshop_quotes.index')
+            ->with('error', 'No se pudo crear guardar los datos de facturación');
     }
 
     /**

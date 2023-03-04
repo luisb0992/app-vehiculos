@@ -32,9 +32,8 @@ class WorkshopQuoteFactory
       $subtotal = array_sum(array_column($data['subs'], 'cost'));
       $total = $data['tax'] ? $subtotal + ($subtotal * $data['tax']) / 100 : $subtotal;
       $total = number_format($total, 2, '.', '');
-      $file = $data['invoice'];
 
-      if ($order->quotation || !$file->isValid()) {
+      if ($order->quotation) {
         return false;
       }
 
@@ -46,21 +45,20 @@ class WorkshopQuoteFactory
       }
 
       // guardar factura
-      $path = config('storage.invoices.storage_path');
-      $name = $this->generateName('invoice_');
-      $fileName = $this->saveFile($file, $name, $path);
-      $data['invoice_path'] = $fileName;
+      // $path = config('storage.invoices.storage_path');
+      // $name = $this->generateName('invoice_');
+      // $fileName = $this->saveFile($file, $name, $path);
+      // $data['invoice_path'] = $fileName;
 
       // crear cotización
       $quotation = Quotation::create([
         'repair_order_id' => $data['repair_order_id'],
-        // 'workshop_id' => $data['workshop_id'],
         'user_id' => $user->id,
         'subtotal' => $subtotal,
         'iva' => $data['tax'],
         'total' => $total,
-        'invoice_number' => $data['invoice_number'],
-        'invoice_path' => $data['invoice_path'],
+        // 'invoice_number' => $data['invoice_number'],
+        // 'invoice_path' => $data['invoice_path'],
       ]);
 
       // cambiar status de la orden a cotizada
@@ -174,6 +172,38 @@ class WorkshopQuoteFactory
       // actualizar el estado del vehiculo
       $vehicle = Vehicle::find($vehicle_id);
       $vehicle->update(['status' => StatusVehicleEnum::FINALIZED]);
+
+      return true;
+    });
+
+    return $trans;
+  }
+
+  /**
+   * Guardar factura relacionada con la cotización
+   *
+   * @param array $data
+   * @return bool|null
+   */
+  public function storeInvoice(array $data): ?bool
+  {
+    $trans = DB::transaction(function () use ($data) {
+      $quotation = Quotation::find($data['quotation_id']);
+      $file = $data['invoice'];
+
+      if (!$file->isValid() || !$quotation) {
+        return false;
+      }
+
+      // guardar factura
+      $path = config('storage.invoices.storage_path');
+      $name = $this->generateName('invoice_');
+      $data['invoice_path'] = $this->saveFile($file, $name, $path);
+
+      $quotation->update([
+        'invoice_number' => $data['invoice_number'],
+        'invoice_path' => $data['invoice_path'],
+      ]);
 
       return true;
     });

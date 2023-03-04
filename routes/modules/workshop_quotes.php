@@ -21,6 +21,11 @@ Route::middleware('auth')->prefix('workshop_quotes')->group(function () {
     ->name('workshop_quotes.storeQuote')
     ->middleware('is_superadmin_or_supplier');
 
+  // guardar una factura
+  Route::post('store-invoice', [WorkshopQuoteController::class, 'storeInvoice'])
+    ->name('workshop_quotes.saveInvoice')
+    ->middleware('is_superadmin_or_supplier');
+
   // descargar la orden de cotización - pdf cotización
   Route::get('download-quote/{id}', [WorkshopQuoteController::class, 'downloadQuote'])
     ->name('workshop_quotes.downloadPDFQuote')

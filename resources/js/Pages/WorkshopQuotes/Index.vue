@@ -18,7 +18,7 @@ const filter = ref({
 });
 </script>
 <template>
-    <Head title="Listado de solicitudes de reparación" />
+    <Head title="Solicitudes de reparación" />
 
     <Layout>
         <div class="py-12 mx-auto">

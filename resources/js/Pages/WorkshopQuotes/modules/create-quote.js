@@ -12,8 +12,6 @@ export const form = useForm({
     tax: 0,
     total: 0,
     repair_order_id: 0,
-    invoice_number: "",
-    invoice: null,
 });
 
 /**
@@ -127,31 +125,4 @@ export const validateFormat = (index) => {
             sub.cost = sub.cost.substring(0, length);
         }
     }
-};
-
-/**
- * Validar y cargar la factura
- * solo se permiten archivos pdf, txt, csv, docx, doc, xls, xlsx
- *
- * @param {File} e      Archivo seleccionado
- */
-export const validateAndLoadInvoice = (e) => {
-    const file = e.target.files[0];
-    const allowedExtensions = /(\.pdf|\.txt|\.csv|\.docx|\.doc|\.xls|\.xlsx)$/i;
-
-    if (!allowedExtensions.exec(file.name)) {
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Solo se permiten archivos pdf, txt, csv, docx, doc, xls, xlsx",
-        });
-
-        // limpiar el input y el form
-        e.target.value = "";
-        form.reset("invoice", null);
-
-        return;
-    }
-
-    form.invoice = file;
 };
