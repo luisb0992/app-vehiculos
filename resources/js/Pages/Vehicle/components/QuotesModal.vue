@@ -69,18 +69,22 @@ const allowApprove = (order) => {
 const allRepaired = computed(() => {
     return orders   .value.every((order) => {
         return (
-            order.status === usePage().props.value.status.repair_order.repaired ||
-            order.status === usePage().props.value.status.repair_order.finalized
+            order.status === usePage().props.value.status.repair_order.repaired
         );
     });
+});
+
+/**
+ * Verificar si el vehiculo tiene estado finalizado
+ */
+const vehicleFinalized = computed(() => {
+    return props.vehicle.status === usePage().props.value.status.vehicle.finalized;
 });
 
 /**
  * Aprobar o no la cotización
  */
 const approveOrder = (order) => {
-    console.log(order);
-
     if (!order.order_number || !order.quotation.id) {
         manageError({
             text: "Debe ingresar el número de orden de compra",
@@ -247,7 +251,7 @@ const finalizedCase = () => {
                         </div>
                     </div>
                 </div>
-                <div class="w-full pt-2 flex justify-end" v-if="allRepaired">
+                <div class="w-full pt-2 flex justify-end" v-if="allRepaired && !vehicleFinalized">
                     <PrimaryButton
                         @click="finalizedCase"
                         type="button"
@@ -259,6 +263,13 @@ const finalizedCase = () => {
                     >
                         Finalizar caso
                     </PrimaryButton>
+                </div>
+                <div class="w-full pt-2 flex justify-end" v-if="vehicleFinalized">
+                    <div>
+                        <p class="text-sm text-gray-500">
+                            El caso ha sido finalizado
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="flex justify-end pt-5">

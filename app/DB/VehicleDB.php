@@ -68,45 +68,79 @@ class VehicleDB
   public function getVehiclesByUser(): Collection
   {
     $user = auth()->user();
-    $data = request()->all();
-    $existsStatus = isset($data['status']);
+    $request = request()->all();
+    $existsStatus = isset($request['status']);
+    $existsDateFrom = isset($request['date_from']);
+    $existsDateTo = isset($request['date_to']);
+    // $data = $this->getVehiclesWithRelations()->statusFinished();
+    $data = $this->getVehiclesWithRelations();
 
+    // si hay que filtrar por status
     if ($existsStatus) {
-      $status = intval($data['status']);
-      return $this->getVehiclesByStatus($status);
+      $status = intval($request['status']);
+      $data = $this->getVehiclesByStatus($status, $data);
     }
 
-    $data =  $this->getVehiclesWithRelations()->statusFinished();
+    // si hay que filtrar por fechas
+    if ($existsDateFrom || $existsDateTo) {
+      $data = $data->dateFromTo($request['date_from'], $request['date_to']);
+    }
 
-    // si es un supera admin, devolver todos los vehículos
-    if ($user->isSuperAdmin()) {
+    // si hay request de búsqueda, return
+    if ($existsStatus || $existsDateFrom || $existsDateTo) {
       return $data->get();
     }
 
-    return $data->where('user_id', $user->id)->get();
+    // si es un super admin, devolver todos los vehículos
+    if ($user->isSuperAdmin()) {
+      return $data->statusFinished()->get();
+    }
+
+    // si no devolver los vehículos del usuario
+    return $data->statusFinished()->where('user_id', $user->id)->get();
   }
 
   /**
    * Filtrar los vehículos según los status recibidos
    *
    * @param int $status         status
-   * @return Collection
+   * @param Builder $data       datos
+   * @return Builder
    */
-  public function getVehiclesByStatus(int $status): Collection
+  public function getVehiclesByStatus(int $status, $data): Builder
   {
-    // con status en proceso
-    if ($status === 1) {
-      return $this->getVehiclesWithRelations()
-        ->where('status', '!=', StatusVehicleEnum::FINALIZED)
-        ->get();
+    // con status cotizado
+    if ($status === StatusVehicleEnum::QUOTED) {
+      $data = $data->status(StatusRepairOrderEnum::QUOTED);
+    }
+
+    // con status en reparación
+    if ($status === StatusVehicleEnum::IN_REPAIR) {
+      $data = $data->status(StatusRepairOrderEnum::IN_REPAIR);
     }
 
     // con status finalizado
-    if ($status === 2) {
-      return $this->getVehiclesWithRelations()
-        ->where('status', StatusVehicleEnum::FINALIZED)
-        ->get();
+    if ($status === StatusVehicleEnum::FINALIZED) {
+      $data = $data->status(StatusRepairOrderEnum::FINALIZED);
     }
+
+    return $data;
+  }
+
+  /**
+   * Filtrar vehiculos según fechas desde - hasta recibidas
+   *
+   * @param string $dateFrom    fecha desde
+   * @param string $dateTo      fecha hasta
+   * @return Collection
+   */
+  public function getVehiclesByDate(string $dateFrom, string $dateTo): Collection
+  {
+    return $this->getVehiclesWithRelations()
+      ->whereHas('repairOrders', function ($query) use ($dateFrom, $dateTo) {
+        $query->whereBetween('created_at', [$dateFrom, $dateTo]);
+      })
+      ->get();
   }
 
   public function getVehiclesReportsFilter($brand = null, $model = null, $dates = null, $nro_chasis = null, $user_id = null, $status = null)

@@ -6,7 +6,8 @@ import InputText from "primevue/inputtext";
 import Toolbar from "primevue/toolbar";
 import StatusVehicle from "./components/StatusVehicle.vue";
 import QuotesModal from "./components/QuotesModal.vue";
-import { formatDate, pp, refreshPage } from "@/Utils/Common/common";
+import Datepicker from "@vuepic/vue-datepicker";
+import { refreshPage } from "@/Utils/Common/common";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import {
     filter,
@@ -14,13 +15,13 @@ import {
     vehicle,
     openModalQuotes,
     FilterData,
-    form
+    clearedData,
+    form,
+    format,
+    pathImage,
 } from "./modules/index";
 
-// props
-const props = defineProps({
-    vehicles: Array,
-});
+defineProps({ vehicles: Array });
 </script>
 <template>
     <Head title="Listado de vehículos" />
@@ -71,34 +72,70 @@ const props = defineProps({
                             responsiveLayout="scroll"
                             dataKey="id"
                         >
+                            <!-- filtros -->
                             <template #header>
                                 <div
                                     class="flex flex-col md:flex-row justify-start gap-5"
                                 >
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search" />
-                                        <InputText
-                                            v-model="filter['global'].value"
-                                            placeholder="Búsqueda..."
-                                            class="w-52"
-                                        />
-                                    </span>
-                                    <div>
-                                        <!-- filtrar por status de la orden -->
-                                        <label class="px-3">Estado</label>
+                                    <div class="flex flex-col">
+                                        <label>Búsqueda</label>
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search" />
+                                            <InputText
+                                                v-model="filter['global'].value"
+                                                placeholder="Búsqueda..."
+                                                class="w-52 h-[38px]"
+                                            />
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label>Periodo</label>
                                         <select
-                                            class="p-inputtext p-component pl-3"
+                                            class="pl-3 h-[38px] text-sm text-gray-700 font-light rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:border-gray-300"
                                             v-model="form.status"
                                             @change="FilterData"
                                         >
                                             <option value="">Todos</option>
-                                            <option value="2">
+                                            <option value="3">
+                                                Por aprobar
+                                            </option>
+                                            <option value="6">
+                                                En reparación
+                                            </option>
+                                            <option value="8">
                                                 Finalizadas
                                             </option>
                                         </select>
                                     </div>
+                                    <div class="flex flex-col">
+                                        <label>Fechas</label>
+                                        <div
+                                            class="flex flex-col md:flex-row gap-5"
+                                        >
+                                            <div>
+                                                <Datepicker
+                                                    @update:modelValue="
+                                                        FilterData()
+                                                    "
+                                                    @cleared="clearedData"
+                                                    :format="format"
+                                                    cancelText="Cancelar"
+                                                    selectText="Seleccionar"
+                                                    v-model="form.date"
+                                                    range
+                                                    locale="es"
+                                                    multi-calendars
+                                                    placeholder="Seleccionar Fechas..."
+                                                    :enable-time-picker="false"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </template>
+                            <!-- /filtros -->
+
+                            <!-- columnas -->
                             <Column
                                 field="gallery"
                                 header="Imagen"
@@ -106,10 +143,7 @@ const props = defineProps({
                             >
                                 <template #body="{ data }" class="w-40">
                                     <img
-                                        :src="
-                                            pp.resizeImgVehicle.value +
-                                            data.gallery[0]?.path
-                                        "
+                                        :src="pathImage(data.gallery[0]?.path)"
                                         class="w-full md:w-28 h-20 rounded"
                                     />
                                 </template>
@@ -140,7 +174,7 @@ const props = defineProps({
                                 :sortable="true"
                             >
                                 <template #body="{ data }">
-                                    {{ formatDate(data.created_at) }}
+                                    {{ formatPickerDate(data.created_at) }}
                                 </template>
                             </Column>
                             <Column
@@ -156,6 +190,7 @@ const props = defineProps({
                                     />
                                 </template>
                             </Column>
+                            <!-- /columnas -->
                         </DataTable>
                     </div>
                 </div>

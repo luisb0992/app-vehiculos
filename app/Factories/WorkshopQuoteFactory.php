@@ -26,9 +26,9 @@ class WorkshopQuoteFactory
   {
     $trans = DB::transaction(function () use ($data) {
       // verificar si ya la orden tiene una cotización
+      $user = auth()->user();
       $order = RepairOrder::with('quotation')->find($data['repair_order_id']);
       $subs = $order->subcategories()->get();
-      $user = auth()->user();
       $subtotal = array_sum(array_column($data['subs'], 'cost'));
       $total = $data['tax'] ? $subtotal + ($subtotal * $data['tax']) / 100 : $subtotal;
       $total = number_format($total, 2, '.', '');
@@ -44,12 +44,6 @@ class WorkshopQuoteFactory
         $sub->pivot->save();
       }
 
-      // guardar factura
-      // $path = config('storage.invoices.storage_path');
-      // $name = $this->generateName('invoice_');
-      // $fileName = $this->saveFile($file, $name, $path);
-      // $data['invoice_path'] = $fileName;
-
       // crear cotización
       $quotation = Quotation::create([
         'repair_order_id' => $data['repair_order_id'],
@@ -57,8 +51,6 @@ class WorkshopQuoteFactory
         'subtotal' => $subtotal,
         'iva' => $data['tax'],
         'total' => $total,
-        // 'invoice_number' => $data['invoice_number'],
-        // 'invoice_path' => $data['invoice_path'],
       ]);
 
       // cambiar status de la orden a cotizada

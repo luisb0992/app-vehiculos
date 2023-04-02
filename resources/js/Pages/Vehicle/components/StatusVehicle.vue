@@ -2,10 +2,7 @@
 import { Link } from "@inertiajs/inertia-vue3";
 import { computed } from "vue";
 
-const props = defineProps({
-    vehicle: Object,
-});
-
+const props = defineProps({ vehicle: Object });
 const id = computed(() => props.vehicle.id);
 const status = computed(() => props.vehicle.status);
 </script>
@@ -47,7 +44,9 @@ const status = computed(() => props.vehicle.status);
         <span
             v-else-if="status === $page.props.status.vehicle.requested_repair"
         >
-            <p class="mb-3">Ordenes creadas ({{ vehicle.repair_orders_count }})</p>
+            <p class="mb-3">
+                Ordenes creadas ({{ vehicle.repair_orders_count }})
+            </p>
 
             <button
                 type="button"
@@ -95,6 +94,19 @@ const status = computed(() => props.vehicle.status);
         <!-- caso finalizado -->
         <span v-else-if="status === $page.props.status.vehicle.finalized">
             Caso finalizado
+
+            <p class="mb-3 text-orange-600">
+                Ordenes creadas ({{ vehicle.repair_orders_count }})
+            </p>
+
+            <button
+                type="button"
+                class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-2 rounded md:text-sm text-xs"
+                @click="$emit('openQuotes', vehicle)"
+            >
+                <i class="fas fa-arrow-right"></i>
+                Ver Ordenes
+            </button>
         </span>
 
         <!-- caso cancelado -->

@@ -10,7 +10,6 @@ trait ScopeVehicle
 
   public function scopeWhereStatusOrders($query)
   {
-
     $query->repairOrders->whereIn('status', [3, 5, 6, 7]);
   }
 
@@ -77,5 +76,17 @@ trait ScopeVehicle
       ['status', '!=', StatusVehicleEnum::CANCELLED],
       ['status', '!=', StatusVehicleEnum::REJECTED_QUOTE],
     ]);
+  }
+
+  /**
+   * Scope date from - to filter
+   *
+   * @param Builder $query
+   */
+  public function scopeDateFromTo($query, $dateFrom, $dateTo): Builder
+  {
+    return $query->whereHas('repairOrders', function ($order) use ($dateFrom, $dateTo) {
+      $order->whereBetween('created_at', [$dateFrom, $dateTo]);
+    });
   }
 }

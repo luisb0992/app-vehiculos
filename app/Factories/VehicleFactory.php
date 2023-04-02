@@ -4,15 +4,18 @@ namespace App\Factories;
 
 use App\Enum\StatusRepairOrderEnum;
 use App\Enum\StatusVehicleEnum;
+use App\Mail\NotifySupplierUserEmail;
 use App\Models\Brand;
 use App\Models\Color;
 use App\Models\ModelVehicle;
 use App\Models\RepairOrder;
 use App\Models\RepairSubCategory;
+use App\Models\User;
 use App\Models\Vehicle;
 use App\Utils\AppStorage;
 use App\Utils\IntervationImage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class VehicleFactory
 {
@@ -155,6 +158,16 @@ class VehicleFactory
             'dock' => isset($sub['dock']) ? $sub['dock'] : false,
           ]);
         }
+
+        // cargar todos los usuarios de un taller
+        $workshopUsers = User::where('workshop_id', $order['workshop_id'])->get();
+
+        // iterar
+        $workshopUsers->each(function ($userF) use ($newOrder) {
+          // tomar el email y notificar via email
+          $email = new NotifySupplierUserEmail($newOrder);
+          Mail::to($userF->email)->send($email);
+        });
       }
 
       // cambia el estado del vehículo a solicitud de reparación enviada

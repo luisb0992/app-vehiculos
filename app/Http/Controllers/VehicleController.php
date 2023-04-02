@@ -19,7 +19,6 @@ use Inertia\Inertia;
 
 class VehicleController extends Controller
 {
-
     // constructor
     public function __construct(
         private BrandFactory $brandF,
