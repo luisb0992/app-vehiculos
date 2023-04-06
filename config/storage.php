@@ -37,4 +37,11 @@ return [
     'storage_path' => 'doc/invoices/',
     'public_path' => env('APP_URL') . 'storage/doc/invoices/',
   ],
+
+  /**
+   * imagen banner de la app
+   */
+  'app_image' => [
+    'banner' => 'https://i.ibb.co/Z2XrMyf/banner.webp',
+  ],
 ];

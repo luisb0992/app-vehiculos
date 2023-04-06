@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NotifySupplierUserEmail extends Mailable
+class NotifySupplierQuotationApprovedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,17 +31,15 @@ class NotifySupplierUserEmail extends Mailable
      */
     public function build()
     {
-        $imgUrl = config('storage.app_image.banner');
-
         $data = [
-            'title' => 'Nueva orden de reparación',
-            'body' => 'Se ha solicitado una nueva orden de reparación para el vehículo ' . $this->repairOrder->vehicle?->chassis_number,
             'vehicle' => $this->repairOrder->vehicle->load('brand', 'model', 'color'),
+            'order_number' => '000' .  $this->repairOrder->id,
+            'workshop' => $this->repairOrder->workshop,
         ];
 
         return $this->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
-            ->subject('Nueva orden de reparación')
-            ->view('emails.repair-order')
-            ->with(['data' => $data, 'img' => $imgUrl]);
+            ->subject('Cotización aprobada')
+            ->view('emails.quotation-approved')
+            ->with(['data' => $data]);
     }
 }

@@ -9,11 +9,9 @@
                         <td>
                             <div class="text" style="padding: 0 3em; text-align: center;">
                                 <h2>
-                                    <strong>{{ $data['title'] }}</strong>
+                                    La order de reparación <strong>{{ $data['order_number'] }}</strong> para el vehículo
+                                    <strong>{{ $data['vehicle']['chassis_number'] }}</strong> ha sido cotizada.
                                 </h2>
-                                <p>
-                                    <strong>{{ $data['body'] }}</strong>
-                                </p>
                             </div>
                         </td>
                     </tr>
@@ -25,8 +23,11 @@
                         <td>
                             <div class="text" style="padding: 0 3em; text-align: center;">
                                 <h2>
-                                    <strong>Datos del vehículo</strong>
+                                    <strong>Vehiculo cotizado</strong>
                                 </h2>
+                                <p>
+                                    <strong>Taller: </strong> {{ $data['workshop']['name'] }}
+                                </p>
                                 <p>
                                     <strong>Marca: </strong> {{ $data['vehicle']['brand']['name'] }}
                                 </p>
@@ -50,7 +51,7 @@
                                     <strong>Para más detalles</strong>
                                 </h2>
                                 <p>
-                                    <a href="{{ route('workshop_quotes.index') }}" class="btn-more">
+                                    <a href="{{ route('login') }}" class="btn-more">
                                         <span style="color: #ffffff;">Da click aquí</span>
                                     </a>
                                 </p>

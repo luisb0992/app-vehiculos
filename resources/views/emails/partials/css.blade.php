@@ -99,6 +99,21 @@
             min-width: 414px !important;
         }
     }
+
+    .btn-more {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+        border-radius: 5px;
+        background: #2f89fc;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 20px;
+    }
 </style>
 
 <!-- CSS Reset : END -->

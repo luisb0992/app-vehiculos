@@ -159,15 +159,8 @@ class VehicleFactory
           ]);
         }
 
-        // cargar todos los usuarios de un taller
-        $workshopUsers = User::where('workshop_id', $order['workshop_id'])->get();
-
-        // iterar
-        $workshopUsers->each(function ($userF) use ($newOrder) {
-          // tomar el email y notificar via email
-          $email = new NotifySupplierUserEmail($newOrder);
-          Mail::to($userF->email)->send($email);
-        });
+        // notificar a los usuarios del taller
+        $this->notifyUsersNewOrderHasBeenCreated($order['workshop_id'], $newOrder);
       }
 
       // cambia el estado del vehículo a solicitud de reparación enviada
@@ -178,5 +171,26 @@ class VehicleFactory
     });
 
     return $ts;
+  }
+
+  /**
+   * Cargar los usuarios por taller
+   * y notificar nueva orden de reparación
+   *
+   * @param int $workshopID
+   * @param RepairOrder $order
+   * @return void
+   */
+  public function notifyUsersNewOrderHasBeenCreated(int $workshopID, RepairOrder $order): void
+  {
+    // cargar todos los usuarios de un taller
+    $workshopUsers = User::byWorkshop($workshopID)->get();
+
+    // iterar
+    // tomar el email y notificar via email
+    $workshopUsers->each(function ($userF) use ($order) {
+      $email = new NotifySupplierUserEmail($order);
+      Mail::to($userF->email)->send($email);
+    });
   }
 }

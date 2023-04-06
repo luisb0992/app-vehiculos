@@ -5,11 +5,14 @@ namespace App\Factories;
 use App\Enum\StatusRepairOrderEnum;
 use Illuminate\Support\Facades\DB;
 use App\Enum\StatusVehicleEnum;
+use App\Mail\NotifyRecorderAndSupervisorNewQuotationEmail;
+use App\Mail\NotifySupplierQuotationApprovedEmail;
 use App\Models\RepairOrder;
 use App\Models\Quotation;
 use App\Models\Vehicle;
 use App\Models\User;
 use App\Utils\AppStorage;
+use Illuminate\Support\Facades\Mail;
 
 class WorkshopQuoteFactory
 {
@@ -56,6 +59,9 @@ class WorkshopQuoteFactory
       // cambiar status de la orden a cotizada
       $order->update(['status' => StatusRepairOrderEnum::QUOTED]);
 
+      // notificar al registrador y supervisor
+      $this->notifyUsersNewQuotationHasBeenCreated($order);
+
       return $quotation;
     });
 
@@ -84,6 +90,9 @@ class WorkshopQuoteFactory
         'quotation_id' => $data['quotation_id'],
         'number' => $data['number'],
       ]);
+
+      // notificar a los usuarios de ese taller
+      $this->notifyUsersNewPurchaseOrderHasBeenCreated($order);
 
       return true;
     });
@@ -201,5 +210,45 @@ class WorkshopQuoteFactory
     });
 
     return $trans;
+  }
+
+  /**
+   * Notificar al registrador y supervisor
+   * que una orden de reparación fue cotizada
+   *
+   * @param RepairOrder $order
+   * @return void
+   */
+  public function notifyUsersNewQuotationHasBeenCreated($order): void
+  {
+    // usuarios a notificar
+    $supervisors = User::supervisor()->get(['id']);
+    $allIDS = array_merge([$order->user_id], $supervisors->pluck('id')->toArray());
+    $users = User::users($allIDS)->get();
+
+    // notificar a los usuarios
+    $users->each(function ($user) use ($order) {
+      $email = new NotifyRecorderAndSupervisorNewQuotationEmail($order);
+      Mail::to($user->email)->send($email);
+    });
+  }
+
+  /**
+   * Notificar a los usuarios del taller
+   * que la cotización fue aprobada
+   *
+   * @param RepairOrder $order
+   * @return void
+   */
+  public function notifyUsersNewPurchaseOrderHasBeenCreated($order): void
+  {
+    // usuarios a notificar
+    $workshopUsers = User::byWorkshop($order->workshop_id)->get();
+
+    // iterar, tomar el email y notificar via email
+    $workshopUsers->each(function ($userF) use ($order) {
+      $email = new NotifySupplierQuotationApprovedEmail($order);
+      Mail::to($userF->email)->send($email);
+    });
   }
 }

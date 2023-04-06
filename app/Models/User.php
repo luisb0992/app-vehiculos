@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Enum\RoleEnum;
+use App\Models\Traits\User\UserScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -16,11 +15,9 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Contracts\Activity;
 use App\Traits\UtilsLogs;
 
-
-
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, LogsActivity, UtilsLogs;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, LogsActivity, UtilsLogs, UserScope;
 
     /**
      * The attributes that are mass assignable.
