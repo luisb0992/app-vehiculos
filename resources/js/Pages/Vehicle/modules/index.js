@@ -51,7 +51,6 @@ export const openModalQuotes = (data) => {
  *
  */
 export const FilterData = () => {
-    console.log(form);
     // filtrar datos
     form.get(route("vehicle.index"), {
         onStart: () => (form.loading = true),
