@@ -6,6 +6,7 @@ use App\Enum\StatusRepairOrderEnum;
 use Illuminate\Support\Facades\DB;
 use App\Enum\StatusVehicleEnum;
 use App\Mail\NotifyRecorderAndSupervisorNewQuotationEmail;
+use App\Mail\NotifyRecorderQuotationHasBeenUpdatedEmail;
 use App\Mail\NotifySupplierQuotationApprovedEmail;
 use App\Models\RepairOrder;
 use App\Models\Quotation;
@@ -63,6 +64,46 @@ class WorkshopQuoteFactory
       $this->notifyUsersNewQuotationHasBeenCreated($order);
 
       return $quotation;
+    });
+
+    return $trans;
+  }
+
+  /**
+   * Actualizar una nueva cotización
+   *
+   * @param Quotation $quotation
+   * @param array $data
+   * @return bool
+   */
+  public function updateQuota($quotation, array $data): bool
+  {
+    $trans = DB::transaction(function () use ($quotation, $data) {
+      // verificar si ya la orden tiene una cotización
+      $order = $quotation->repairOrder;
+      $subs = $order->subcategories()->get();
+      $subtotal = array_sum(array_column($data['subs'], 'cost'));
+      $total = $data['tax'] ? $subtotal + ($subtotal * $data['tax']) / 100 : $subtotal;
+      $total = number_format($total, 2, '.', '');
+
+      // actualizar los costos de las sub categorias
+      foreach ($data['subs'] as $subcategory) {
+        $sub = $subs->where('id', $subcategory['id'])->first();
+        $sub->pivot->cost = $subcategory['cost'];
+        $sub->pivot->save();
+      }
+
+      // actualizar cotización
+      $updated = $quotation->update([
+        'subtotal' => $subtotal,
+        'iva' => $data['tax'],
+        'total' => $total,
+      ]);
+
+      // notificar al registrador y supervisor
+      $this->notifyUsersQuotationHasBeenUpdated($order);
+
+      return $updated;
     });
 
     return $trans;
@@ -249,6 +290,27 @@ class WorkshopQuoteFactory
     $workshopUsers->each(function ($userF) use ($order) {
       $email = new NotifySupplierQuotationApprovedEmail($order);
       Mail::to($userF->email)->send($email);
+    });
+  }
+
+  /**
+   * Notificar que una cotización fue actualizada
+   * Notificar al supervisor y al registrador
+   *
+   * @param RepairOrder $order
+   * @return void
+   */
+  public function notifyUsersQuotationHasBeenUpdated($order): void
+  {
+    // usuarios a notificar
+    $supervisors = User::supervisor()->get(['id']);
+    $allIDS = array_merge([$order->user_id], $supervisors->pluck('id')->toArray());
+    $users = User::users($allIDS)->get();
+
+    // iterar, tomar el email y notificar via email
+    $users->each(function ($user) use ($order) {
+      $email = new NotifyRecorderQuotationHasBeenUpdatedEmail($order);
+      Mail::to($user->email)->send($email);
     });
   }
 }

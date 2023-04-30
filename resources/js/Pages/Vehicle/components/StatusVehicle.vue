@@ -1,6 +1,8 @@
 <script setup>
 import { Link } from "@inertiajs/inertia-vue3";
 import { computed } from "vue";
+import ButtonShowImages from "./ButtonShowImages.vue";
+import ButtonShowOrders from "./ButtonShowOrders.vue";
 
 const props = defineProps({ vehicle: Object });
 const id = computed(() => props.vehicle.id);
@@ -48,14 +50,10 @@ const status = computed(() => props.vehicle.status);
                 Ordenes creadas ({{ vehicle.repair_orders_count }})
             </p>
 
-            <button
-                type="button"
-                class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-2 rounded md:text-sm text-xs"
-                @click="$emit('openQuotes', vehicle)"
-            >
-                <i class="fas fa-arrow-right"></i>
-                Ver Ordenes
-            </button>
+            <div class="flex flex-col gap-3 w-28">
+                <ButtonShowOrders @click="$emit('openQuotes', vehicle)" />
+                <ButtonShowImages @click="$emit('openImages', vehicle)" />
+            </div>
         </span>
 
         <!-- cotizado -->
@@ -99,14 +97,10 @@ const status = computed(() => props.vehicle.status);
                 Ordenes creadas ({{ vehicle.repair_orders_count }})
             </p>
 
-            <button
-                type="button"
-                class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-2 rounded md:text-sm text-xs"
-                @click="$emit('openQuotes', vehicle)"
-            >
-                <i class="fas fa-arrow-right"></i>
-                Ver Ordenes
-            </button>
+            <div class="flex flex-col gap-3 w-28">
+                <ButtonShowOrders @click="$emit('openQuotes', vehicle)" />
+                <ButtonShowImages @click="$emit('openImages', vehicle)" />
+            </div>
         </span>
 
         <!-- caso cancelado -->

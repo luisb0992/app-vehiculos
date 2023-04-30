@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/inertia-vue3";
 import { computed, ref } from "vue";
-import Swal from "sweetalert2";
 import { manageError } from "@/Utils/Common/common";
+import Swal from "sweetalert2";
 
 /**
  * Formulario
@@ -46,6 +46,11 @@ export const total = computed(() => {
  */
 export const hasZero = computed(() => form.subs.some((sub) => sub.cost == 0));
 
+/**
+ * Guardar cotización
+ *
+ * @returns void
+ */
 export const saveQuote = () => {
     // validar que no haya un item con costo 0
     if (hasZero.value) {
@@ -75,11 +80,44 @@ export const saveQuote = () => {
     });
 };
 
+/**
+ * Actualizar cotización
+ *
+ * @returns void
+ */
+export const updateQuote = (id) => {
+    // validar que no haya un item con costo 0
+    if (hasZero.value) {
+        manageError({
+            test: "No se puede actualizar la cotización si no ha llenado todos los items",
+        });
+        return;
+    }
+
+    // validar total y subtotal
+    if (subtotal.value == 0 || total.value == 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "El total y subtotal debe ser mayor a 0",
+        });
+        return;
+    }
+
+    form.subtotal = parseFloat(subtotal.value);
+    form.tax = includeTax.value ? tax.value : 0;
+    form.total = parseFloat(total.value);
+
+    form.put(route("workshop_quotes.updateQuote", id), {
+        onError: (error) => manageError(),
+        onSuccess: (resp) => clearForm(),
+    });
+};
+
 export const clearForm = () => {
     form.reset("subs", []);
     form.reset("subtotal", 0);
     form.reset("tax", 0);
-    form.reset("total", 0);
     form.reset("total", 0);
     form.reset("repair_order_id", 0);
 };
@@ -125,4 +163,17 @@ export const validateFormat = (index) => {
             sub.cost = sub.cost.substring(0, length);
         }
     }
+};
+
+// cargar y exportar los costos
+export const loadCosts = (order) => {
+    form.subs = [];
+    form.repair_order_id = order.value.id;
+    order.value.subcategories.forEach((sub) => {
+        form.subs.push({
+            id: sub.id,
+            name: sub.name,
+            cost: sub.pivot.cost,
+        });
+    });
 };

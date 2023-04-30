@@ -7,6 +7,7 @@ import ButtonDownloadQuotation from "./ButtonDownloadQuotation.vue";
 import ButtonDownloadInvoice from "./ButtonDownloadInvoice.vue";
 import ButtonAddInvoice from "./ButtonAddInvoice.vue";
 import AddInvoiceModal from "./AddInvoiceModal.vue";
+import ButtonEditQuotation from "./ButtonEditQuotation.vue";
 
 const props = defineProps({
     status: Number,
@@ -119,6 +120,7 @@ const openModal = (id) => {
                     @openModalInvoice="openModal"
                     v-if="!order.quotation.invoice_path"
                 />
+                <ButtonEditQuotation :id="order.quotation.id" />
             </div>
         </div>
 
@@ -163,9 +165,7 @@ const openModal = (id) => {
                     @click="finishRepair"
                 >
                     <i class="fas fa-arrow-right"></i>
-                    <span class="text-xs font-semibold">
-                        Finalizar rep.
-                    </span>
+                    <span class="text-xs font-semibold"> Finalizar rep. </span>
                 </button>
                 <ButtonDownloadQuotation :id="order.quotation.id" />
                 <ButtonDownloadInvoice

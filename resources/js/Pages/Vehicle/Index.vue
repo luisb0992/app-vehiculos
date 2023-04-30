@@ -6,14 +6,17 @@ import InputText from "primevue/inputtext";
 import Toolbar from "primevue/toolbar";
 import StatusVehicle from "./components/StatusVehicle.vue";
 import QuotesModal from "./components/QuotesModal.vue";
+import ImagesModal from "./components/ImagesModal.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import { refreshPage } from "@/Utils/Common/common";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import {
     filter,
     showQuotesModal,
+    showImagesModal,
     vehicle,
     openModalQuotes,
+    openModalImages,
     FilterData,
     clearedData,
     form,
@@ -187,6 +190,7 @@ defineProps({ vehicles: Array });
                                     <StatusVehicle
                                         :vehicle="data"
                                         @openQuotes="openModalQuotes"
+                                        @openImages="openModalImages"
                                     />
                                 </template>
                             </Column>
@@ -201,6 +205,12 @@ defineProps({ vehicles: Array });
             :show="showQuotesModal"
             :vehicle="vehicle"
             @close="showQuotesModal = false"
+        />
+
+        <ImagesModal
+            :show="showImagesModal"
+            :vehicle="vehicle"
+            @close="showImagesModal = false"
         />
     </Layout>
 </template>

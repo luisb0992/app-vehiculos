@@ -32,6 +32,11 @@ export const filter = ref({
 export const showQuotesModal = ref(false);
 
 /**
+ * Estado del modal de imagenes
+ */
+export const showImagesModal = ref(false);
+
+/**
  * Datos del vehiculo
  */
 export const vehicle = ref({});
@@ -44,6 +49,14 @@ export const vehicle = ref({});
 export const openModalQuotes = (data) => {
     vehicle.value = data;
     showQuotesModal.value = true;
+};
+
+/**
+ * Abrir el modal de imagenes del vehiculo
+ */
+export const openModalImages = (veh) => {
+    vehicle.value = veh;
+    showImagesModal.value = true;
 };
 
 /**

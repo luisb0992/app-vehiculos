@@ -9,6 +9,11 @@ Route::get('/optimizeclear', function () {
   return 'Cache cleared';
 });
 
+Route::get('/dump-autoload', function () {
+  Artisan::call('composer dump-autoload');
+  return 'Composer dump-autoload complete';
+});
+
 // migrate
 Route::get('/migrateall', function () {
   Artisan::call('migrate');

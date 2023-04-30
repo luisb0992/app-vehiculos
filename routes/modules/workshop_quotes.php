@@ -16,9 +16,19 @@ Route::middleware('auth')->prefix('workshop_quotes')->group(function () {
     ->name('workshop_quotes.createQuote')
     ->middleware('is_superadmin_or_supplier');
 
+  // edita una cotización, siempre y cuando no esté aprobada
+  Route::get('edit-quote/{id}', [WorkshopQuoteController::class, 'editQuote'])
+    ->name('workshop_quotes.editQuote')
+    ->middleware('is_superadmin_or_supplier');
+
   // guardar una cotización
   Route::post('store-quote', [WorkshopQuoteController::class, 'store'])
     ->name('workshop_quotes.storeQuote')
+    ->middleware('is_superadmin_or_supplier');
+
+  // actualizar una cotización
+  Route::put('update-quote/{quotation}', [WorkshopQuoteController::class, 'update'])
+    ->name('workshop_quotes.updateQuote')
     ->middleware('is_superadmin_or_supplier');
 
   // guardar una factura

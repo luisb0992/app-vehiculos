@@ -138,15 +138,6 @@ const filter = ref({
                                     />
                                 </template>
                             </Column>
-                            <!-- <Column
-                                field="-"
-                                header="Cotización"
-                                :sortable="true"
-                            >
-                                <template #body="{ data }">
-                                    <ActionButtons :order="data" />
-                                </template>
-                            </Column> -->
                         </DataTable>
                     </div>
                 </div>

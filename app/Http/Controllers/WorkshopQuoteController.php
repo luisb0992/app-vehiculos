@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DB\WorkshopQuoteDB;
+use App\Enum\StatusRepairOrderEnum;
 use App\Factories\WorkshopQuoteFactory;
 use App\Http\Requests\ApproveQuotationRequest;
 use App\Http\Requests\CreateInvoiceRequest;
 use App\Http\Requests\CreateWorkshopQuoteRequest;
+use App\Models\Quotation;
 use App\Models\WorkshopQuote;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -45,6 +47,36 @@ class WorkshopQuoteController extends Controller
     {
         return Inertia::render('WorkshopQuotes/Create', [
             'order' => $this->db->getOrderById($id)
+        ]);
+    }
+
+    /**
+     * Edita una cotización siempre y cuando no esté aprobada
+     *
+     * @param  int  $id         id de la cotización
+     * @return Response
+     */
+    public function editQuote(int $id): Response|RedirectResponse
+    {
+        $quotation = $this->db->getQuotationById($id);
+
+        // sino existe
+        if (!$quotation) {
+            return redirect()
+                ->route('workshop_quotes.index')
+                ->with('error', 'No existe la cotización');
+        }
+
+        // si la orden ya fue aprobada no se puede editar
+        if ($quotation->repairOrder->status <> StatusRepairOrderEnum::QUOTED) {
+            return redirect()
+                ->route('workshop_quotes.index')
+                ->with('error', 'No se puede editar una cotización aprobada');
+        }
+
+        // sino editar
+        return Inertia::render('WorkshopQuotes/Edit', [
+            'quotation' => $quotation
         ]);
     }
 
@@ -89,6 +121,34 @@ class WorkshopQuoteController extends Controller
         return redirect()
             ->route('workshop_quotes.index')
             ->with('error', 'No se pudo crear guardar los datos de facturación');
+    }
+
+    /**
+     * Guarda los datos de una factura relacionada con una cotización
+     *
+     * @param  CreateWorkshopQuoteRequest  $request
+     * @return RedirectResponse
+     */
+    public function update(Quotation $quotation, CreateWorkshopQuoteRequest $request): RedirectResponse
+    {
+        // si la orden ya fue aprobada no se puede editar
+        if ($quotation->repairOrder->status <> StatusRepairOrderEnum::QUOTED) {
+            return redirect()
+                ->route('workshop_quotes.index')
+                ->with('error', 'No se puede actualizar una cotización aprobada');
+        }
+
+        $quota = $this->factory->updateQuota($quotation, $request->validated());
+
+        if ($quota) {
+            return redirect()
+                ->route('workshop_quotes.index')
+                ->with('success', 'Cotización actualizada con éxito');
+        }
+
+        return redirect()
+            ->route('workshop_quotes.index')
+            ->with('error', 'No se pudo actualizar la cotización');
     }
 
     /**
